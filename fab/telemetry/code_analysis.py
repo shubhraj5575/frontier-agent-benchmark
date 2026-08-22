@@ -104,6 +104,11 @@ class CodeTelemetry:
     license_present: bool = False
     dependency_manifests: list[str] = field(default_factory=list)
     pinned_deps: tuple[int, int] = (0, 0)
+    # precise AST checks -> OBSERVED
+    mutable_default_args: int = 0
+    bare_excepts: int = 0
+    # approximate check -> ESTIMATED
+    unused_imports_est: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -127,6 +132,9 @@ class CodeTelemetry:
             "license_present": self.license_present,
             "dependency_manifests": self.dependency_manifests,
             "pinned_deps": {"pinned": self.pinned_deps[0], "total": self.pinned_deps[1]},
+            "mutable_default_args": self.mutable_default_args,
+            "bare_excepts": self.bare_excepts,
+            "unused_imports_est": self.unused_imports_est,
         }
 
     def measurements(self) -> dict[str, Measurement]:
@@ -235,13 +243,19 @@ def analyze_python_module(path: Path, rel: str, tel: CodeTelemetry) -> None:
         return
 
     raw_imports: list[tuple[int, str | None, list[str]]] = []
+    import_names: list[tuple[str, int]] = []  # (bound name, lineno)
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
             raw_imports.append((node.level, node.module,
                                 [a.name for a in node.names]))
+            for a in node.names:
+                if a.name != "*":
+                    import_names.append((a.asname or a.name, node.lineno))
         elif isinstance(node, ast.Import):
             for alias in node.names:
                 raw_imports.append((0, alias.name, []))
+                root_name = alias.name.split(".")[0]
+                import_names.append((alias.asname or root_name, node.lineno))
 
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             args = getattr(getattr(node, "args", None), "args", []) or []
@@ -251,6 +265,27 @@ def analyze_python_module(path: Path, rel: str, tel: CodeTelemetry) -> None:
                 has_docstring=ast.get_docstring(node) is not None,
                 is_public=not node.name.startswith("_"),
                 params=len(args)))
+            defaults = list(node.args.defaults or [])
+            defaults += [d for d in (node.args.kw_defaults or []) if d is not None]
+            for d in defaults:
+                if isinstance(d, (ast.List, ast.Dict, ast.Set)) or (
+                        isinstance(d, ast.Call)
+                        and isinstance(d.func, ast.Name)
+                        and d.func.id in {"list", "dict", "set"}):
+                    tel.mutable_default_args += 1
+        if isinstance(node, ast.ExceptHandler) and node.type is None:
+            tel.bare_excepts += 1
+
+    # unused-import estimate: bound name never appears again after its import
+    try:
+        all_text = path.read_text(encoding="utf-8")
+    except OSError:
+        all_text = ""
+    used_names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)}
+    used_names |= {n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
+    for bound, _ln in import_names:
+        if bound not in used_names and all_text.count(bound) <= 1:
+            tel.unused_imports_est += 1
 
     # record raw import requests; resolved into a graph after all files scanned
     tel.import_graph.setdefault(rel, set())

@@ -242,7 +242,8 @@ def saturate(x: float, cap: float) -> float:
 def band_score(value: float, low: float, ideal_low: float, ideal_high: float,
                high: float) -> float:
     """Trapezoid membership: 1 inside [ideal_low, ideal_high], falling to 0 at
-    ``low`` / ``high``.  Values outside [low, high] score 0.05 floor."""
+    ``low`` / ``high``.  Values outside [low, high] score 0.05 floor.
+    Use only for genuinely two-sided metrics."""
     v = value
     if v <= low or v >= high:
         return 0.05
@@ -252,4 +253,17 @@ def band_score(value: float, low: float, ideal_low: float, ideal_high: float,
         frac = (v - low) / max(1e-9, ideal_low - low)
     else:
         frac = (high - v) / max(1e-9, high - ideal_high)
+    return max(0.05, min(1.0, frac))
+
+
+def penalty_band(value: float, ideal_hi: float, hard_hi: float) -> float:
+    """One-sided penalty: 1.0 while value <= ideal_hi, decaying linearly to a
+    0.05 floor at hard_hi.  'Lower is better' metrics use this - low values
+    must never be punished."""
+    v = float(value)
+    if v <= ideal_hi:
+        return 1.0
+    if v >= hard_hi:
+        return 0.05
+    frac = (hard_hi - v) / max(1e-9, hard_hi - ideal_hi)
     return max(0.05, min(1.0, frac))
