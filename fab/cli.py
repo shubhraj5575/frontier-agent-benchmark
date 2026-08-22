@@ -31,6 +31,7 @@ from .config import BenchConfig, load_config, write_default_config
 from .dashboard.generator import write_dashboard
 from .models import Event, EventType, Provenance, utc_iso
 from .report.exporters import write_exports
+from .report.manifest import write_manifest
 from .report.final_report import generate_final_report
 from .scoring.engine import score_project
 from .store import BenchmarkStore
@@ -160,6 +161,8 @@ def _run_pipeline(cfg: BenchConfig, args) -> dict:
                           comparison, meta)
     (data_root / "results" / "final_report.md").write_text(report_md,
                                                            encoding="utf-8")
+    write_manifest(data_root / "results" / "manifest.json",
+                   bundles, cards, meta)
     dash = write_dashboard(data_root / "dashboard" / "index.html",
                            bundles, cards, comparison, meta)
 
@@ -175,6 +178,7 @@ def _run_pipeline(cfg: BenchConfig, args) -> dict:
 
     print("\n--- artifacts ---")
     for k, v in {**paths, "final_report": data_root / "results" / "final_report.md",
+                 "manifest": data_root / "results" / "manifest.json",
                  "dashboard": dash}.items():
         print(f"  {k}: {v}")
     return {"bundles": bundles, "cards": cards, "comparison": comparison}

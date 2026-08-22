@@ -3,17 +3,18 @@ demo-atlas,dimension,score.completion,100.0,OBSERVED,scoring-engine,coverage=100
 demo-atlas,dimension,score.reliability,100.0,OBSERVED,scoring-engine,coverage=75%
 demo-atlas,dimension,score.testing,77.32,OBSERVED,scoring-engine,coverage=75%
 demo-atlas,dimension,score.architecture,95.5,OBSERVED,scoring-engine,coverage=100%
-demo-atlas,dimension,score.performance,100.0,OBSERVED,scoring-engine,coverage=100%
+demo-atlas,dimension,score.performance,94.0,OBSERVED,scoring-engine,coverage=100%
 demo-atlas,dimension,score.documentation,60.29,OBSERVED,scoring-engine,coverage=100%
 demo-atlas,dimension,score.autonomy,100.0,OBSERVED,scoring-engine,coverage=100%
 demo-atlas,dimension,score.maintainability,97.19,OBSERVED,scoring-engine,coverage=100%
-demo-atlas,overall,engineering_score,93.11,OBSERVED,scoring-engine,data coverage=92%
+demo-atlas,overall,engineering_score,92.62,OBSERVED,scoring-engine,data coverage=92%
 demo-atlas,metric,avg_complexity,2.43,OBSERVED,code,
 demo-atlas,metric,branch,master,OBSERVED,git,
 demo-atlas,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
-demo-atlas,metric,build.duration_s,0.072,OBSERVED,procmon,
+demo-atlas,metric,build.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
+demo-atlas,metric,build.duration_s,0.268,OBSERVED,procmon,
 demo-atlas,metric,build.exit_code,0,OBSERVED,procmon,
-demo-atlas,metric,build.peak_rss_mb,11.31,OBSERVED,procmon,
+demo-atlas,metric,build.peak_rss_mb,17.33,OBSERVED,procmon,
 demo-atlas,metric,build.timed_out,False,OBSERVED,procmon,
 demo-atlas,metric,commit_first_time,2026-08-20T17:35:46Z,OBSERVED,git,
 demo-atlas,metric,commit_last_time,2026-08-21T19:29:46Z,OBSERVED,git,
@@ -29,19 +30,19 @@ demo-atlas,metric,retries,1,OBSERVED,log_ingest,
 demo-atlas,metric,sloc_test,39,OBSERVED,code,
 demo-atlas,metric,sloc_total,106,OBSERVED,code,
 demo-atlas,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
-demo-atlas,metric,smoke.duration_s,0.074,OBSERVED,procmon,
+demo-atlas,metric,smoke.duration_s,0.065,OBSERVED,procmon,
 demo-atlas,metric,smoke.exit_code,0,OBSERVED,procmon,
-demo-atlas,metric,smoke.peak_rss_mb,0.16,OBSERVED,procmon,
+demo-atlas,metric,smoke.peak_rss_mb,0.12,OBSERVED,procmon,
 demo-atlas,metric,smoke.timed_out,False,OBSERVED,procmon,
 demo-atlas,metric,test_to_code_ratio,0.5821,OBSERVED,code,
 demo-atlas,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
 demo-atlas,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
-demo-atlas,metric,tests.duration_s,0.491,OBSERVED,procmon,
+demo-atlas,metric,tests.duration_s,1.154,OBSERVED,procmon,
 demo-atlas,metric,tests.errors,0,OBSERVED,harness,
 demo-atlas,metric,tests.exit_code,0,OBSERVED,procmon,
 demo-atlas,metric,tests.failed,0,OBSERVED,harness,
 demo-atlas,metric,tests.passed,7,OBSERVED,harness,
-demo-atlas,metric,tests.peak_rss_mb,34.7,OBSERVED,procmon,
+demo-atlas,metric,tests.peak_rss_mb,32.11,OBSERVED,procmon,
 demo-atlas,metric,tests.skipped,0,OBSERVED,harness,
 demo-atlas,metric,tests.timed_out,False,OBSERVED,procmon,
 demo-atlas,metric,todo_count,0,OBSERVED,code,
@@ -51,15 +52,15 @@ demo-atlas,metric,tokens.provenance,OBSERVED,OBSERVED,log_ingest,
 demo-atlas,metric,tokens.total,10230,OBSERVED,log_ingest,from agent usage records
 demo-atlas,metric,tools.calls,2,OBSERVED,log_ingest,
 demo-atlas,metric,tools.success_rate,1.0,ESTIMATED,log_ingest,only calls with explicit success flags counted
-demo-atlas,event,build_succeeded,1787427330.564,OBSERVED,harness,build ok (0.1s)
-demo-atlas,event,test_run,1787427331.273,OBSERVED,harness,"7 passed, 0 failed, 0 errors"
-demo-atlas,event,test_passed,1787427331.273,OBSERVED,harness,7 passed
-demo-atlas,event,coverage_reported,1787427331.273,OBSERVED,harness,coverage 94.79166666666667%
-demo-atlas,event,test_run,1787427333.879,OBSERVED,harness,"7 passed, 0 failed, 0 errors"
-demo-atlas,event,test_passed,1787427333.879,OBSERVED,harness,7 passed
-demo-atlas,event,coverage_reported,1787427333.879,OBSERVED,harness,coverage 94.79166666666667%
-demo-atlas,event,run_started,1787427335.505,OBSERVED,harness,smoke-run start
-demo-atlas,event,run_finished,1787427335.579,OBSERVED,harness,entrypoint smoke-run ok
+demo-atlas,event,build_succeeded,1787427683.823,OBSERVED,harness,build ok (0.3s)
+demo-atlas,event,test_run,1787427686.351,OBSERVED,harness,"7 passed, 0 failed, 0 errors"
+demo-atlas,event,test_passed,1787427686.351,OBSERVED,harness,7 passed
+demo-atlas,event,coverage_reported,1787427686.351,OBSERVED,harness,coverage 94.79166666666667%
+demo-atlas,event,test_run,1787427690.311,OBSERVED,harness,"7 passed, 0 failed, 0 errors"
+demo-atlas,event,test_passed,1787427690.311,OBSERVED,harness,7 passed
+demo-atlas,event,coverage_reported,1787427690.311,OBSERVED,harness,coverage 94.79166666666667%
+demo-atlas,event,run_started,1787427692.364,OBSERVED,harness,smoke-run start
+demo-atlas,event,run_finished,1787427692.429,OBSERVED,harness,entrypoint smoke-run ok
 demo-atlas,event,agent_started,1755500000.0,OBSERVED,log_ingest,
 demo-atlas,event,tool_call,,OBSERVED,log_ingest,tool: bash
 demo-atlas,event,tool_call,,OBSERVED,log_ingest,python -m venv .venv
@@ -101,9 +102,9 @@ demo-cascade,overall,engineering_score,53.37,OBSERVED,scoring-engine,data covera
 demo-cascade,metric,avg_complexity,4.6,OBSERVED,code,
 demo-cascade,metric,branch,master,OBSERVED,git,
 demo-cascade,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
-demo-cascade,metric,build.duration_s,0.072,OBSERVED,procmon,
+demo-cascade,metric,build.duration_s,0.095,OBSERVED,procmon,
 demo-cascade,metric,build.exit_code,0,OBSERVED,procmon,
-demo-cascade,metric,build.peak_rss_mb,0.28,OBSERVED,procmon,
+demo-cascade,metric,build.peak_rss_mb,0.59,OBSERVED,procmon,
 demo-cascade,metric,build.timed_out,False,OBSERVED,procmon,
 demo-cascade,metric,commit_first_time,2026-08-20T17:35:46Z,OBSERVED,git,
 demo-cascade,metric,commit_last_time,2026-08-21T04:41:46Z,OBSERVED,git,
@@ -118,41 +119,41 @@ demo-cascade,metric,max_complexity,7,OBSERVED,code,
 demo-cascade,metric,sloc_test,13,OBSERVED,code,
 demo-cascade,metric,sloc_total,63,OBSERVED,code,
 demo-cascade,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
-demo-cascade,metric,smoke.duration_s,0.049,OBSERVED,procmon,
+demo-cascade,metric,smoke.duration_s,0.063,OBSERVED,procmon,
 demo-cascade,metric,smoke.exit_code,0,OBSERVED,procmon,
-demo-cascade,metric,smoke.peak_rss_mb,7.14,OBSERVED,procmon,
+demo-cascade,metric,smoke.peak_rss_mb,0.28,OBSERVED,procmon,
 demo-cascade,metric,smoke.timed_out,False,OBSERVED,procmon,
 demo-cascade,metric,test_to_code_ratio,0.26,OBSERVED,code,
 demo-cascade,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
 demo-cascade,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
-demo-cascade,metric,tests.duration_s,0.524,OBSERVED,procmon,
+demo-cascade,metric,tests.duration_s,0.759,OBSERVED,procmon,
 demo-cascade,metric,tests.errors,0,OBSERVED,harness,
 demo-cascade,metric,tests.exit_code,1,OBSERVED,procmon,
 demo-cascade,metric,tests.failed,2,OBSERVED,harness,
 demo-cascade,metric,tests.passed,1,OBSERVED,harness,
-demo-cascade,metric,tests.peak_rss_mb,34.84,OBSERVED,procmon,
+demo-cascade,metric,tests.peak_rss_mb,32.56,OBSERVED,procmon,
 demo-cascade,metric,tests.skipped,0,OBSERVED,harness,
 demo-cascade,metric,tests.timed_out,False,OBSERVED,procmon,
 demo-cascade,metric,todo_count,2,OBSERVED,code,
-demo-cascade,event,build_succeeded,1787427339.741,OBSERVED,harness,build ok (0.1s)
-demo-cascade,event,test_run,1787427340.287,OBSERVED,harness,"1 passed, 2 failed, 0 errors"
-demo-cascade,event,test_failed,1787427340.287,OBSERVED,harness,2 failed / 0 errors
-demo-cascade,event,bug_discovered,1787427340.287,ESTIMATED,harness,E       NotImplementedError: soon
-demo-cascade,event,bug_discovered,1787427340.287,ESTIMATED,harness,E       assert 27 == (9 * 2)
-demo-cascade,event,bug_discovered,1787427340.287,ESTIMATED,harness,"E        +  where 9 = len('{""id"": 2}')"
-demo-cascade,event,bug_discovered,1787427340.287,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-a65968ca96/te
-demo-cascade,event,bug_discovered,1787427340.287,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-a65968ca96/te
-demo-cascade,event,coverage_reported,1787427340.287,OBSERVED,harness,coverage 65.3061224489796%
-demo-cascade,event,test_run,1787427342.106,OBSERVED,harness,"1 passed, 2 failed, 0 errors"
-demo-cascade,event,test_failed,1787427342.106,OBSERVED,harness,2 failed / 0 errors
-demo-cascade,event,bug_discovered,1787427342.106,ESTIMATED,harness,E       NotImplementedError: soon
-demo-cascade,event,bug_discovered,1787427342.106,ESTIMATED,harness,E       assert 27 == (9 * 2)
-demo-cascade,event,bug_discovered,1787427342.106,ESTIMATED,harness,"E        +  where 9 = len('{""id"": 2}')"
-demo-cascade,event,bug_discovered,1787427342.106,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-a65968ca96/te
-demo-cascade,event,bug_discovered,1787427342.106,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-a65968ca96/te
-demo-cascade,event,coverage_reported,1787427342.106,OBSERVED,harness,coverage 65.3061224489796%
-demo-cascade,event,run_started,1787427343.491,OBSERVED,harness,smoke-run start
-demo-cascade,event,run_finished,1787427343.539,OBSERVED,harness,entrypoint smoke-run ok
+demo-cascade,event,build_succeeded,1787427697.27,OBSERVED,harness,build ok (0.1s)
+demo-cascade,event,test_run,1787427697.844,OBSERVED,harness,"1 passed, 2 failed, 0 errors"
+demo-cascade,event,test_failed,1787427697.844,OBSERVED,harness,2 failed / 0 errors
+demo-cascade,event,bug_discovered,1787427697.844,ESTIMATED,harness,E       NotImplementedError: soon
+demo-cascade,event,bug_discovered,1787427697.844,ESTIMATED,harness,E       assert 27 == (9 * 2)
+demo-cascade,event,bug_discovered,1787427697.844,ESTIMATED,harness,"E        +  where 9 = len('{""id"": 2}')"
+demo-cascade,event,bug_discovered,1787427697.844,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-909c246cdd/te
+demo-cascade,event,bug_discovered,1787427697.844,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-909c246cdd/te
+demo-cascade,event,coverage_reported,1787427697.844,OBSERVED,harness,coverage 65.3061224489796%
+demo-cascade,event,test_run,1787427700.096,OBSERVED,harness,"1 passed, 2 failed, 0 errors"
+demo-cascade,event,test_failed,1787427700.096,OBSERVED,harness,2 failed / 0 errors
+demo-cascade,event,bug_discovered,1787427700.096,ESTIMATED,harness,E       NotImplementedError: soon
+demo-cascade,event,bug_discovered,1787427700.096,ESTIMATED,harness,E       assert 27 == (9 * 2)
+demo-cascade,event,bug_discovered,1787427700.096,ESTIMATED,harness,"E        +  where 9 = len('{""id"": 2}')"
+demo-cascade,event,bug_discovered,1787427700.096,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-909c246cdd/te
+demo-cascade,event,bug_discovered,1787427700.096,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-909c246cdd/te
+demo-cascade,event,coverage_reported,1787427700.096,OBSERVED,harness,coverage 65.3061224489796%
+demo-cascade,event,run_started,1787427701.718,OBSERVED,harness,smoke-run start
+demo-cascade,event,run_finished,1787427701.781,OBSERVED,harness,entrypoint smoke-run ok
 demo-cascade,failure_analysis,build_failures,0,OBSERVED,comparison,
 demo-cascade,failure_analysis,test_failures,2,OBSERVED,comparison,
 demo-cascade,failure_analysis,errors_observed,0,OBSERVED,comparison,
@@ -173,9 +174,9 @@ demo-volt,overall,engineering_score,66.51,OBSERVED,scoring-engine,data coverage=
 demo-volt,metric,avg_complexity,3.2,OBSERVED,code,
 demo-volt,metric,branch,master,OBSERVED,git,
 demo-volt,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
-demo-volt,metric,build.duration_s,0.101,OBSERVED,procmon,
+demo-volt,metric,build.duration_s,0.1,OBSERVED,procmon,
 demo-volt,metric,build.exit_code,0,OBSERVED,procmon,
-demo-volt,metric,build.peak_rss_mb,7.42,OBSERVED,procmon,
+demo-volt,metric,build.peak_rss_mb,6.53,OBSERVED,procmon,
 demo-volt,metric,build.timed_out,False,OBSERVED,procmon,
 demo-volt,metric,commit_first_time,2026-08-20T17:35:46Z,OBSERVED,git,
 demo-volt,metric,commit_last_time,2026-08-21T12:05:46Z,OBSERVED,git,
@@ -191,19 +192,19 @@ demo-volt,metric,retries,1,OBSERVED,log_ingest,
 demo-volt,metric,sloc_test,17,OBSERVED,code,
 demo-volt,metric,sloc_total,62,OBSERVED,code,
 demo-volt,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
-demo-volt,metric,smoke.duration_s,0.05,OBSERVED,procmon,
+demo-volt,metric,smoke.duration_s,0.06,OBSERVED,procmon,
 demo-volt,metric,smoke.exit_code,0,OBSERVED,procmon,
-demo-volt,metric,smoke.peak_rss_mb,0.08,OBSERVED,procmon,
+demo-volt,metric,smoke.peak_rss_mb,0.12,OBSERVED,procmon,
 demo-volt,metric,smoke.timed_out,False,OBSERVED,procmon,
 demo-volt,metric,test_to_code_ratio,0.3778,OBSERVED,code,
 demo-volt,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
 demo-volt,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
-demo-volt,metric,tests.duration_s,0.493,OBSERVED,procmon,
+demo-volt,metric,tests.duration_s,0.533,OBSERVED,procmon,
 demo-volt,metric,tests.errors,0,OBSERVED,harness,
 demo-volt,metric,tests.exit_code,1,OBSERVED,procmon,
 demo-volt,metric,tests.failed,1,OBSERVED,harness,
 demo-volt,metric,tests.passed,5,OBSERVED,harness,
-demo-volt,metric,tests.peak_rss_mb,34.61,OBSERVED,procmon,
+demo-volt,metric,tests.peak_rss_mb,34.56,OBSERVED,procmon,
 demo-volt,metric,tests.skipped,0,OBSERVED,harness,
 demo-volt,metric,tests.timed_out,False,OBSERVED,procmon,
 demo-volt,metric,todo_count,1,OBSERVED,code,
@@ -213,21 +214,21 @@ demo-volt,metric,tokens.provenance,OBSERVED,OBSERVED,log_ingest,
 demo-volt,metric,tokens.total,1250,OBSERVED,log_ingest,from agent usage records
 demo-volt,metric,tools.calls,2,OBSERVED,log_ingest,
 demo-volt,metric,tools.success_rate,0.5,ESTIMATED,log_ingest,only calls with explicit success flags counted
-demo-volt,event,build_succeeded,1787427335.822,OBSERVED,harness,build ok (0.1s)
-demo-volt,event,test_run,1787427336.444,OBSERVED,harness,"5 passed, 1 failed, 0 errors"
-demo-volt,event,test_failed,1787427336.444,OBSERVED,harness,1 failed / 0 errors
-demo-volt,event,bug_discovered,1787427336.444,ESTIMATED,harness,E       assert 0.0 is None
-demo-volt,event,bug_discovered,1787427336.444,ESTIMATED,harness,E        +  where 0.0 = median([])
-demo-volt,event,bug_discovered,1787427336.444,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-7dff501183/tests
-demo-volt,event,coverage_reported,1787427336.444,OBSERVED,harness,coverage 95.83333333333333%
-demo-volt,event,test_run,1787427338.218,OBSERVED,harness,"5 passed, 1 failed, 0 errors"
-demo-volt,event,test_failed,1787427338.218,OBSERVED,harness,1 failed / 0 errors
-demo-volt,event,bug_discovered,1787427338.218,ESTIMATED,harness,E       assert 0.0 is None
-demo-volt,event,bug_discovered,1787427338.218,ESTIMATED,harness,E        +  where 0.0 = median([])
-demo-volt,event,bug_discovered,1787427338.218,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-7dff501183/tests
-demo-volt,event,coverage_reported,1787427338.218,OBSERVED,harness,coverage 95.83333333333333%
-demo-volt,event,run_started,1787427339.51,OBSERVED,harness,smoke-run start
-demo-volt,event,run_finished,1787427339.56,OBSERVED,harness,entrypoint smoke-run ok
+demo-volt,event,build_succeeded,1787427692.736,OBSERVED,harness,build ok (0.1s)
+demo-volt,event,test_run,1787427693.563,OBSERVED,harness,"5 passed, 1 failed, 0 errors"
+demo-volt,event,test_failed,1787427693.563,OBSERVED,harness,1 failed / 0 errors
+demo-volt,event,bug_discovered,1787427693.563,ESTIMATED,harness,E       assert 0.0 is None
+demo-volt,event,bug_discovered,1787427693.563,ESTIMATED,harness,E        +  where 0.0 = median([])
+demo-volt,event,bug_discovered,1787427693.563,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-f470139510/tests
+demo-volt,event,coverage_reported,1787427693.563,OBSERVED,harness,coverage 95.83333333333333%
+demo-volt,event,test_run,1787427695.532,OBSERVED,harness,"5 passed, 1 failed, 0 errors"
+demo-volt,event,test_failed,1787427695.532,OBSERVED,harness,1 failed / 0 errors
+demo-volt,event,bug_discovered,1787427695.532,ESTIMATED,harness,E       assert 0.0 is None
+demo-volt,event,bug_discovered,1787427695.532,ESTIMATED,harness,E        +  where 0.0 = median([])
+demo-volt,event,bug_discovered,1787427695.532,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-f470139510/tests
+demo-volt,event,coverage_reported,1787427695.532,OBSERVED,harness,coverage 95.83333333333333%
+demo-volt,event,run_started,1787427696.904,OBSERVED,harness,smoke-run start
+demo-volt,event,run_finished,1787427696.964,OBSERVED,harness,entrypoint smoke-run ok
 demo-volt,event,agent_started,1755510000.0,OBSERVED,log_ingest,
 demo-volt,event,tool_call,,OBSERVED,log_ingest,tool: bash
 demo-volt,event,tool_call,,OBSERVED,log_ingest,pytest -q (collection error)
@@ -247,63 +248,63 @@ demo-volt,failure_analysis,failures_total,3,OBSERVED,comparison,
 demo-volt,failure_analysis,recovered,1,OBSERVED,comparison,
 demo-volt,failure_analysis,persisting,2,OBSERVED,comparison,
 demo-volt,failure_analysis,recovery_rate,0.3333,OBSERVED,comparison,
-demo-volt,failure_analysis,mean_time_to_recovery_s,31916235.82,OBSERVED,comparison,
-fab-self,dimension,score.completion,80.58,OBSERVED,scoring-engine,coverage=100%
+demo-volt,failure_analysis,mean_time_to_recovery_s,31916592.74,OBSERVED,comparison,
+fab-self,dimension,score.completion,80.95,OBSERVED,scoring-engine,coverage=100%
 fab-self,dimension,score.reliability,100.0,OBSERVED,scoring-engine,coverage=60%
-fab-self,dimension,score.testing,99.49,OBSERVED,scoring-engine,coverage=75%
-fab-self,dimension,score.architecture,82.35,OBSERVED,scoring-engine,coverage=100%
+fab-self,dimension,score.testing,99.57,OBSERVED,scoring-engine,coverage=75%
+fab-self,dimension,score.architecture,82.34,OBSERVED,scoring-engine,coverage=100%
 fab-self,dimension,score.performance,88.0,OBSERVED,scoring-engine,coverage=100%
-fab-self,dimension,score.documentation,45.45,OBSERVED,scoring-engine,coverage=100%
+fab-self,dimension,score.documentation,49.35,OBSERVED,scoring-engine,coverage=100%
 fab-self,dimension,score.autonomy,,UNAVAILABLE,scoring-engine,no data backed this dimension
-fab-self,dimension,score.maintainability,72.56,OBSERVED,scoring-engine,coverage=100%
-fab-self,overall,engineering_score,82.14,OBSERVED,scoring-engine,data coverage=78%
-fab-self,metric,avg_complexity,6.89,OBSERVED,code,
+fab-self,dimension,score.maintainability,72.32,OBSERVED,scoring-engine,coverage=100%
+fab-self,overall,engineering_score,82.59,OBSERVED,scoring-engine,data coverage=78%
+fab-self,metric,avg_complexity,6.92,OBSERVED,code,
 fab-self,metric,branch,main,OBSERVED,git,
 fab-self,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
 fab-self,metric,build.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
-fab-self,metric,build.duration_s,0.163,OBSERVED,procmon,
+fab-self,metric,build.duration_s,0.165,OBSERVED,procmon,
 fab-self,metric,build.exit_code,0,OBSERVED,procmon,
-fab-self,metric,build.peak_rss_mb,23.02,OBSERVED,procmon,
+fab-self,metric,build.peak_rss_mb,22.31,OBSERVED,procmon,
 fab-self,metric,build.timed_out,False,OBSERVED,procmon,
 fab-self,metric,commit_first_time,2026-08-22T17:38:32Z,OBSERVED,git,
-fab-self,metric,commit_last_time,2026-08-22T19:29:07Z,OBSERVED,git,
-fab-self,metric,commits_total,8,OBSERVED,git,
+fab-self,metric,commit_last_time,2026-08-22T19:37:00Z,OBSERVED,git,
+fab-self,metric,commits_total,10,OBSERVED,git,
 fab-self,metric,coverage.percent,,UNAVAILABLE,harness,no machine-readable coverage report found
-fab-self,metric,dirty_files,3,OBSERVED,git,
-fab-self,metric,docstring_coverage,0.2049,OBSERVED,code,
-fab-self,metric,duplication_ratio,0.008,ESTIMATED,code,6-line shingle heuristic
-fab-self,metric,files_total,36,OBSERVED,code,
-fab-self,metric,head_sha,e79d380ddb542fa74b7ab939a038f5f330f724e8,OBSERVED,git,
-fab-self,metric,max_complexity,43,OBSERVED,code,
-fab-self,metric,sloc_test,1004,OBSERVED,code,
-fab-self,metric,sloc_total,5413,OBSERVED,code,
+fab-self,metric,dirty_files,6,OBSERVED,git,
+fab-self,metric,docstring_coverage,0.2016,OBSERVED,code,
+fab-self,metric,duplication_ratio,0.0077,ESTIMATED,code,6-line shingle heuristic
+fab-self,metric,files_total,37,OBSERVED,code,
+fab-self,metric,head_sha,9367a7423ff43ec74a413dfb817efff0104b8b0e,OBSERVED,git,
+fab-self,metric,max_complexity,51,OBSERVED,code,
+fab-self,metric,sloc_test,1049,OBSERVED,code,
+fab-self,metric,sloc_total,5596,OBSERVED,code,
 fab-self,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
 fab-self,metric,smoke.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
-fab-self,metric,smoke.duration_s,0.15,OBSERVED,procmon,
+fab-self,metric,smoke.duration_s,0.118,OBSERVED,procmon,
 fab-self,metric,smoke.exit_code,0,OBSERVED,procmon,
-fab-self,metric,smoke.peak_rss_mb,24.39,OBSERVED,procmon,
+fab-self,metric,smoke.peak_rss_mb,25.67,OBSERVED,procmon,
 fab-self,metric,smoke.timed_out,False,OBSERVED,procmon,
-fab-self,metric,test_to_code_ratio,0.2277,OBSERVED,code,
+fab-self,metric,test_to_code_ratio,0.2307,OBSERVED,code,
 fab-self,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
 fab-self,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
-fab-self,metric,tests.duration_s,12.669,OBSERVED,procmon,
+fab-self,metric,tests.duration_s,12.159,OBSERVED,procmon,
 fab-self,metric,tests.errors,0,OBSERVED,harness,
 fab-self,metric,tests.exit_code,0,OBSERVED,procmon,
 fab-self,metric,tests.failed,0,OBSERVED,harness,
-fab-self,metric,tests.passed,76,OBSERVED,harness,
-fab-self,metric,tests.peak_rss_mb,77.66,OBSERVED,procmon,
+fab-self,metric,tests.passed,79,OBSERVED,harness,
+fab-self,metric,tests.peak_rss_mb,84.03,OBSERVED,procmon,
 fab-self,metric,tests.skipped,0,OBSERVED,harness,
 fab-self,metric,tests.timed_out,False,OBSERVED,procmon,
 fab-self,metric,todo_count,7,OBSERVED,code,
-fab-self,event,build_succeeded,1787427343.839,OBSERVED,harness,build ok (0.2s)
-fab-self,event,test_run,1787427356.42,OBSERVED,harness,"76 passed, 0 failed, 0 errors"
-fab-self,event,test_passed,1787427356.42,OBSERVED,harness,76 passed
-fab-self,event,coverage_reported,1787427356.42,OBSERVED,harness,coverage 81.62650602409639%
-fab-self,event,test_run,1787427382.491,OBSERVED,harness,"76 passed, 0 failed, 0 errors"
-fab-self,event,test_passed,1787427382.491,OBSERVED,harness,76 passed
-fab-self,event,coverage_reported,1787427382.491,OBSERVED,harness,coverage 81.62650602409639%
-fab-self,event,run_started,1787427397.647,OBSERVED,harness,smoke-run start
-fab-self,event,run_finished,1787427397.797,OBSERVED,harness,entrypoint smoke-run ok
+fab-self,event,build_succeeded,1787427702.081,OBSERVED,harness,build ok (0.2s)
+fab-self,event,test_run,1787427716.349,OBSERVED,harness,"79 passed, 0 failed, 0 errors"
+fab-self,event,test_passed,1787427716.349,OBSERVED,harness,79 passed
+fab-self,event,coverage_reported,1787427716.349,OBSERVED,harness,coverage 82.08652546191978%
+fab-self,event,test_run,1787427742.293,OBSERVED,harness,"79 passed, 0 failed, 0 errors"
+fab-self,event,test_passed,1787427742.293,OBSERVED,harness,79 passed
+fab-self,event,coverage_reported,1787427742.293,OBSERVED,harness,coverage 82.08652546191978%
+fab-self,event,run_started,1787427755.507,OBSERVED,harness,smoke-run start
+fab-self,event,run_finished,1787427755.625,OBSERVED,harness,entrypoint smoke-run ok
 fab-self,failure_analysis,build_failures,0,OBSERVED,comparison,
 fab-self,failure_analysis,test_failures,0,OBSERVED,comparison,
 fab-self,failure_analysis,errors_observed,0,OBSERVED,comparison,

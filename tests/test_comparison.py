@@ -79,3 +79,46 @@ def test_verdicts_handle_all_unavailable():
     v = res.verdicts
     assert v["most_complete"]["project"] is None
     assert v["most_efficient_compute"]["project"] is None
+
+
+def test_cohort_relative_speed_percentile():
+    from types import SimpleNamespace
+
+    def run(dur):
+        return SimpleNamespace(duration_s=dur, exit_code=0,
+                               peak_rss_mb=None, samples=[])
+
+    def phase(dur):
+        return SimpleNamespace(phase="tests", run=run(dur), counts={},
+                               coverage_pct=None, coverage_source="", ok=True)
+
+    bundles = {
+        "slow": SimpleNamespace(events=[], phases=[phase(30.0)],
+                                measurements={}),
+        "mid": SimpleNamespace(events=[], phases=[phase(10.0)],
+                               measurements={}),
+        "fast": SimpleNamespace(events=[], phases=[phase(2.0)],
+                                measurements={}),
+    }
+    cards = {k: _mk_card(k) for k in bundles}
+    res = compare(bundles, cards)
+    eff = res.efficiency
+    assert eff["fast"]["suite_speed_percentile"]["value"] == 1.0
+    assert eff["slow"]["suite_speed_percentile"]["value"] == 0.0
+    assert abs(eff["mid"]["suite_speed_percentile"]["value"] - 0.5) < 1e-9
+
+
+def test_no_percentile_for_single_subject():
+    from types import SimpleNamespace
+
+    def phase():
+        return SimpleNamespace(phase="tests",
+                               run=SimpleNamespace(duration_s=5.0, exit_code=0,
+                                                   peak_rss_mb=None, samples=[]),
+                               counts={}, coverage_pct=None,
+                               coverage_source="", ok=True)
+
+    bundles = {"solo": SimpleNamespace(events=[], phases=[phase()],
+                                       measurements={})}
+    res = compare(bundles, {"solo": _mk_card("solo")})
+    assert "suite_speed_percentile" not in res.efficiency["solo"]

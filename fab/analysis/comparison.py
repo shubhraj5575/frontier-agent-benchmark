@@ -68,6 +68,27 @@ def compare(bundles: dict[str, ProjectBundle],
                 {"delta": round(oa - ob, 2)} if (oa is not None and ob is not None)
                 else {"delta": None})
 
+    # ---- cohort-relative suite speed ---------------------------------------
+    wall_times = {}
+    for p, bundle in bundles.items():
+        for ph in getattr(bundle, "phases", []):
+            if ph.phase == "tests" and ph.run is not None:
+                wall_times[p] = ph.run.duration_s
+                break
+    if len(wall_times) >= 2:
+        vals = sorted(wall_times.values())
+        n = len(vals)
+        for p, t in wall_times.items():
+            slower = sum(1 for v in vals if v > t)
+            pct = slower / (n - 1) if n > 1 else 0.0
+            res.efficiency.setdefault(p, {})
+            res.efficiency[p]["suite_speed_percentile"] = {
+                "value": round(pct, 4),
+                "provenance": "OBSERVED",
+                "note": f"{t:.2f}s vs {n}-subject cohort "
+                        f"(0=slowest, 1=fastest)",
+            }
+
     # ---- compute efficiency ------------------------------------------------
     for p, bundle in bundles.items():
         entry: dict[str, Any] = {}
@@ -92,7 +113,7 @@ def compare(bundles: dict[str, ProjectBundle],
             note = tokens.note if tokens else "not ingested"
             entry["score_per_1k_tokens"] = Measurement.unavailable(
                 "comparison", f"token usage unavailable ({note})").to_dict()
-        res.efficiency[p] = entry
+        res.efficiency.setdefault(p, {}).update(entry)
 
     # ---- failure & recovery -------------------------------------------------
     for p, bundle in bundles.items():

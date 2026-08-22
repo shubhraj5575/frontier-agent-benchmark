@@ -109,3 +109,16 @@ def test_write_exports_creates_files():
     assert paths["json"].exists() and paths["csv"].exists()
     assert paths["markdown"].exists()
     assert paths["json"].stat().st_size > 1000
+
+
+def test_manifest_pins_reproducibility():
+    from fab.report.manifest import build_manifest
+    tmp = Path(tempfile.mkdtemp())
+    bundles, cards, comp = _build(tmp)
+    m = build_manifest(bundles, cards, {"generated_iso": "t",
+                                        "monitor_backend": "test"})
+    assert m["fab_version"]
+    assert "scoring_weights" in m and abs(sum(m["scoring_weights"].values()) - 1) < 1e-9
+    for name, subj in m["subjects"].items():
+        assert subj["file_checksums_sha256"], "checksums must pin inputs"
+        assert all(len(v) == 64 for v in subj["file_checksums_sha256"].values())

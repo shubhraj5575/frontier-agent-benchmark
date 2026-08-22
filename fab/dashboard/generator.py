@@ -75,13 +75,20 @@ def build_payload(bundles: dict[str, ProjectBundle],
             return mes.to_dict()
 
         events = []
+        prov_counts = {"OBSERVED": 0, "ESTIMATED": 0, "UNAVAILABLE": 0}
         for e in sorted(b.events, key=lambda x: x.ts or 9e18):
+            prov_counts[e.provenance.value] = \
+                prov_counts.get(e.provenance.value, 0) + 1
             events.append({
                 "ts": e.ts, "type": e.type.value, "severity": e.severity,
                 "message": (e.message or "")[:160],
                 "provenance": e.provenance.value,
                 "data_sha": (e.data or {}).get("sha"),
             })
+        metric_prov = {"OBSERVED": 0, "ESTIMATED": 0, "UNAVAILABLE": 0}
+        for mes in b.measurements.values():
+            metric_prov[mes.provenance.value] = \
+                metric_prov.get(mes.provenance.value, 0) + 1
         fa = comparison.failure_analysis.get(name, {})
         eff = comparison.efficiency.get(name, {})
 
@@ -122,6 +129,10 @@ def build_payload(bundles: dict[str, ProjectBundle],
             "failure_analysis": fa,
             "efficiency": eff,
             "events": events,
+            "data_quality": {
+                "events": prov_counts,
+                "metrics": metric_prov,
+            },
         }
     return {
         "meta": meta,
@@ -262,6 +273,14 @@ footer{margin-top:40px;color:var(--mut);font-size:12px;border-top:1px solid var(
 
 <h2>Failures &amp; recovery</h2>
 <div class="card"><table id="failtable"></table></div>
+
+<h2>Data quality - provenance breakdown</h2>
+<div class="card"><div id="dq"></div>
+<div class="legend">
+ <span><i class="dot" style="display:inline-block;background:#34d399"></i>OBSERVED - directly measured</span>
+ <span><i class="dot" style="display:inline-block;background:#fbbf24"></i>ESTIMATED - documented heuristic</span>
+ <span><i class="dot" style="display:inline-block;background:#7d8db1"></i>UNAVAILABLE - honestly absent</span>
+</div></div>
 
 <h2>Event stream</h2>
 <div class="filters">
@@ -520,6 +539,30 @@ function gradeColor(g){return {A:"#34d399","A+":"#34d399",B:"#6ea8fe","B+":"#6ea
       <td class="num">${f.mean_time_to_recovery_s==null?"n/a":f.mean_time_to_recovery_s}</td></tr>`;
   });
   document.getElementById("failtable").innerHTML=html+"</tbody>";
+})();
+
+/* data quality panel */
+(function(){
+  const dq=document.getElementById("dq");
+  const names=Object.keys(D.projects).sort();
+  let html=`<table><thead><tr><th>Project</th>
+    <th class='num'>Metrics O/E/U</th><th class='num'>Events O/E</th>
+    <th>Measurement provenance mix</th></tr></thead><tbody>`;
+  names.forEach(n=>{
+    const q=(D.projects[n].data_quality)||{metrics:{},events:{}};
+    const m=q.metrics||{},e=q.events||{};
+    const tot=(m.OBSERVED||0)+(m.ESTIMATED||0)+(m.UNAVAILABLE||0)||1;
+    const wO=100*(m.OBSERVED||0)/tot, wE=100*(m.ESTIMATED||0)/tot, wU=100*(m.UNAVAILABLE||0)/tot;
+    html+=`<tr><td><b>${esc(n)}</b></td>
+      <td class="num">${m.OBSERVED||0} / ${m.ESTIMATED||0} / ${m.UNAVAILABLE||0}</td>
+      <td class="num">${e.OBSERVED||0} / ${e.ESTIMATED||0}</td>
+      <td><div style="display:flex;height:10px;border-radius:99px;overflow:hidden;max-width:280px">
+        <i style="width:${wO}%;background:#34d399" title="observed ${wO.toFixed(0)}%"></i>
+        <i style="width:${wE}%;background:#fbbf24" title="estimated ${wE.toFixed(0)}%"></i>
+        <i style="width:${wU}%;background:#475569" title="unavailable ${wU.toFixed(0)}%"></i>
+      </div></td></tr>`;
+  });
+  dq.innerHTML=html+"</tbody></table>";
 })();
 
 /* event stream */
