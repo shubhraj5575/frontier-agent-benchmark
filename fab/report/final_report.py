@@ -167,6 +167,37 @@ def _render_dimensions(ranked) -> list[str]:
 def _render_verdicts(comparison, cards) -> list[str]:
     L: list[str] = []
     ap = L.append
+    ap("## Compute & token efficiency")
+    ap("")
+    eff = comparison.efficiency
+    if eff:
+        ap("| Project | CPU core-s | Score per CPU-s | Speed percentile | "
+           "Score per 1k tokens |")
+        ap("|---|---:|---:|---:|---:|")
+        for p in sorted(eff):
+            e = eff[p]
+            cpu = e.get("cpu_core_seconds", {})
+            per_cpu = e.get("score_per_cpu_second", {})
+            pct = e.get("suite_speed_percentile", {})
+            per_tok = e.get("score_per_1k_tokens", {})
+            cpu_v = cpu.get("value")
+            per_cpu_v = per_cpu.get("value")
+            pct_v = pct.get("value")
+            tok_v = per_tok.get("value")
+
+            def cell(v, prov):
+                if v is None:
+                    return "n/a"
+                return f"{v}" if not isinstance(v, float) else f"{v:.3f}"
+            ap(f"| {p} | {cell(cpu_v, cpu.get('provenance'))} "
+               f"({cpu.get('provenance', 'n/a')[:4]}) "
+               f"| {cell(per_cpu_v, None)} "
+               f"| {'-' if pct_v is None else f'{pct_v:.0%}'} "
+               f"| {cell(tok_v, None)} |")
+        ap("")
+        ap("*CPU integrals are ESTIMATED between samples; percentiles are "
+           "OBSERVED within this cohort. `n/a` marks genuinely missing data.*")
+    ap("")
     ap("## Answers to the nine questions")
     ap("")
     v = comparison.verdicts

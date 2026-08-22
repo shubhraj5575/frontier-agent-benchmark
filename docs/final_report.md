@@ -1,6 +1,6 @@
 # Frontier Agent Benchmark - Final Report
 
-*Generated 2026-08-22T20:25:54Z - FAB v0.1.0*
+*Generated 2026-08-22T20:28:22Z - FAB v0.1.0*
 
 Session logs ingested as evidence: `examples/demo_logs/demo-atlas-session.jsonl` -> demo-atlas (15 records), `examples/demo_logs/demo-volt-session.jsonl` -> demo-volt (10 records)
 
@@ -23,7 +23,7 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 | Rank | Project | Overall Engineering Score | Grade | Backed by data |
 |-----:|---------|--------------------------:|:------|---------------:|
 | 1 | **demo-atlas** | 93.11 | A+ | 92% |
-| 2 | **fab-self** | 84.41 | B+ | 78% |
+| 2 | **fab-self** | 84.32 | B+ | 78% |
 | 3 | **demo-volt** | 66.51 | C+ | 92% |
 | 4 | **demo-cascade** | 53.37 | D | 86% |
 
@@ -34,11 +34,22 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 | Project | Completion | Reliability | Testing | Architecture | Performance | Documentation | Autonomy | Maintainability |
 |---|---|---|---|---|---|---|---|---|
 | demo-atlas | 100.0 | 100.0 (75%) | 77.3 (75%) | 95.5 | 100.0 | 60.3 | 100.0 | 97.2 |
-| fab-self | 80.8 | 100.0 (60%) | 99.6 (75%) | 82.3 | 88.0 | 67.8 | n/a | 72.9 |
+| fab-self | 80.6 | 100.0 (60%) | 99.6 (75%) | 82.4 | 88.0 | 67.7 | n/a | 72.7 |
 | demo-volt | 70.0 | 77.8 (75%) | 68.3 (75%) | 87.2 | 100.0 | 7.8 | 22.5 | 92.8 |
 | demo-cascade | 73.3 | 44.4 (75%) | 40.6 (75%) | 73.2 | 100.0 | 0.0 | 0.0 (35%) | 51.4 |
 
 `n/a` = UNAVAILABLE. `(xx%)` after a value = share of that dimension's weight backed by collected data.
+
+## Compute & token efficiency
+
+| Project | CPU core-s | Score per CPU-s | Speed percentile | Score per 1k tokens |
+|---|---:|---:|---:|---:|
+| demo-atlas | 1.320 (ESTI) | 70.538 | 100% | 9.102 |
+| demo-cascade | 0.816 (ESTI) | 65.405 | 67% | n/a |
+| demo-volt | 1.174 (ESTI) | 56.649 | 33% | 53.205 |
+| fab-self | 11.464 (ESTI) | 7.355 | 0% | n/a |
+
+*CPU integrals are ESTIMATED between samples; percentiles are OBSERVED within this cohort. `n/a` marks genuinely missing data.*
 
 ## Answers to the nine questions
 
@@ -48,7 +59,7 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 - **Which has the best tests?** -> `fab-self` (score 99.6, OBSERVED from collected telemetry). Evidence: pass rate=100; suite scale=99.
 - **Which has the best performance?** -> `demo-atlas` (score 100.0, OBSERVED from collected telemetry). Evidence: suite wall time=100; memory efficiency=100.
 - **Which demonstrates the strongest autonomy?** -> `demo-atlas` (score 100.0, OBSERVED from collected telemetry). Evidence: self correction ratio=100; unattended completion=100.
-- **Which uses compute most efficiently?** -> `demo-atlas` (68.463 score-points per CPU core-second, ESTIMATED).
+- **Which uses compute most efficiently?** -> `demo-atlas` (70.538 score-points per CPU core-second, ESTIMATED).
 - **Which encounters the most failures?** -> `demo-volt` (3 failure events, OBSERVED).
 - **Which recovers from failures most effectively?** -> `demo-atlas` (100% recovery rate, MTTR 500.0s, OBSERVED).
 
@@ -60,8 +71,8 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 
 | Metric | Value |
 |--------|-------|
-| Session start | 2026-08-22T20:25:54Z |
-| Runtime (collection session) | 6.8s |
+| Session start | 2026-08-22T20:28:22Z |
+| Runtime (collection session) | 7.5s |
 | Git commits | 8 *(OBSERVED)* |
 | First commit | 2026-08-20T17:35:46Z *(OBSERVED)* |
 | Last commit | 2026-08-21T19:29:46Z *(OBSERVED)* |
@@ -102,7 +113,7 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
   - dependency_hygiene: 70 [OBSERVED] - manifest(s) present but no unpinned deps detected
   - complexity_ceiling: 100 [OBSERVED] - max cyclomatic complexity 6
 - Performance: **100.0** (data coverage 100%)
-  - suite_wall_time: 100 [OBSERVED] - tests finished in 1.03s
+  - suite_wall_time: 100 [OBSERVED] - tests finished in 0.57s
   - memory_efficiency: 100 [OBSERVED] - peak RSS 35MB (absolute; project below 10kLOC)
   - startup_latency: 100 [OBSERVED] - entrypoint responded in 0.09s
 - Documentation: **60.3** (data coverage 100%)
@@ -124,19 +135,19 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 
 ## Project detail - fab-self
 
-- Overall: **84.41** (B+) - 78% of scoring weight backed by data
+- Overall: **84.32** (B+) - 78% of scoring weight backed by data
 
 **Telemetry**
 
 | Metric | Value |
 |--------|-------|
-| Session start | 2026-08-22T20:26:13Z |
-| Runtime (collection session) | 68.4s |
-| Git commits | 12 *(OBSERVED)* |
+| Session start | 2026-08-22T20:28:41Z |
+| Runtime (collection session) | 70.0s |
+| Git commits | 13 *(OBSERVED)* |
 | First commit | 2026-08-22T17:38:32Z *(OBSERVED)* |
-| Last commit | 2026-08-22T20:14:20Z *(OBSERVED)* |
+| Last commit | 2026-08-22T20:27:22Z *(OBSERVED)* |
 | Files | 37 |
-| Lines of code (SLOC) | 5764 *(OBSERVED)* |
+| Lines of code (SLOC) | 5800 *(OBSERVED)* |
 | Test SLOC | 1075 *(OBSERVED)* |
 | Tests executed | 82 passed / 0 failed / 0 errors (OBSERVED) |
 | Test coverage | n/a *(UNAVAILABLE: no machine-readable coverage report found)* |
@@ -151,10 +162,10 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 
 **Score components**
 
-- Completion: **80.8** (data coverage 100%)
+- Completion: **80.6** (data coverage 100%)
   - build_succeeds: 100 [OBSERVED] - exit code of build/compile phase
   - entrypoint_runs: 100 [OBSERVED] - entrypoint: python3 -m fab.cli --help
-  - behavior_delivered: 52 [ESTIMATED] - public functions referenced by test files
+  - behavior_delivered: 51 [ESTIMATED] - public functions referenced by test files
 - Reliability: **100.0** (data coverage 60%)
   - test_pass_rate: 100 [OBSERVED] - 2 test run(s)
   - stability_across_runs: 100 [OBSERVED] - 2 repeated runs
@@ -164,18 +175,18 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
   - suite_scale: 99 [OBSERVED] - 82 tests executed
   - pass_rate: 100 [OBSERVED]
   - line_coverage: - [OBSERVED] - no machine-readable coverage report found
-  - test_to_code_balance: 100 [OBSERVED] - ratio=0.229
-- Architecture: **82.3** (data coverage 100%)
-  - module_size_discipline: 88 [OBSERVED] - avg file 156 sloc; 2 file(s) >500
+  - test_to_code_balance: 100 [OBSERVED] - ratio=0.228
+- Architecture: **82.4** (data coverage 100%)
+  - module_size_discipline: 88 [OBSERVED] - avg file 157 sloc; 2 file(s) >500
   - coupling_control: 100 [OBSERVED] - 0 circular cycle(s); avg fan-out 2.2
   - layering_and_layout: 100 [OBSERVED] - src/tests/config separated
   - dependency_hygiene: 70 [OBSERVED] - manifest(s) present but no unpinned deps detected
   - complexity_ceiling: 5 [OBSERVED] - max cyclomatic complexity 39
 - Performance: **88.0** (data coverage 100%)
-  - suite_wall_time: 70 [OBSERVED] - tests finished in 15.72s
+  - suite_wall_time: 70 [OBSERVED] - tests finished in 15.34s
   - memory_efficiency: 100 [OBSERVED] - peak RSS 80MB (absolute; project below 10kLOC)
-  - startup_latency: 100 [OBSERVED] - entrypoint responded in 0.18s
-- Documentation: **67.8** (data coverage 100%)
+  - startup_latency: 100 [OBSERVED] - entrypoint responded in 0.22s
+- Documentation: **67.7** (data coverage 100%)
   - readme_quality: 90 [OBSERVED] - 1006 words, 6/6 core sections
   - docstring_coverage: 56 [OBSERVED] - 56% of public functions documented
   - changelog_versioning: 50 [OBSERVED] - no changelog + version declared
@@ -185,8 +196,8 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
   - unattended_completion: - [OBSERVED] - no task lifecycle events observed
   - retry_effectiveness: - [OBSERVED] - no retry signals observed
   - tool_success_rate: - [OBSERVED] - no tool-call records ingested
-- Maintainability: **72.9** (data coverage 100%)
-  - avg_complexity: 54 [OBSERVED] - avg cyclomatic complexity 6.84
+- Maintainability: **72.7** (data coverage 100%)
+  - avg_complexity: 53 [OBSERVED] - avg cyclomatic complexity 6.87
   - low_duplication: 99 [ESTIMATED] - 0.7% duplicated SLOC (shingle estimate)
   - file_size_distribution: 78 [OBSERVED] - 2/37 files exceed 500 sloc
   - todo_debt: 100 [OBSERVED] - 8 TODO/FIXME (1.4/kLOC)
@@ -200,8 +211,8 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 
 | Metric | Value |
 |--------|-------|
-| Session start | 2026-08-22T20:26:01Z |
-| Runtime (collection session) | 6.2s |
+| Session start | 2026-08-22T20:28:30Z |
+| Runtime (collection session) | 6.6s |
 | Git commits | 6 *(OBSERVED)* |
 | First commit | 2026-08-20T17:35:46Z *(OBSERVED)* |
 | Last commit | 2026-08-21T12:05:46Z *(OBSERVED)* |
@@ -211,12 +222,12 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 | Tests executed | 5 passed / 1 failed / 0 errors (OBSERVED) |
 | Test coverage | n/a *(UNAVAILABLE: no machine-readable coverage report found)* |
 | Build result | success (OBSERVED) |
-| Peak RAM across phases | 36 MB (OBSERVED) |
+| Peak RAM across phases | 35 MB (OBSERVED) |
 | Token usage | 1250 *(OBSERVED; from agent usage records)* |
 | Tool calls | 2 *(OBSERVED)* |
 | Errors observed | 0 (OBSERVED event count) |
 | Retries | 1 (OBSERVED) |
-| Failure/recovery | 3 failures, 1 recovered, MTTR 31919261.2s |
+| Failure/recovery | 3 failures, 1 recovered, MTTR 31919410.29s |
 | Feature manifest | none declared |
 
 **Score components**
@@ -242,9 +253,9 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
   - dependency_hygiene: 55 [OBSERVED] - no dependency manifest; treated as minimal-dependency project
   - complexity_ceiling: 100 [OBSERVED] - max cyclomatic complexity 5
 - Performance: **100.0** (data coverage 100%)
-  - suite_wall_time: 100 [OBSERVED] - tests finished in 0.94s
-  - memory_efficiency: 100 [OBSERVED] - peak RSS 36MB (absolute; project below 10kLOC)
-  - startup_latency: 100 [OBSERVED] - entrypoint responded in 0.07s
+  - suite_wall_time: 100 [OBSERVED] - tests finished in 1.22s
+  - memory_efficiency: 100 [OBSERVED] - peak RSS 35MB (absolute; project below 10kLOC)
+  - startup_latency: 100 [OBSERVED] - entrypoint responded in 0.06s
 - Documentation: **7.8** (data coverage 100%)
   - readme_quality: 5 [OBSERVED] - 5 words, 0/6 core sections
   - docstring_coverage: 20 [OBSERVED] - 20% of public functions documented
@@ -270,8 +281,8 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 
 | Metric | Value |
 |--------|-------|
-| Session start | 2026-08-22T20:26:07Z |
-| Runtime (collection session) | 5.9s |
+| Session start | 2026-08-22T20:28:36Z |
+| Runtime (collection session) | 4.3s |
 | Git commits | 4 *(OBSERVED)* |
 | First commit | 2026-08-20T17:35:46Z *(OBSERVED)* |
 | Last commit | 2026-08-21T04:41:46Z *(OBSERVED)* |
@@ -312,9 +323,9 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
   - dependency_hygiene: 55 [OBSERVED] - no dependency manifest; treated as minimal-dependency project
   - complexity_ceiling: 100 [OBSERVED] - max cyclomatic complexity 7
 - Performance: **100.0** (data coverage 100%)
-  - suite_wall_time: 100 [OBSERVED] - tests finished in 0.78s
-  - memory_efficiency: 100 [OBSERVED] - peak RSS 36MB (absolute; project below 10kLOC)
-  - startup_latency: 100 [OBSERVED] - entrypoint responded in 0.06s
+  - suite_wall_time: 100 [OBSERVED] - tests finished in 0.60s
+  - memory_efficiency: 100 [OBSERVED] - peak RSS 35MB (absolute; project below 10kLOC)
+  - startup_latency: 100 [OBSERVED] - entrypoint responded in 0.04s
 - Documentation: **0.0** (data coverage 100%)
   - readme_quality: 0 [OBSERVED] - no README file
   - docstring_coverage: 0 [OBSERVED] - 0% of public functions documented
@@ -347,20 +358,20 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 | 2025-08-18T07:43:20Z | demo-atlas | task_completed | Task complete: queue, retry policy and worker delivered with green suite. | ESTIMATED |
 | 2025-08-18T07:43:30Z | demo-atlas | task_completed |  | OBSERVED |
 | 2025-08-18T07:45:00Z | demo-atlas | milestone_reached | v0.1.0 tagged | OBSERVED |
-| 2026-08-22T20:25:54Z | demo-atlas | build_succeeded | build ok (0.1s) | OBSERVED |
-| 2026-08-22T20:26:07Z | demo-cascade | build_succeeded | build ok (0.1s) | OBSERVED |
-| 2026-08-22T20:26:08Z | demo-cascade | test_failed | 2 failed / 0 errors | OBSERVED |
-| 2026-08-22T20:26:08Z | demo-cascade | bug_discovered | E       NotImplementedError: soon | ESTIMATED |
-| 2026-08-22T20:26:08Z | demo-cascade | bug_discovered | E       assert 27 == (9 * 2) | ESTIMATED |
-| 2026-08-22T20:26:08Z | demo-cascade | bug_discovered | E        +  where 9 = len('{"id": 2}') | ESTIMATED |
-| 2026-08-22T20:26:08Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
-| 2026-08-22T20:26:08Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
-| 2026-08-22T20:26:10Z | demo-cascade | test_failed | 2 failed / 0 errors | OBSERVED |
-| 2026-08-22T20:26:10Z | demo-cascade | bug_discovered | E       NotImplementedError: soon | ESTIMATED |
-| 2026-08-22T20:26:10Z | demo-cascade | bug_discovered | E       assert 27 == (9 * 2) | ESTIMATED |
-| 2026-08-22T20:26:10Z | demo-cascade | bug_discovered | E        +  where 9 = len('{"id": 2}') | ESTIMATED |
-| 2026-08-22T20:26:10Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
-| 2026-08-22T20:26:10Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
+| 2026-08-22T20:28:22Z | demo-atlas | build_succeeded | build ok (0.1s) | OBSERVED |
+| 2026-08-22T20:28:36Z | demo-cascade | build_succeeded | build ok (0.1s) | OBSERVED |
+| 2026-08-22T20:28:37Z | demo-cascade | test_failed | 2 failed / 0 errors | OBSERVED |
+| 2026-08-22T20:28:37Z | demo-cascade | bug_discovered | E       NotImplementedError: soon | ESTIMATED |
+| 2026-08-22T20:28:37Z | demo-cascade | bug_discovered | E       assert 27 == (9 * 2) | ESTIMATED |
+| 2026-08-22T20:28:37Z | demo-cascade | bug_discovered | E        +  where 9 = len('{"id": 2}') | ESTIMATED |
+| 2026-08-22T20:28:37Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
+| 2026-08-22T20:28:37Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
+| 2026-08-22T20:28:39Z | demo-cascade | test_failed | 2 failed / 0 errors | OBSERVED |
+| 2026-08-22T20:28:39Z | demo-cascade | bug_discovered | E       NotImplementedError: soon | ESTIMATED |
+| 2026-08-22T20:28:39Z | demo-cascade | bug_discovered | E       assert 27 == (9 * 2) | ESTIMATED |
+| 2026-08-22T20:28:39Z | demo-cascade | bug_discovered | E        +  where 9 = len('{"id": 2}') | ESTIMATED |
+| 2026-08-22T20:28:39Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
+| 2026-08-22T20:28:39Z | demo-cascade | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
 | 2025-08-18T09:40:00Z | demo-volt | agent_started |  | OBSERVED |
 | 2025-08-18T09:40:50Z | demo-volt | retry_attempted | retrying after fixing imports | OBSERVED |
 | 2025-08-18T09:56:40Z | demo-volt | bug_discovered | Stats implemented; median edge case still failing, deferring. | ESTIMATED |
@@ -368,16 +379,16 @@ Across this run: **198** observed, **31** estimated, **14** unavailable measurem
 | 2025-08-18T10:06:40Z | demo-volt | intervention_requested | clarify spec for empty-input median | OBSERVED |
 | 2025-08-18T10:13:20Z | demo-volt | commit_created | wip: column filter | OBSERVED |
 | 2025-08-18T10:21:40Z | demo-volt | task_completed | cli usable for basic mean reporting | OBSERVED |
-| 2026-08-22T20:26:01Z | demo-volt | build_succeeded | build ok (0.2s) | OBSERVED |
-| 2026-08-22T20:26:02Z | demo-volt | test_failed | 1 failed / 0 errors | OBSERVED |
-| 2026-08-22T20:26:02Z | demo-volt | bug_discovered | E       assert 0.0 is None | ESTIMATED |
-| 2026-08-22T20:26:02Z | demo-volt | bug_discovered | E        +  where 0.0 = median([]) | ESTIMATED |
-| 2026-08-22T20:26:02Z | demo-volt | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
-| 2026-08-22T20:26:05Z | demo-volt | test_failed | 1 failed / 0 errors | OBSERVED |
-| 2026-08-22T20:26:05Z | demo-volt | bug_discovered | E       assert 0.0 is None | ESTIMATED |
-| 2026-08-22T20:26:05Z | demo-volt | bug_discovered | E        +  where 0.0 = median([]) | ESTIMATED |
-| 2026-08-22T20:26:05Z | demo-volt | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
-| 2026-08-22T20:26:13Z | fab-self | build_succeeded | build ok (0.2s) | OBSERVED |
+| 2026-08-22T20:28:30Z | demo-volt | build_succeeded | build ok (0.2s) | OBSERVED |
+| 2026-08-22T20:28:31Z | demo-volt | test_failed | 1 failed / 0 errors | OBSERVED |
+| 2026-08-22T20:28:31Z | demo-volt | bug_discovered | E       assert 0.0 is None | ESTIMATED |
+| 2026-08-22T20:28:31Z | demo-volt | bug_discovered | E        +  where 0.0 = median([]) | ESTIMATED |
+| 2026-08-22T20:28:31Z | demo-volt | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
+| 2026-08-22T20:28:34Z | demo-volt | test_failed | 1 failed / 0 errors | OBSERVED |
+| 2026-08-22T20:28:34Z | demo-volt | bug_discovered | E       assert 0.0 is None | ESTIMATED |
+| 2026-08-22T20:28:34Z | demo-volt | bug_discovered | E        +  where 0.0 = median([]) | ESTIMATED |
+| 2026-08-22T20:28:34Z | demo-volt | bug_discovered | FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspa | ESTIMATED |
+| 2026-08-22T20:28:41Z | fab-self | build_succeeded | build ok (0.1s) | OBSERVED |
 
 ---
 

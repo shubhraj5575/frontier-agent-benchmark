@@ -60,6 +60,12 @@ def export_csv(bundles: dict[str, ProjectBundle],
                 w.writerow([p, "dimension", f"score.{name}", "",
                             "UNAVAILABLE", "scoring-engine",
                             "no data backed this dimension"])
+            for comp in dim.components:
+                w.writerow([p, "component", f"{name}.{comp.name}",
+                            "" if comp.value is None else round(comp.value, 2),
+                            comp.provenance.value,
+                            comp.formula or "scoring-engine",
+                            (comp.note or "")[:120]])
         w.writerow([p, "overall", "engineering_score",
                     "" if card.overall is None else round(card.overall, 2),
                     "OBSERVED" if card.overall is not None else "UNAVAILABLE",
