@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "frontier-agent-benchmark"
+version = "0.1.0"
+description = "Independent observability and benchmarking platform for evaluating autonomous AI engineering agents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "shubhraj5575" }]
+keywords = ["ai-agents", "benchmark", "observability", "evaluation", "telemetry"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development :: Quality Assurance",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.optional-dependencies]
+monitor = ["psutil>=5.9"]
+config = ["pyyaml>=6.0"]
+dev = ["pytest>=8.0", "psutil>=5.9", "pyyaml>=6.0"]
+
+[project.scripts]
+fab = "fab.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["fab*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

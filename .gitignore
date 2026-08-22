@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# FAB runtime artifacts (raw sessions & workspaces are reproducible)
+output/workspaces/
+output/sessions/raw/
+*.db
+*.db-journal
+fab.log
+
+# OS
+.DS_Store
