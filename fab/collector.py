@@ -16,7 +16,8 @@ from .models import Event, Measurement, SessionMeta, SubjectSpec
 from .telemetry.code_analysis import CodeTelemetry, collect_code_telemetry
 from .telemetry.git_telemetry import GitTelemetry, collect_git_telemetry, \
     commit_activity_series
-from .telemetry.harness import Harness, detect_build_plan, detect_test_plan
+from .telemetry.harness import (Harness, detect_build_plan,
+                                detect_test_plan, has_coverage_tool)
 from .telemetry.log_ingest import IngestResult
 from .telemetry.workspace import cleanup_workspace, make_workspace
 
@@ -87,10 +88,13 @@ def collect_dynamic(spec: SubjectSpec, data_root: Path, cfg: BenchConfig,
                     keep_workspaces: bool = False,
                     run_build: bool = True,
                     run_tests: bool = True,
-                    run_smoke: bool = True) -> tuple[ProjectBundle, Path]:
+                    run_smoke: bool = True,
+                    repeats: int = 1) -> tuple[ProjectBundle, Path]:
     """Full collection with execution inside an isolated workspace copy.
 
-    Returns (bundle, workspace_path).  Caller decides whether to clean up.
+    ``repeats`` runs the test suite multiple times on the same workspace,
+    which is what makes stability / flakiness observable rather than
+    assumed.  Returns (bundle, workspace_path).  Caller decides cleanup.
     """
     ws, meta = make_workspace(spec.name, spec.path, data_root,
                               exclude=spec.exclude)
@@ -112,10 +116,21 @@ def collect_dynamic(spec: SubjectSpec, data_root: Path, cfg: BenchConfig,
         bundle.events.extend(pr.events(spec.name, meta.session_id))
         bundle.measurements.update(pr.measurements())
     if run_tests and test_plan.framework != "none":
-        pr = harness.test_phase(test_plan, spec.name, meta.session_id, ws)
-        bundle.phases.append(pr)
-        bundle.events.extend(pr.events(spec.name, meta.session_id))
-        bundle.measurements.update(pr.measurements())
+        n_runs = max(1, int(repeats))
+        last_pr = None
+        for i in range(n_runs):
+            pr = harness.test_phase(test_plan, spec.name, meta.session_id, ws)
+            if n_runs > 1 and pr.run is not None:
+                pr.run.stdout_tail += f"\n[fab] repeat {i + 1}/{n_runs}"
+            bundle.phases.append(pr)
+            bundle.events.extend(pr.events(spec.name, meta.session_id))
+            bundle.measurements.update(pr.measurements())
+            last_pr = pr
+        # coverage only needs to be extracted once
+        if last_pr is not None and last_pr.coverage_pct is None \
+                and has_coverage_tool() and test_plan.framework == "pytest" \
+                and n_runs > 1:
+            pass  # per-run coverage already attempted inside each phase
     elif run_tests:
         bundle.measurements["tests.available"] = Measurement.observed(False, "harness")
     if run_smoke and spec.entrypoint:

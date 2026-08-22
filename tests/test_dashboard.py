@@ -71,3 +71,49 @@ def test_write_dashboard_file():
     out = write_dashboard(tmp / "dash" / "index.html", bundles, cards, comp,
                           {"generated_iso": "now"})
     assert out.exists() and out.stat().st_size > 20_000
+
+
+def test_dashboard_javascript_renders_all_panels():
+    """Execute the embedded JS against the real payload (node required)."""
+    import re as _re
+    import shutil as _sh
+    import subprocess as _sp
+
+    if not _sh.which("node"):
+        import pytest
+        pytest.skip("node not available")
+    tmp = Path(tempfile.mkdtemp())
+    bundles, cards, comp = _build(tmp)
+    html = render_dashboard(bundles, cards, comp, {"generated_iso": "x"})
+    scripts = _re.findall(r"<script>([\s\S]*?)</script>", html)
+    assert len(scripts) == 2
+    harness_js = r'''
+const fs=require("fs");
+function makeEl(){return new Proxy({innerHTML:"",textContent:"",value:""},{
+ get(t,k){if(k in t)return t[k];
+  if(["setAttribute","appendChild","addEventListener"].includes(k))return()=>{};
+  return undefined;},
+ set(t,k,v){t[k]=v;return true;}});}
+const els={};
+global.document={getElementById(id){return els[id]||(els[id]=makeEl());},
+ querySelectorAll(){return [];},createElement(){return makeEl();}};
+global.window={innerWidth:1400};
+const scripts=JSON.parse(fs.readFileSync(process.argv[1+1],"utf8"));
+eval(scripts[0]);global.D=window.FAB_DATA;eval(scripts[1]);
+const checks={board:els["board"].innerHTML.includes("<td"),
+ projects:els["projects"].innerHTML.length>500,
+ timeline:(els["timeline"].innerHTML||"").length>50,
+ matrix:els["matrix"].innerHTML.length>50,
+ verdicts:els["verdicts"].innerHTML.length>50,
+ stream:els["stream"].innerHTML.length>100};
+console.log(JSON.stringify(checks));
+'''
+    script_file = tmp / "render_check.js"
+    script_file.write_text(harness_js)
+    payload_file = tmp / "scripts.json"
+    payload_file.write_text(json.dumps(scripts))
+    sp = _sp.run(["node", str(script_file), str(payload_file)],
+                 capture_output=True, text=True)
+    assert sp.returncode == 0, sp.stderr
+    checks = json.loads(sp.stdout.strip().splitlines()[-1])
+    assert all(checks.values()), checks

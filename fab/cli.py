@@ -16,6 +16,7 @@ import argparse
 import json
 import os
 import platform
+import shutil
 import subprocess
 import sys
 import time
@@ -121,7 +122,8 @@ def _run_pipeline(cfg: BenchConfig, args) -> dict:
             keep_workspaces=args.keep_workspaces,
             run_build=not args.static_only,
             run_tests=not args.static_only,
-            run_smoke=not args.static_only)
+            run_smoke=not args.static_only,
+            repeats=getattr(args, "repeats", 1))
         bundles[name] = bundle
         cards[name] = score_project(bundle, cfg.scoring_weights)
         ov = cards[name].overall
@@ -249,6 +251,22 @@ def cmd_serve(args) -> int:
     return 0
 
 
+def cmd_pages(args) -> int:
+    """Regenerate GitHub Pages artifacts under docs/ from latest outputs."""
+    dash_src = DEFAULT_OUT / "dashboard" / "index.html"
+    report_src = DEFAULT_OUT / "results" / "final_report.md"
+    if not dash_src.exists():
+        print("no dashboard found - run `fab run` first", file=sys.stderr)
+        return 2
+    docs = Path("docs")
+    docs.mkdir(exist_ok=True)
+    shutil.copyfile(dash_src, docs / "index.html")
+    if report_src.exists():
+        shutil.copyfile(report_src, docs / "final_report.md")
+    print(f"published {dash_src} -> {docs/'index.html'}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="fab",
@@ -272,6 +290,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--config", default=None)
     p.add_argument("--static-only", action="store_true",
                    help="skip execution phases (no tests/build/smoke)")
+    p.add_argument("--repeats", type=int, default=1,
+                   help="run the test suite N times (>=2 enables the "
+                        "stability/flakiness component)")
     p.add_argument("--keep-workspaces", action="store_true")
     p.add_argument("--no-store", action="store_true",
                    help="skip SQLite persistence")
@@ -296,6 +317,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("command", nargs=argparse.REMAINDER,
                    help="command to run, after --")
     p.set_defaults(func=cmd_watch)
+
+    p = sub.add_parser("pages", help="refresh Pages artifacts in docs/")
+    p.set_defaults(func=cmd_pages)
 
     p = sub.add_parser("serve", help="serve dashboard/results locally")
     p.add_argument("--directory",
