@@ -50,6 +50,7 @@ def _load_or_exit(path: str | None) -> BenchConfig:
 
 
 def cmd_init(args) -> int:
+    """Write a starter bench config file."""
     target = Path(args.config)
     if target.exists():
         print(f"refusing to overwrite existing {target}")
@@ -185,6 +186,7 @@ def _run_pipeline(cfg: BenchConfig, args) -> dict:
 
 
 def cmd_run(args) -> int:
+    """Run the full benchmark pipeline over configured subjects."""
     cfg = _load_or_exit(args.config)
     if not cfg.subjects:
         print("no subjects configured - add entries to bench.yaml/json "
@@ -203,6 +205,7 @@ def cmd_run(args) -> int:
 
 
 def cmd_collect(args) -> int:
+    """Read-only static telemetry for configured subjects."""
     cfg = _load_or_exit(args.config)
     specs = ([s for s in cfg.subjects if s.name in set(args.names)]
              if args.names else cfg.subjects)
@@ -220,6 +223,7 @@ def cmd_collect(args) -> int:
 
 
 def cmd_ingest(args) -> int:
+    """Parse one agent session log and summarise its events."""
     cfg = _load_or_exit(args.config)
     res = ingest_log(args.logfile, args.project,
                      f"manual-{int(time.time())}",
@@ -241,6 +245,7 @@ def cmd_ingest(args) -> int:
 
 
 def cmd_serve(args) -> int:
+    """Serve generated dashboard/results over local HTTP."""
     d = Path(args.directory)
     if not d.exists():
         print(f"directory not found: {d}", file=sys.stderr)
@@ -271,7 +276,48 @@ def cmd_pages(args) -> int:
     return 0
 
 
+def cmd_doctor(args) -> int:
+    """Report which telemetry capabilities are available on this host."""
+    import importlib.util
+    import shutil as _sh
+
+    checks = [
+        ("git", _sh.which("git") is not None,
+         "commit history / activity timeline"),
+        ("pytest (importable)", importlib.util.find_spec("pytest") is not None,
+         "python test execution + JUnit counts"),
+        ("coverage", importlib.util.find_spec("coverage") is not None,
+         "line/branch coverage measurement"),
+        ("psutil", importlib.util.find_spec("psutil") is not None,
+         "precise CPU/RAM sampling of process trees"),
+        ("yaml", importlib.util.find_spec("yaml") is not None,
+         "bench.yaml + features.yaml parsing (JSON fallback exists)"),
+        ("node (optional)", _sh.which("npx") is not None,
+         "js/ts test suites (jest/vitest)"),
+        ("go (optional)", _sh.which("go") is not None, "go test suites"),
+        ("cargo (optional)", _sh.which("cargo") is not None,
+         "rust test suites"),
+    ]
+    print(f"fab {__version__} environment check")
+    print("-" * 56)
+    missing_important = []
+    for name, ok, why in checks:
+        mark = "OK  " if ok else "MISS"
+        print(f"  [{mark}] {name:<20} {why}")
+        if not ok and "optional" not in name:
+            missing_important.append(name)
+    print("-" * 56)
+    if missing_important:
+        print("without these, corresponding metrics stay honestly "
+              "UNAVAILABLE:", ", ".join(missing_important))
+        print("install with: pip install -e '.[dev]'")
+        return 1
+    print("all core capabilities present - full OBSERVED coverage possible")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
+    """Construct the argparse tree of fab subcommands."""
     ap = argparse.ArgumentParser(
         prog="fab",
         description="Frontier Agent Benchmark - observability & scoring for "
@@ -324,6 +370,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("pages", help="refresh Pages artifacts in docs/")
     p.set_defaults(func=cmd_pages)
+
+    p = sub.add_parser("doctor", help="check which telemetry capabilities exist")
+    p.set_defaults(func=cmd_doctor)
 
     p = sub.add_parser("serve", help="serve dashboard/results locally")
     p.add_argument("--directory",

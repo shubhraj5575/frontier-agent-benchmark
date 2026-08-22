@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_iso": "2026-08-22T20:08:41Z",
+    "generated_iso": "2026-08-22T20:25:54Z",
     "version": "0.1.0",
     "host": "shubhrajs-MacBook-Air.local",
     "python": "3.12.6",
@@ -21,25 +21,25 @@
   "leaderboard": [
     {
       "project": "demo-atlas",
-      "overall": 92.62,
-      "grade": "A",
+      "overall": 93.11,
+      "grade": "A+",
       "coverage": 0.925
     },
     {
       "project": "fab-self",
-      "overall": 81.8,
+      "overall": 84.41,
       "grade": "B+",
       "coverage": 0.7775
     },
     {
       "project": "demo-volt",
-      "overall": 66.02,
+      "overall": 66.51,
       "grade": "C+",
       "coverage": 0.925
     },
     {
       "project": "demo-cascade",
-      "overall": 52.85,
+      "overall": 53.37,
       "grade": "D",
       "coverage": 0.8625
     }
@@ -216,15 +216,15 @@
           "performance": {
             "name": "performance",
             "title": "Performance",
-            "value": 94.0,
+            "value": 100.0,
             "coverage": 1.0,
             "components": [
               {
                 "name": "suite_wall_time",
                 "weight": 0.4,
-                "value": 85.0,
+                "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "tests finished in 4.12s",
+                "note": "tests finished in 1.03s",
                 "formula": "threshold bands 2/10/30/120/600s"
               },
               {
@@ -232,7 +232,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "peak RSS 32MB (absolute; project below 10kLOC)",
+                "note": "peak RSS 35MB (absolute; project below 10kLOC)",
                 "formula": "absolute MB band"
               },
               {
@@ -240,7 +240,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "entrypoint responded in 0.45s",
+                "note": "entrypoint responded in 0.09s",
                 "formula": "band on startup wall time"
               }
             ],
@@ -378,8 +378,8 @@
             "notes": []
           }
         },
-        "overall": 92.62,
-        "grade": "A",
+        "overall": 93.11,
+        "grade": "A+",
         "overall_coverage": 0.925,
         "weights": {
           "completion": 0.2,
@@ -404,14 +404,14 @@
           "notes": "high-quality fixture - green suite, docs, manifest"
         },
         "session": {
-          "session_id": "b84b387cfc9dfd65",
+          "session_id": "591ba027962ae968",
           "project": "demo-atlas",
-          "started_at": 1787429321.7235231,
-          "finished_at": 1787429355.1626618,
+          "started_at": 1787430354.18032,
+          "finished_at": 1787430360.9960902,
           "collector_versions": {
             "fab": "1.0"
           },
-          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-b84b387cfc",
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-591ba02796",
           "host": "shubhrajs-MacBook-Air.local"
         },
         "git": {
@@ -578,13 +578,13 @@
             "run": {
               "cmd": "python3 -m compileall -q .",
               "exit_code": 0,
-              "duration_s": 0.404,
+              "duration_s": 0.102,
               "timed_out": false,
-              "peak_rss_mb": 16.42,
-              "peak_cpu_pct": 43.8,
-              "avg_cpu_pct": 31.2,
-              "cpu_core_seconds_est": 0.034,
-              "n_samples": 2,
+              "peak_rss_mb": null,
+              "peak_cpu_pct": null,
+              "avg_cpu_pct": null,
+              "cpu_core_seconds_est": null,
+              "n_samples": 0,
               "monitor_backend": "psutil"
             }
           },
@@ -600,15 +600,15 @@
             "coverage_pct": 94.79166666666667,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-b84b387cfc --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-b84b387cfc/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-591ba02796 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-591ba02796/junit-fab.xml",
               "exit_code": 0,
-              "duration_s": 4.116,
+              "duration_s": 1.028,
               "timed_out": false,
-              "peak_rss_mb": 32.09,
-              "peak_cpu_pct": 58.6,
-              "avg_cpu_pct": 31.8,
-              "cpu_core_seconds_est": 1.178,
-              "n_samples": 35,
+              "peak_rss_mb": 34.86,
+              "peak_cpu_pct": 95.3,
+              "avg_cpu_pct": 85.8,
+              "cpu_core_seconds_est": 0.705,
+              "n_samples": 9,
               "monitor_backend": "psutil"
             }
           },
@@ -624,15 +624,15 @@
             "coverage_pct": 94.79166666666667,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-b84b387cfc --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-b84b387cfc/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-591ba02796 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-591ba02796/junit-fab.xml",
               "exit_code": 0,
-              "duration_s": 3.867,
+              "duration_s": 0.875,
               "timed_out": false,
-              "peak_rss_mb": 31.7,
-              "peak_cpu_pct": 73.4,
-              "avg_cpu_pct": 32.0,
-              "cpu_core_seconds_est": 1.165,
-              "n_samples": 36,
+              "peak_rss_mb": 35.64,
+              "peak_cpu_pct": 96.5,
+              "avg_cpu_pct": 94.6,
+              "cpu_core_seconds_est": 0.68,
+              "n_samples": 8,
               "monitor_backend": "psutil"
             }
           },
@@ -645,13 +645,13 @@
             "run": {
               "cmd": "python3 -c import sys; from atlas.queue import Queue; q=Queue(); q.push('job'); t=q.pop(); assert t.name=='job'; print('atlas ok')",
               "exit_code": 0,
-              "duration_s": 0.451,
+              "duration_s": 0.093,
               "timed_out": false,
-              "peak_rss_mb": 16.09,
-              "peak_cpu_pct": 48.8,
-              "avg_cpu_pct": 34.2,
-              "cpu_core_seconds_est": 0.053,
-              "n_samples": 3,
+              "peak_rss_mb": null,
+              "peak_cpu_pct": null,
+              "avg_cpu_pct": null,
+              "cpu_core_seconds_est": null,
+              "n_samples": 0,
               "monitor_backend": "psutil"
             }
           }
@@ -660,22 +660,22 @@
           {
             "type": "build_succeeded",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429322.131867,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430354.282798,
             "severity": "success",
-            "message": "build ok (0.4s)",
+            "message": "build ok (0.1s)",
             "data": {},
             "raw_type": null,
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "5d6127967eda4dfb"
+            "id": "a359f6f2f82e43c5"
           },
           {
             "type": "test_run",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429326.248502,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430355.311143,
             "severity": "success",
             "message": "7 passed, 0 failed, 0 errors",
             "data": {
@@ -688,13 +688,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "b23407ecd68c4834"
+            "id": "5463d0c7cb2748e9"
           },
           {
             "type": "test_passed",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429326.248502,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430355.311143,
             "severity": "success",
             "message": "7 passed",
             "data": {
@@ -707,13 +707,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "bfa5a1c641084371"
+            "id": "3904c82446814573"
           },
           {
             "type": "coverage_reported",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429326.248502,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430355.311143,
             "severity": "info",
             "message": "coverage 94.79166666666667%",
             "data": {
@@ -724,13 +724,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "2289a07d50774ae9"
+            "id": "49e1469163944f47"
           },
           {
             "type": "test_run",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429340.284754,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430358.435861,
             "severity": "success",
             "message": "7 passed, 0 failed, 0 errors",
             "data": {
@@ -743,13 +743,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "9ba6ece508fc4a26"
+            "id": "f3674300bc5641cd"
           },
           {
             "type": "test_passed",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429340.284754,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430358.435861,
             "severity": "success",
             "message": "7 passed",
             "data": {
@@ -762,13 +762,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "5be50afe7f194239"
+            "id": "123101d7b683471b"
           },
           {
             "type": "coverage_reported",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429340.284754,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430358.435861,
             "severity": "info",
             "message": "coverage 94.79166666666667%",
             "data": {
@@ -779,13 +779,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "ebb6c5a7c1d84f2f"
+            "id": "e31c0d7e3a5e437c"
           },
           {
             "type": "run_started",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429353.9356449,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430360.749383,
             "severity": "info",
             "message": "smoke-run start",
             "data": {},
@@ -793,13 +793,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "a054f341676d4f6e"
+            "id": "f59f20959e0a4552"
           },
           {
             "type": "run_finished",
             "project": "demo-atlas",
-            "session_id": "b84b387cfc9dfd65",
-            "ts": 1787429354.386892,
+            "session_id": "591ba027962ae968",
+            "ts": 1787430360.841938,
             "severity": "success",
             "message": "entrypoint smoke-run ok",
             "data": {},
@@ -807,12 +807,12 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "951293ad5f404d84"
+            "id": "be91c04ba80743b5"
           },
           {
             "type": "agent_started",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755500000.0,
             "severity": "info",
             "message": "",
@@ -821,12 +821,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "937f9cdf078a42eb"
+            "id": "2abd6823997c4434"
           },
           {
             "type": "tool_call",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "tool: bash",
@@ -838,12 +838,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "43d269caad0b4f6a"
+            "id": "f2b0c93e18154f00"
           },
           {
             "type": "tool_call",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "python -m venv .venv",
@@ -852,12 +852,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "794f7960554b4eda"
+            "id": "8450bbf48fc64491"
           },
           {
             "type": "tool_call",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "tool: write_file",
@@ -869,12 +869,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "19225fb11d214ce5"
+            "id": "630d35e38f2b418c"
           },
           {
             "type": "tool_call",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "atlas/queue.py",
@@ -883,12 +883,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "ad2103998ba64313"
+            "id": "a49b8f292b6547da"
           },
           {
             "type": "tokens_reported",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755500300.0,
             "severity": "info",
             "message": "usage record",
@@ -900,12 +900,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "68ed97381ee4443a"
+            "id": "51f456c2670144a1"
           },
           {
             "type": "task_completed",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755500300.0,
             "severity": "success",
             "message": "Implemented core queue with push/pop semantics.",
@@ -914,12 +914,12 @@
             "provenance": "ESTIMATED",
             "source": "log_ingest",
             "note": "classified by keyword heuristic",
-            "id": "2885df06b16e40cb"
+            "id": "c580be5d1b254621"
           },
           {
             "type": "tokens_reported",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755501200.0,
             "severity": "info",
             "message": "usage record",
@@ -931,12 +931,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "15df938901334d36"
+            "id": "8388a2f29cbc4a0e"
           },
           {
             "type": "test_failed",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755501900.0,
             "severity": "error",
             "message": "FAILED tests/test_queue.py::test_pop_attempts - assert 2 == 1",
@@ -945,12 +945,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "b141d84def5044cd"
+            "id": "c93e62b5ee244bd6"
           },
           {
             "type": "tokens_reported",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755501910.0,
             "severity": "info",
             "message": "usage record",
@@ -962,12 +962,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "5759323c4947493f"
+            "id": "dbf8c6b6f09a41e9"
           },
           {
             "type": "bug_discovered",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755501910.0,
             "severity": "warn",
             "message": "Found bug: pop() increments attempts twice, breaking retry budget.",
@@ -976,12 +976,12 @@
             "provenance": "ESTIMATED",
             "source": "log_ingest",
             "note": "classified by keyword heuristic",
-            "id": "eec2d0f6e94849b6"
+            "id": "0aced61a53724f15"
           },
           {
             "type": "retry_attempted",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755502000.0,
             "severity": "warn",
             "message": "re-running suite after edit",
@@ -990,12 +990,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "cd59c42aeb884ecf"
+            "id": "433e1de6f72e4244"
           },
           {
             "type": "tokens_reported",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755502400.0,
             "severity": "info",
             "message": "usage record",
@@ -1007,12 +1007,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "09f38660b32f428f"
+            "id": "31f47ae384814d4a"
           },
           {
             "type": "bug_fixed",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755502400.0,
             "severity": "success",
             "message": "Patched attempt accounting; extracted priority pick to queue_prio.",
@@ -1021,12 +1021,12 @@
             "provenance": "ESTIMATED",
             "source": "log_ingest",
             "note": "classified by keyword heuristic",
-            "id": "6e02b838a0a2458c"
+            "id": "b96d84b3e846457c"
           },
           {
             "type": "bug_fixed",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755502500.0,
             "severity": "success",
             "message": "attempts off-by-one fixed",
@@ -1035,12 +1035,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "255a60acab6047c4"
+            "id": "beef919972f74ba9"
           },
           {
             "type": "test_passed",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755502600.0,
             "severity": "success",
             "message": "7 passed",
@@ -1049,12 +1049,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "e1953c4ec1944c47"
+            "id": "7f5baceddde942fd"
           },
           {
             "type": "commit_created",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755502700.0,
             "severity": "info",
             "message": "fix: restore attempt accounting in pop()",
@@ -1063,12 +1063,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "81175618a750460b"
+            "id": "7e0a2e0a916a43f0"
           },
           {
             "type": "tokens_reported",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755503000.0,
             "severity": "info",
             "message": "usage record",
@@ -1080,12 +1080,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "9be5a94d23804dae"
+            "id": "f49ce967576e4acc"
           },
           {
             "type": "task_completed",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755503000.0,
             "severity": "success",
             "message": "Task complete: queue, retry policy and worker delivered with green suite.",
@@ -1094,12 +1094,12 @@
             "provenance": "ESTIMATED",
             "source": "log_ingest",
             "note": "classified by keyword heuristic",
-            "id": "126e7a902c794764"
+            "id": "7031d26d67a64fa4"
           },
           {
             "type": "task_completed",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755503010.0,
             "severity": "success",
             "message": "",
@@ -1108,12 +1108,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "505a6e7d7e0c4f74"
+            "id": "f35b35fe9db641a3"
           },
           {
             "type": "milestone_reached",
             "project": "demo-atlas",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755503100.0,
             "severity": "success",
             "message": "v0.1.0 tagged",
@@ -1122,7 +1122,7 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "918519370d634aca"
+            "id": "71ea89d1d7d34d31"
           }
         ],
         "measurements": {
@@ -1133,7 +1133,7 @@
             "note": null
           },
           "build.duration_s": {
-            "value": 0.404,
+            "value": 0.102,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -1145,22 +1145,16 @@
             "note": null
           },
           "build.peak_rss_mb": {
-            "value": 16.42,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
+            "note": "no samples collected"
           },
           "build.avg_cpu_pct": {
-            "value": 31.25,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
-          },
-          "build.cpu_core_seconds": {
-            "value": 0.034,
-            "provenance": "ESTIMATED",
-            "source": "procmon",
-            "note": "integral between samples"
+            "note": "no samples collected"
           },
           "coverage.percent": {
             "value": null,
@@ -1175,7 +1169,7 @@
             "note": null
           },
           "tests.duration_s": {
-            "value": 3.867,
+            "value": 0.875,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -1187,19 +1181,19 @@
             "note": null
           },
           "tests.peak_rss_mb": {
-            "value": 31.7,
+            "value": 35.64,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.avg_cpu_pct": {
-            "value": 32.03,
+            "value": 94.56,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.cpu_core_seconds": {
-            "value": 1.165,
+            "value": 0.68,
             "provenance": "ESTIMATED",
             "source": "procmon",
             "note": "integral between samples"
@@ -1235,7 +1229,7 @@
             "note": null
           },
           "smoke.duration_s": {
-            "value": 0.451,
+            "value": 0.093,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -1247,22 +1241,16 @@
             "note": null
           },
           "smoke.peak_rss_mb": {
-            "value": 16.09,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
+            "note": "no samples collected"
           },
           "smoke.avg_cpu_pct": {
-            "value": 34.23,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
-          },
-          "smoke.cpu_core_seconds": {
-            "value": 0.053,
-            "provenance": "ESTIMATED",
-            "source": "procmon",
-            "note": "integral between samples"
+            "note": "no samples collected"
           },
           "commits_total": {
             "value": 8,
@@ -1571,15 +1559,15 @@
           "performance": {
             "name": "performance",
             "title": "Performance",
-            "value": 94.0,
+            "value": 100.0,
             "coverage": 1.0,
             "components": [
               {
                 "name": "suite_wall_time",
                 "weight": 0.4,
-                "value": 85.0,
+                "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "tests finished in 2.85s",
+                "note": "tests finished in 0.78s",
                 "formula": "threshold bands 2/10/30/120/600s"
               },
               {
@@ -1587,7 +1575,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "peak RSS 35MB (absolute; project below 10kLOC)",
+                "note": "peak RSS 36MB (absolute; project below 10kLOC)",
                 "formula": "absolute MB band"
               },
               {
@@ -1595,7 +1583,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "entrypoint responded in 0.25s",
+                "note": "entrypoint responded in 0.06s",
                 "formula": "band on startup wall time"
               }
             ],
@@ -1733,7 +1721,7 @@
             "notes": []
           }
         },
-        "overall": 52.85,
+        "overall": 53.37,
         "grade": "D",
         "overall_coverage": 0.8625,
         "weights": {
@@ -1759,14 +1747,14 @@
           "notes": "poor fixture - duplication, TODO debt, red suite"
         },
         "session": {
-          "session_id": "3ed332d47e6d6d06",
+          "session_id": "99ba9bb8c08dff08",
           "project": "demo-cascade",
-          "started_at": 1787429391.0026581,
-          "finished_at": 1787429427.130038,
+          "started_at": 1787430367.256703,
+          "finished_at": 1787430373.157501,
           "collector_versions": {
             "fab": "1.0"
           },
-          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e",
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0",
           "host": "shubhrajs-MacBook-Air.local"
         },
         "git": {
@@ -1873,13 +1861,13 @@
             "run": {
               "cmd": "python3 -m compileall -q .",
               "exit_code": 0,
-              "duration_s": 0.157,
+              "duration_s": 0.098,
               "timed_out": false,
-              "peak_rss_mb": 16.83,
-              "peak_cpu_pct": 89.5,
-              "avg_cpu_pct": 89.5,
+              "peak_rss_mb": null,
+              "peak_cpu_pct": null,
+              "avg_cpu_pct": null,
               "cpu_core_seconds_est": null,
-              "n_samples": 1,
+              "n_samples": 0,
               "monitor_backend": "psutil"
             }
           },
@@ -1895,15 +1883,15 @@
             "coverage_pct": 65.3061224489796,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0/junit-fab.xml",
               "exit_code": 1,
-              "duration_s": 2.846,
+              "duration_s": 0.783,
               "timed_out": false,
-              "peak_rss_mb": 35.45,
-              "peak_cpu_pct": 79.6,
-              "avg_cpu_pct": 41.4,
-              "cpu_core_seconds_est": 1.09,
-              "n_samples": 26,
+              "peak_rss_mb": 35.5,
+              "peak_cpu_pct": 97.0,
+              "avg_cpu_pct": 95.9,
+              "cpu_core_seconds_est": 0.597,
+              "n_samples": 7,
               "monitor_backend": "psutil"
             }
           },
@@ -1919,15 +1907,15 @@
             "coverage_pct": 65.3061224489796,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0/junit-fab.xml",
               "exit_code": 1,
-              "duration_s": 5.664,
+              "duration_s": 0.781,
               "timed_out": false,
-              "peak_rss_mb": 31.94,
-              "peak_cpu_pct": 65.8,
-              "avg_cpu_pct": 21.6,
-              "cpu_core_seconds_est": 1.187,
-              "n_samples": 52,
+              "peak_rss_mb": 35.44,
+              "peak_cpu_pct": 98.0,
+              "avg_cpu_pct": 96.3,
+              "cpu_core_seconds_est": 0.602,
+              "n_samples": 7,
               "monitor_backend": "psutil"
             }
           },
@@ -1940,13 +1928,13 @@
             "run": {
               "cmd": "python3 -c import processor; print('cascade loads')",
               "exit_code": 0,
-              "duration_s": 0.253,
+              "duration_s": 0.061,
               "timed_out": false,
-              "peak_rss_mb": 10.89,
-              "peak_cpu_pct": 22.1,
-              "avg_cpu_pct": 22.1,
+              "peak_rss_mb": null,
+              "peak_cpu_pct": null,
+              "avg_cpu_pct": null,
               "cpu_core_seconds_est": null,
-              "n_samples": 1,
+              "n_samples": 0,
               "monitor_backend": "psutil"
             }
           }
@@ -1955,22 +1943,22 @@
           {
             "type": "build_succeeded",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429391.1612182,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430367.356093,
             "severity": "success",
-            "message": "build ok (0.2s)",
+            "message": "build ok (0.1s)",
             "data": {},
             "raw_type": null,
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "ce889b05c5ab474f"
+            "id": "1e52349267bd49f7"
           },
           {
             "type": "test_run",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "warn",
             "message": "1 passed, 2 failed, 0 errors",
             "data": {
@@ -1983,13 +1971,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "8167742fe16245e4"
+            "id": "4d229f70257443b5"
           },
           {
             "type": "test_failed",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "error",
             "message": "2 failed / 0 errors",
             "data": {
@@ -2002,13 +1990,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "3b3a5f91135344e7"
+            "id": "ae872997b4d746ce"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "warn",
             "message": "E       NotImplementedError: soon",
             "data": {
@@ -2018,13 +2006,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "94af91ac98454f18"
+            "id": "067c6b3da65f401f"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "warn",
             "message": "E       assert 27 == (9 * 2)",
             "data": {
@@ -2034,13 +2022,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "ae20cbc69c47449a"
+            "id": "ba504cd347934d69"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "warn",
             "message": "E        +  where 9 = len('{\"id\": 2}')",
             "data": {
@@ -2050,15 +2038,15 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "24ef61bec6824c93"
+            "id": "b6fac81217b9404b"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "warn",
-            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e/test_exporter.py::test_export_writes_file",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0/test_exporter.py::test_export_writes_file",
             "data": {
               "index": 3
             },
@@ -2066,15 +2054,15 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "34583b4e2caa4914"
+            "id": "c13ab559d9124c54"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "warn",
-            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e/test_processor.py::test_score_multiplier_spec",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0/test_processor.py::test_score_multiplier_spec",
             "data": {
               "index": 4
             },
@@ -2082,13 +2070,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "6755f833a5224bc0"
+            "id": "7b4abb47df3f4aea"
           },
           {
             "type": "coverage_reported",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429394.007743,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430368.1398919,
             "severity": "info",
             "message": "coverage 65.3061224489796%",
             "data": {
@@ -2099,13 +2087,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "b707d1c2c2304c54"
+            "id": "a26a26e934924a73"
           },
           {
             "type": "test_run",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "warn",
             "message": "1 passed, 2 failed, 0 errors",
             "data": {
@@ -2118,13 +2106,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "cb7d22b4e2e0405b"
+            "id": "68d1a0bac7ad4969"
           },
           {
             "type": "test_failed",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "error",
             "message": "2 failed / 0 errors",
             "data": {
@@ -2137,13 +2125,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "3c19a13486434ad2"
+            "id": "2def6d33c4064df5"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "warn",
             "message": "E       NotImplementedError: soon",
             "data": {
@@ -2153,13 +2141,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "cfcc9909f7274339"
+            "id": "fb42712f9be04435"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "warn",
             "message": "E       assert 27 == (9 * 2)",
             "data": {
@@ -2169,13 +2157,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "7a3582b4205c4d24"
+            "id": "9ef789d848fb4a98"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "warn",
             "message": "E        +  where 9 = len('{\"id\": 2}')",
             "data": {
@@ -2185,15 +2173,15 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "bd8e4e9c7c0248c4"
+            "id": "ae6af6cabe4e4c4b"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "warn",
-            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e/test_exporter.py::test_export_writes_file",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0/test_exporter.py::test_export_writes_file",
             "data": {
               "index": 3
             },
@@ -2201,15 +2189,15 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "50c99ab58de2496e"
+            "id": "044225861a954799"
           },
           {
             "type": "bug_discovered",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "warn",
-            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-3ed332d47e/test_processor.py::test_score_multiplier_spec",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-99ba9bb8c0/test_processor.py::test_score_multiplier_spec",
             "data": {
               "index": 4
             },
@@ -2217,13 +2205,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "cadcdaa20c234240"
+            "id": "c94d58b7c755413f"
           },
           {
             "type": "coverage_reported",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429411.52876,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430370.915798,
             "severity": "info",
             "message": "coverage 65.3061224489796%",
             "data": {
@@ -2234,13 +2222,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "d101c96a4ba44fa9"
+            "id": "0799737025a3488b"
           },
           {
             "type": "run_started",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429426.6360111,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430372.994959,
             "severity": "info",
             "message": "smoke-run start",
             "data": {},
@@ -2248,13 +2236,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "8e57c57f96ae4731"
+            "id": "a6123899cd2d4d91"
           },
           {
             "type": "run_finished",
             "project": "demo-cascade",
-            "session_id": "3ed332d47e6d6d06",
-            "ts": 1787429426.888576,
+            "session_id": "99ba9bb8c08dff08",
+            "ts": 1787430373.05568,
             "severity": "success",
             "message": "entrypoint smoke-run ok",
             "data": {},
@@ -2262,7 +2250,7 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "da209c74efc047a8"
+            "id": "7834ad84f59d457f"
           }
         ],
         "measurements": {
@@ -2273,7 +2261,7 @@
             "note": null
           },
           "build.duration_s": {
-            "value": 0.157,
+            "value": 0.098,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -2285,16 +2273,16 @@
             "note": null
           },
           "build.peak_rss_mb": {
-            "value": 16.83,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
+            "note": "no samples collected"
           },
           "build.avg_cpu_pct": {
-            "value": 89.5,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
+            "note": "no samples collected"
           },
           "coverage.percent": {
             "value": null,
@@ -2309,7 +2297,7 @@
             "note": null
           },
           "tests.duration_s": {
-            "value": 5.664,
+            "value": 0.781,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -2321,19 +2309,19 @@
             "note": null
           },
           "tests.peak_rss_mb": {
-            "value": 31.94,
+            "value": 35.44,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.avg_cpu_pct": {
-            "value": 21.63,
+            "value": 96.31,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.cpu_core_seconds": {
-            "value": 1.187,
+            "value": 0.602,
             "provenance": "ESTIMATED",
             "source": "procmon",
             "note": "integral between samples"
@@ -2369,7 +2357,7 @@
             "note": null
           },
           "smoke.duration_s": {
-            "value": 0.253,
+            "value": 0.061,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -2381,16 +2369,16 @@
             "note": null
           },
           "smoke.peak_rss_mb": {
-            "value": 10.89,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
+            "note": "no samples collected"
           },
           "smoke.avg_cpu_pct": {
-            "value": 22.1,
-            "provenance": "OBSERVED",
+            "value": null,
+            "provenance": "UNAVAILABLE",
             "source": "procmon",
-            "note": null
+            "note": "no samples collected"
           },
           "commits_total": {
             "value": 4,
@@ -2657,15 +2645,15 @@
           "performance": {
             "name": "performance",
             "title": "Performance",
-            "value": 94.0,
+            "value": 100.0,
             "coverage": 1.0,
             "components": [
               {
                 "name": "suite_wall_time",
                 "weight": 0.4,
-                "value": 85.0,
+                "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "tests finished in 4.62s",
+                "note": "tests finished in 0.94s",
                 "formula": "threshold bands 2/10/30/120/600s"
               },
               {
@@ -2673,7 +2661,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "peak RSS 32MB (absolute; project below 10kLOC)",
+                "note": "peak RSS 36MB (absolute; project below 10kLOC)",
                 "formula": "absolute MB band"
               },
               {
@@ -2681,7 +2669,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "entrypoint responded in 0.13s",
+                "note": "entrypoint responded in 0.07s",
                 "formula": "band on startup wall time"
               }
             ],
@@ -2819,7 +2807,7 @@
             "notes": []
           }
         },
-        "overall": 66.02,
+        "overall": 66.51,
         "grade": "C+",
         "overall_coverage": 0.925,
         "weights": {
@@ -2845,14 +2833,14 @@
           "notes": "medium fixture - works but ships one failing test"
         },
         "session": {
-          "session_id": "166d807fa9abb114",
+          "session_id": "0c1c3e7669e4987a",
           "project": "demo-volt",
-          "started_at": 1787429355.196804,
-          "finished_at": 1787429390.988113,
+          "started_at": 1787430361.013272,
+          "finished_at": 1787430367.2484841,
           "collector_versions": {
             "fab": "1.0"
           },
-          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-166d807fa9",
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-0c1c3e7669",
           "host": "shubhrajs-MacBook-Air.local"
         },
         "git": {
@@ -2989,13 +2977,13 @@
             "run": {
               "cmd": "python3 -m compileall -q .",
               "exit_code": 0,
-              "duration_s": 0.329,
+              "duration_s": 0.184,
               "timed_out": false,
-              "peak_rss_mb": 17.3,
-              "peak_cpu_pct": 70.5,
-              "avg_cpu_pct": 42.4,
-              "cpu_core_seconds_est": 0.046,
-              "n_samples": 2,
+              "peak_rss_mb": 16.36,
+              "peak_cpu_pct": 62.7,
+              "avg_cpu_pct": 62.7,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
               "monitor_backend": "psutil"
             }
           },
@@ -3011,15 +2999,15 @@
             "coverage_pct": 95.83333333333333,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-166d807fa9 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-166d807fa9/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-0c1c3e7669 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-0c1c3e7669/junit-fab.xml",
               "exit_code": 1,
-              "duration_s": 4.616,
+              "duration_s": 0.937,
               "timed_out": false,
-              "peak_rss_mb": 32.0,
-              "peak_cpu_pct": 75.4,
-              "avg_cpu_pct": 27.7,
-              "cpu_core_seconds_est": 1.204,
-              "n_samples": 42,
+              "peak_rss_mb": 35.73,
+              "peak_cpu_pct": 97.9,
+              "avg_cpu_pct": 88.8,
+              "cpu_core_seconds_est": 0.658,
+              "n_samples": 8,
               "monitor_backend": "psutil"
             }
           },
@@ -3035,15 +3023,15 @@
             "coverage_pct": 95.83333333333333,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-166d807fa9 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-166d807fa9/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-0c1c3e7669 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-0c1c3e7669/junit-fab.xml",
               "exit_code": 1,
-              "duration_s": 4.709,
+              "duration_s": 0.788,
               "timed_out": false,
-              "peak_rss_mb": 32.19,
-              "peak_cpu_pct": 71.8,
-              "avg_cpu_pct": 28.7,
-              "cpu_core_seconds_est": 1.214,
-              "n_samples": 40,
+              "peak_rss_mb": 35.62,
+              "peak_cpu_pct": 98.0,
+              "avg_cpu_pct": 95.7,
+              "cpu_core_seconds_est": 0.592,
+              "n_samples": 7,
               "monitor_backend": "psutil"
             }
           },
@@ -3056,7 +3044,7 @@
             "run": {
               "cmd": "python3 -m volt.cli --help",
               "exit_code": 0,
-              "duration_s": 0.134,
+              "duration_s": 0.071,
               "timed_out": false,
               "peak_rss_mb": null,
               "peak_cpu_pct": null,
@@ -3071,22 +3059,22 @@
           {
             "type": "build_succeeded",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429355.527054,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430361.1981928,
             "severity": "success",
-            "message": "build ok (0.3s)",
+            "message": "build ok (0.2s)",
             "data": {},
             "raw_type": null,
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "62daa07f1472493d"
+            "id": "124a77e72ea149cb"
           },
           {
             "type": "test_run",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429360.1446989,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430362.136045,
             "severity": "warn",
             "message": "5 passed, 1 failed, 0 errors",
             "data": {
@@ -3099,13 +3087,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "c72e02b0f9c1471b"
+            "id": "1d719a54c8e147d6"
           },
           {
             "type": "test_failed",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429360.1446989,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430362.136045,
             "severity": "error",
             "message": "1 failed / 0 errors",
             "data": {
@@ -3118,13 +3106,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "073484b9435d4763"
+            "id": "40bbd951d3e3466e"
           },
           {
             "type": "bug_discovered",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429360.1446989,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430362.136045,
             "severity": "warn",
             "message": "E       assert 0.0 is None",
             "data": {
@@ -3134,13 +3122,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "eff8be1be2c14326"
+            "id": "2a3a48e69fa947c2"
           },
           {
             "type": "bug_discovered",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429360.1446989,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430362.136045,
             "severity": "warn",
             "message": "E        +  where 0.0 = median([])",
             "data": {
@@ -3150,15 +3138,15 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "bfd4da60c7844a27"
+            "id": "b10e067fc75b43ed"
           },
           {
             "type": "bug_discovered",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429360.1446989,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430362.136045,
             "severity": "warn",
-            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-166d807fa9/tests/test_median_edge.py::test_median_empty_should_be_none",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-0c1c3e7669/tests/test_median_edge.py::test_median_empty_should_be_none",
             "data": {
               "index": 2
             },
@@ -3166,13 +3154,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "a9b2fe7970a8416d"
+            "id": "f0d5c1ace94a4264"
           },
           {
             "type": "coverage_reported",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429360.1446989,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430362.136045,
             "severity": "info",
             "message": "coverage 95.83333333333333%",
             "data": {
@@ -3183,13 +3171,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "fd97c821cb9f4727"
+            "id": "965b8f0b799a4b07"
           },
           {
             "type": "test_run",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429380.0993779,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430365.023929,
             "severity": "warn",
             "message": "5 passed, 1 failed, 0 errors",
             "data": {
@@ -3202,13 +3190,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "fc396c43f83a49f4"
+            "id": "d975ca36070047be"
           },
           {
             "type": "test_failed",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429380.0993779,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430365.023929,
             "severity": "error",
             "message": "1 failed / 0 errors",
             "data": {
@@ -3221,13 +3209,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "458244d2728049d2"
+            "id": "ff48d3fbc14847a7"
           },
           {
             "type": "bug_discovered",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429380.0993779,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430365.023929,
             "severity": "warn",
             "message": "E       assert 0.0 is None",
             "data": {
@@ -3237,13 +3225,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "83cf69316eba4315"
+            "id": "6ed355433bc94e3a"
           },
           {
             "type": "bug_discovered",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429380.0993779,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430365.023929,
             "severity": "warn",
             "message": "E        +  where 0.0 = median([])",
             "data": {
@@ -3253,15 +3241,15 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "748ce6b5c1cf4645"
+            "id": "59a47246d9bd4fea"
           },
           {
             "type": "bug_discovered",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429380.0993779,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430365.023929,
             "severity": "warn",
-            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-166d807fa9/tests/test_median_edge.py::test_median_empty_should_be_none",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-0c1c3e7669/tests/test_median_edge.py::test_median_empty_should_be_none",
             "data": {
               "index": 2
             },
@@ -3269,13 +3257,13 @@
             "provenance": "ESTIMATED",
             "source": "harness",
             "note": "failing-test line interpreted as bug signal",
-            "id": "7b5264db73c54ca8"
+            "id": "6281289e27fc4114"
           },
           {
             "type": "coverage_reported",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429380.0993779,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430365.023929,
             "severity": "info",
             "message": "coverage 95.83333333333333%",
             "data": {
@@ -3286,13 +3274,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "21dd947cd4ea4f8b"
+            "id": "96f90b4d45454876"
           },
           {
             "type": "run_started",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429390.6394398,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430367.068824,
             "severity": "info",
             "message": "smoke-run start",
             "data": {},
@@ -3300,13 +3288,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "0e8c2fc24ce34cb8"
+            "id": "ef52efb7b70849de"
           },
           {
             "type": "run_finished",
             "project": "demo-volt",
-            "session_id": "166d807fa9abb114",
-            "ts": 1787429390.7737238,
+            "session_id": "0c1c3e7669e4987a",
+            "ts": 1787430367.139916,
             "severity": "success",
             "message": "entrypoint smoke-run ok",
             "data": {},
@@ -3314,12 +3302,12 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "f9a4b13b5b614567"
+            "id": "669a03b223634619"
           },
           {
             "type": "agent_started",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755510000.0,
             "severity": "info",
             "message": "",
@@ -3328,12 +3316,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "94ac48c897dc4d0b"
+            "id": "e7036544a2114515"
           },
           {
             "type": "tool_call",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "tool: bash",
@@ -3345,12 +3333,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "631e0e00ed46437c"
+            "id": "64d59fcc75234801"
           },
           {
             "type": "tool_call",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "pytest -q (collection error)",
@@ -3359,12 +3347,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "fc5ce5bf686b4ecf"
+            "id": "9c5600c7fd2e47ae"
           },
           {
             "type": "retry_attempted",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755510050.0,
             "severity": "warn",
             "message": "retrying after fixing imports",
@@ -3373,12 +3361,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "013d82544dbb4378"
+            "id": "ef76384b7b7747ff"
           },
           {
             "type": "tool_call",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "tool: bash",
@@ -3390,12 +3378,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "6f081940756b4c4d"
+            "id": "cb3ba8b1b1904731"
           },
           {
             "type": "tool_call",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": null,
             "severity": "info",
             "message": "pytest -q",
@@ -3404,12 +3392,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "62b869a1bfd1431a"
+            "id": "551cf4c957464d21"
           },
           {
             "type": "tokens_reported",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755511000.0,
             "severity": "info",
             "message": "usage record",
@@ -3421,12 +3409,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "dd5a86284b324f58"
+            "id": "4a712f0411af4068"
           },
           {
             "type": "bug_discovered",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755511000.0,
             "severity": "warn",
             "message": "Stats implemented; median edge case still failing, deferring.",
@@ -3435,12 +3423,12 @@
             "provenance": "ESTIMATED",
             "source": "log_ingest",
             "note": "classified by keyword heuristic",
-            "id": "f63f81d3fe7b4001"
+            "id": "7e1b65525f36407f"
           },
           {
             "type": "test_failed",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755511100.0,
             "severity": "error",
             "message": "FAILED tests/test_median_edge.py - expected None",
@@ -3449,12 +3437,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "442a7632cbe14251"
+            "id": "b939f2b4a8b5490c"
           },
           {
             "type": "intervention_requested",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755511600.0,
             "severity": "critical",
             "message": "clarify spec for empty-input median",
@@ -3463,12 +3451,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "06bb4e528ae34460"
+            "id": "7711a2ec94ac4282"
           },
           {
             "type": "commit_created",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755512000.0,
             "severity": "info",
             "message": "wip: column filter",
@@ -3477,12 +3465,12 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "56a73047ce094f9b"
+            "id": "795eb3b032664b09"
           },
           {
             "type": "task_completed",
             "project": "demo-volt",
-            "session_id": "ingest-1787429630",
+            "session_id": "ingest-1787430441",
             "ts": 1755512500.0,
             "severity": "success",
             "message": "cli usable for basic mean reporting",
@@ -3491,7 +3479,7 @@
             "provenance": "OBSERVED",
             "source": "log_ingest",
             "note": null,
-            "id": "89479b7f18234439"
+            "id": "f607941aed5b4d9f"
           }
         ],
         "measurements": {
@@ -3502,7 +3490,7 @@
             "note": null
           },
           "build.duration_s": {
-            "value": 0.329,
+            "value": 0.184,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -3514,22 +3502,16 @@
             "note": null
           },
           "build.peak_rss_mb": {
-            "value": 17.3,
+            "value": 16.36,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "build.avg_cpu_pct": {
-            "value": 42.4,
+            "value": 62.7,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
-          },
-          "build.cpu_core_seconds": {
-            "value": 0.046,
-            "provenance": "ESTIMATED",
-            "source": "procmon",
-            "note": "integral between samples"
           },
           "coverage.percent": {
             "value": null,
@@ -3544,7 +3526,7 @@
             "note": null
           },
           "tests.duration_s": {
-            "value": 4.709,
+            "value": 0.788,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -3556,19 +3538,19 @@
             "note": null
           },
           "tests.peak_rss_mb": {
-            "value": 32.19,
+            "value": 35.62,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.avg_cpu_pct": {
-            "value": 28.66,
+            "value": 95.69,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.cpu_core_seconds": {
-            "value": 1.214,
+            "value": 0.592,
             "provenance": "ESTIMATED",
             "source": "procmon",
             "note": "integral between samples"
@@ -3604,7 +3586,7 @@
             "note": null
           },
           "smoke.duration_s": {
-            "value": 0.134,
+            "value": 0.071,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -3770,7 +3752,7 @@
           "completion": {
             "name": "completion",
             "title": "Completion",
-            "value": 80.95,
+            "value": 80.75,
             "coverage": 1.0,
             "components": [
               {
@@ -3792,7 +3774,7 @@
               {
                 "name": "behavior_delivered",
                 "weight": 0.4,
-                "value": 52.38,
+                "value": 51.89,
                 "provenance": "ESTIMATED",
                 "note": "public functions referenced by test files",
                 "formula": "matched references / declared-or-public surface"
@@ -3844,15 +3826,15 @@
           "testing": {
             "name": "testing",
             "title": "Testing",
-            "value": 99.59,
+            "value": 99.63,
             "coverage": 0.75,
             "components": [
               {
                 "name": "suite_scale",
                 "weight": 0.25,
-                "value": 98.77,
+                "value": 98.9,
                 "provenance": "OBSERVED",
-                "note": "80 tests executed",
+                "note": "82 tests executed",
                 "formula": "saturating(n_tests, cap=40)"
               },
               {
@@ -3876,7 +3858,7 @@
                 "weight": 0.15,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "ratio=0.232",
+                "note": "ratio=0.229",
                 "formula": "trapezoid band [0.12..0.8 ideal]"
               }
             ],
@@ -3885,15 +3867,15 @@
           "architecture": {
             "name": "architecture",
             "title": "Architecture",
-            "value": 82.36,
+            "value": 82.34,
             "coverage": 1.0,
             "components": [
               {
                 "name": "module_size_discipline",
                 "weight": 0.3,
-                "value": 87.85,
+                "value": 87.79,
                 "provenance": "OBSERVED",
-                "note": "avg file 152 sloc; 2 file(s) >500",
+                "note": "avg file 156 sloc; 2 file(s) >500",
                 "formula": "0.6*(1-big-file share)+0.4*band(avg size)"
               },
               {
@@ -3925,7 +3907,7 @@
                 "weight": 0.1,
                 "value": 5.0,
                 "provenance": "OBSERVED",
-                "note": "max cyclomatic complexity 51",
+                "note": "max cyclomatic complexity 39",
                 "formula": "penalty above 14, floor at 26"
               }
             ],
@@ -3934,15 +3916,15 @@
           "performance": {
             "name": "performance",
             "title": "Performance",
-            "value": 80.0,
+            "value": 88.0,
             "coverage": 1.0,
             "components": [
               {
                 "name": "suite_wall_time",
                 "weight": 0.4,
-                "value": 50.0,
+                "value": 70.0,
                 "provenance": "OBSERVED",
-                "note": "tests finished in 48.93s",
+                "note": "tests finished in 15.72s",
                 "formula": "threshold bands 2/10/30/120/600s"
               },
               {
@@ -3950,7 +3932,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "peak RSS 72MB (absolute; project below 10kLOC)",
+                "note": "peak RSS 80MB (absolute; project below 10kLOC)",
                 "formula": "absolute MB band"
               },
               {
@@ -3958,7 +3940,7 @@
                 "weight": 0.3,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "entrypoint responded in 0.98s",
+                "note": "entrypoint responded in 0.18s",
                 "formula": "band on startup wall time"
               }
             ],
@@ -3967,23 +3949,23 @@
           "documentation": {
             "name": "documentation",
             "title": "Documentation",
-            "value": 49.35,
+            "value": 67.8,
             "coverage": 1.0,
             "components": [
               {
                 "name": "readme_quality",
                 "weight": 0.35,
-                "value": 68.0,
+                "value": 90.0,
                 "provenance": "OBSERVED",
-                "note": "863 words, 3/6 core sections",
+                "note": "1006 words, 6/6 core sections",
                 "formula": "(35 + 11*sections) * word-band factor"
               },
               {
                 "name": "docstring_coverage",
                 "weight": 0.3,
-                "value": 20.16,
+                "value": 56.0,
                 "provenance": "OBSERVED",
-                "note": "20% of public functions documented",
+                "note": "56% of public functions documented",
                 "formula": ""
               },
               {
@@ -4051,23 +4033,23 @@
           "maintainability": {
             "name": "maintainability",
             "title": "Maintainability",
-            "value": 72.1,
+            "value": 72.93,
             "coverage": 1.0,
             "components": [
               {
                 "name": "avg_complexity",
                 "weight": 0.3,
-                "value": 51.25,
+                "value": 54.0,
                 "provenance": "OBSERVED",
-                "note": "avg cyclomatic complexity 6.95",
+                "note": "avg cyclomatic complexity 6.84",
                 "formula": "band [ideal 2..5]"
               },
               {
                 "name": "low_duplication",
                 "weight": 0.25,
-                "value": 99.23,
+                "value": 99.25,
                 "provenance": "ESTIMATED",
-                "note": "0.8% duplicated SLOC (shingle estimate)",
+                "note": "0.7% duplicated SLOC (shingle estimate)",
                 "formula": "1 - duplication fraction"
               },
               {
@@ -4083,7 +4065,7 @@
                 "weight": 0.15,
                 "value": 100.0,
                 "provenance": "OBSERVED",
-                "note": "7 TODO/FIXME (1.2/kLOC)",
+                "note": "8 TODO/FIXME (1.4/kLOC)",
                 "formula": ""
               },
               {
@@ -4098,7 +4080,7 @@
             "notes": []
           }
         },
-        "overall": 81.8,
+        "overall": 84.41,
         "grade": "B+",
         "overall_coverage": 0.7775,
         "weights": {
@@ -4128,25 +4110,47 @@
           "notes": "dogfooding - FAB benchmarking its own repository; nested demo fixtures are excluded so the analysis scopes to the platform itself"
         },
         "session": {
-          "session_id": "9eb22fe906c69fe0",
+          "session_id": "6f16a02a70ef84c3",
           "project": "fab-self",
-          "started_at": 1787429427.21157,
-          "finished_at": 1787429630.492778,
+          "started_at": 1787430373.19464,
+          "finished_at": 1787430441.644182,
           "collector_versions": {
             "fab": "1.0"
           },
-          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-9eb22fe906",
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-6f16a02a70",
           "host": "shubhrajs-MacBook-Air.local"
         },
         "git": {
           "is_git_repo": true,
-          "head_sha": "f296500acbe7e2c43af8e6b9cb6ac4043b34c95e",
+          "head_sha": "b498766adbb06e01e40520af191cf02fba32527d",
           "branch": "main",
-          "dirty_files": 2,
-          "total_commits": 11,
+          "dirty_files": 21,
+          "total_commits": 12,
           "first_commit_iso": "2026-08-22T17:38:32Z",
-          "last_commit_iso": "2026-08-22T19:42:43Z",
+          "last_commit_iso": "2026-08-22T20:14:20Z",
           "commits": [
+            {
+              "sha": "b498766adbb06e01e40520af191cf02fba32527d",
+              "ts": 1787429660.0,
+              "iso": "2026-08-22T20:14:20Z",
+              "author": "Shubhraj Bhartiya",
+              "subject": "fix: CPU sampling regression - cache psutil Process objects across samples (cpu_percent needs prior reading); compute-efficiency now observed",
+              "files_changed": 10,
+              "insertions": 906,
+              "deletions": 828,
+              "files": [
+                "docs/final_report.md",
+                "docs/index.html",
+                "fab/telemetry/process_monitor.py",
+                "output/dashboard/index.html",
+                "output/results/final_report.md",
+                "output/results/manifest.json",
+                "output/results/results.csv",
+                "output/results/results.json",
+                "output/results/results.md",
+                "tests/test_harness.py"
+              ]
+            },
             {
               "sha": "f296500acbe7e2c43af8e6b9cb6ac4043b34c95e",
               "ts": 1787427763.0,
@@ -4403,15 +4407,15 @@
         "code": {
           "root": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark",
           "n_files": 37,
-          "total_sloc": 5625,
-          "test_sloc": 1060,
+          "total_sloc": 5764,
+          "test_sloc": 1075,
           "languages": {
-            "python": 5625
+            "python": 5764
           },
           "n_test_files": 12,
-          "todo_count": 7,
+          "todo_count": 8,
           "long_file_count": 2,
-          "duplicate_sloc_fraction_est": 0.0077,
+          "duplicate_sloc_fraction_est": 0.0075,
           "avg_internal_fanout": 2.24,
           "circular_imports": [],
           "n_circular_import_cycles": 0,
@@ -4442,13 +4446,13 @@
             "run": {
               "cmd": "python3 -m compileall -q .",
               "exit_code": 0,
-              "duration_s": 0.673,
+              "duration_s": 0.205,
               "timed_out": false,
-              "peak_rss_mb": 20.34,
-              "peak_cpu_pct": 63.4,
-              "avg_cpu_pct": 40.7,
-              "cpu_core_seconds_est": 0.163,
-              "n_samples": 5,
+              "peak_rss_mb": 20.39,
+              "peak_cpu_pct": 86.7,
+              "avg_cpu_pct": 86.7,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
               "monitor_backend": "psutil"
             }
           },
@@ -4456,23 +4460,23 @@
             "phase": "tests",
             "ok": true,
             "counts": {
-              "passed": 80,
+              "passed": 82,
               "failed": 0,
               "errors": 0,
               "skipped": 0
             },
-            "coverage_pct": 82.4557472552095,
+            "coverage_pct": 82.62026158279761,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-9eb22fe906 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-9eb22fe906/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-6f16a02a70 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-6f16a02a70/junit-fab.xml",
               "exit_code": 0,
-              "duration_s": 48.933,
+              "duration_s": 15.715,
               "timed_out": false,
-              "peak_rss_mb": 71.75,
-              "peak_cpu_pct": 84.6,
-              "avg_cpu_pct": 26.4,
-              "cpu_core_seconds_est": 12.472,
-              "n_samples": 433,
+              "peak_rss_mb": 79.98,
+              "peak_cpu_pct": 118.5,
+              "avg_cpu_pct": 30.7,
+              "cpu_core_seconds_est": 4.719,
+              "n_samples": 150,
               "monitor_backend": "psutil"
             }
           },
@@ -4480,23 +4484,23 @@
             "phase": "tests",
             "ok": true,
             "counts": {
-              "passed": 80,
+              "passed": 82,
               "failed": 0,
               "errors": 0,
               "skipped": 0
             },
-            "coverage_pct": 82.4557472552095,
+            "coverage_pct": 82.70893371757926,
             "coverage_source": "coverage.py json",
             "run": {
-              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-9eb22fe906 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-9eb22fe906/junit-fab.xml",
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-6f16a02a70 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-6f16a02a70/junit-fab.xml",
               "exit_code": 0,
-              "duration_s": 43.069,
+              "duration_s": 16.08,
               "timed_out": false,
-              "peak_rss_mb": 82.62,
-              "peak_cpu_pct": 83.5,
-              "avg_cpu_pct": 27.1,
-              "cpu_core_seconds_est": 11.369,
-              "n_samples": 384,
+              "peak_rss_mb": 76.34,
+              "peak_cpu_pct": 121.8,
+              "avg_cpu_pct": 30.3,
+              "cpu_core_seconds_est": 4.823,
+              "n_samples": 153,
               "monitor_backend": "psutil"
             }
           },
@@ -4509,13 +4513,13 @@
             "run": {
               "cmd": "python3 -m fab.cli --help",
               "exit_code": 0,
-              "duration_s": 0.983,
+              "duration_s": 0.183,
               "timed_out": false,
-              "peak_rss_mb": 24.36,
-              "peak_cpu_pct": 65.1,
-              "avg_cpu_pct": 30.7,
-              "cpu_core_seconds_est": 0.22,
-              "n_samples": 8,
+              "peak_rss_mb": 23.28,
+              "peak_cpu_pct": 89.4,
+              "avg_cpu_pct": 89.4,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
               "monitor_backend": "psutil"
             }
           }
@@ -4524,26 +4528,26 @@
           {
             "type": "build_succeeded",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429427.8858051,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430373.3997529,
             "severity": "success",
-            "message": "build ok (0.7s)",
+            "message": "build ok (0.2s)",
             "data": {},
             "raw_type": null,
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "1cd7a707ba5147a8"
+            "id": "18705a5b66a64cd6"
           },
           {
             "type": "test_run",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429476.8195379,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430389.115615,
             "severity": "success",
-            "message": "80 passed, 0 failed, 0 errors",
+            "message": "82 passed, 0 failed, 0 errors",
             "data": {
-              "passed": 80,
+              "passed": 82,
               "failed": 0,
               "errors": 0,
               "skipped": 0
@@ -4552,17 +4556,17 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "216bc04c8d6a43e9"
+            "id": "c88878a2514b470e"
           },
           {
             "type": "test_passed",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429476.8195379,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430389.115615,
             "severity": "success",
-            "message": "80 passed",
+            "message": "82 passed",
             "data": {
-              "passed": 80,
+              "passed": 82,
               "failed": 0,
               "errors": 0,
               "skipped": 0
@@ -4571,34 +4575,34 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "352bd7ddaa0f42ec"
+            "id": "bab61c0170ca4c52"
           },
           {
             "type": "coverage_reported",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429476.8195379,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430389.115615,
             "severity": "info",
-            "message": "coverage 82.4557472552095%",
+            "message": "coverage 82.62026158279761%",
             "data": {
-              "coverage_pct": 82.4557472552095,
+              "coverage_pct": 82.62026158279761,
               "source": "coverage.py json"
             },
             "raw_type": null,
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "20529f49f9244cbc"
+            "id": "b843a612ea7a4366"
           },
           {
             "type": "test_run",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429570.165663,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430421.5429518,
             "severity": "success",
-            "message": "80 passed, 0 failed, 0 errors",
+            "message": "82 passed, 0 failed, 0 errors",
             "data": {
-              "passed": 80,
+              "passed": 82,
               "failed": 0,
               "errors": 0,
               "skipped": 0
@@ -4607,17 +4611,17 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "82cf2e07fee740a2"
+            "id": "977e7e69162e4fff"
           },
           {
             "type": "test_passed",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429570.165663,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430421.5429518,
             "severity": "success",
-            "message": "80 passed",
+            "message": "82 passed",
             "data": {
-              "passed": 80,
+              "passed": 82,
               "failed": 0,
               "errors": 0,
               "skipped": 0
@@ -4626,30 +4630,30 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "8fbc76c36938461b"
+            "id": "16c2b3b5767f4c0e"
           },
           {
             "type": "coverage_reported",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429570.165663,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430421.5429518,
             "severity": "info",
-            "message": "coverage 82.4557472552095%",
+            "message": "coverage 82.70893371757926%",
             "data": {
-              "coverage_pct": 82.4557472552095,
+              "coverage_pct": 82.70893371757926,
               "source": "coverage.py json"
             },
             "raw_type": null,
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "0cb939559bfa4765"
+            "id": "0398bd30d7b04cb9"
           },
           {
             "type": "run_started",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429620.813272,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430440.7064362,
             "severity": "info",
             "message": "smoke-run start",
             "data": {},
@@ -4657,13 +4661,13 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "ba2a35674ba44bbb"
+            "id": "db4225d3910e401f"
           },
           {
             "type": "run_finished",
             "project": "fab-self",
-            "session_id": "9eb22fe906c69fe0",
-            "ts": 1787429621.796743,
+            "session_id": "6f16a02a70ef84c3",
+            "ts": 1787430440.88911,
             "severity": "success",
             "message": "entrypoint smoke-run ok",
             "data": {},
@@ -4671,7 +4675,7 @@
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null,
-            "id": "981aef3c41b5482a"
+            "id": "94be4426a8384b5e"
           }
         ],
         "measurements": {
@@ -4682,7 +4686,7 @@
             "note": null
           },
           "build.duration_s": {
-            "value": 0.673,
+            "value": 0.205,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -4694,22 +4698,16 @@
             "note": null
           },
           "build.peak_rss_mb": {
-            "value": 20.34,
+            "value": 20.39,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "build.avg_cpu_pct": {
-            "value": 40.72,
+            "value": 86.7,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
-          },
-          "build.cpu_core_seconds": {
-            "value": 0.163,
-            "provenance": "ESTIMATED",
-            "source": "procmon",
-            "note": "integral between samples"
           },
           "coverage.percent": {
             "value": null,
@@ -4724,7 +4722,7 @@
             "note": null
           },
           "tests.duration_s": {
-            "value": 43.069,
+            "value": 16.08,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -4736,25 +4734,25 @@
             "note": null
           },
           "tests.peak_rss_mb": {
-            "value": 82.62,
+            "value": 76.34,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.avg_cpu_pct": {
-            "value": 27.11,
+            "value": 30.31,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "tests.cpu_core_seconds": {
-            "value": 11.369,
+            "value": 4.823,
             "provenance": "ESTIMATED",
             "source": "procmon",
             "note": "integral between samples"
           },
           "tests.passed": {
-            "value": 80,
+            "value": 82,
             "provenance": "OBSERVED",
             "source": "harness",
             "note": null
@@ -4784,7 +4782,7 @@
             "note": null
           },
           "smoke.duration_s": {
-            "value": 0.983,
+            "value": 0.183,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
@@ -4796,31 +4794,25 @@
             "note": null
           },
           "smoke.peak_rss_mb": {
-            "value": 24.36,
+            "value": 23.28,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
           "smoke.avg_cpu_pct": {
-            "value": 30.66,
+            "value": 89.4,
             "provenance": "OBSERVED",
             "source": "procmon",
             "note": null
           },
-          "smoke.cpu_core_seconds": {
-            "value": 0.22,
-            "provenance": "ESTIMATED",
-            "source": "procmon",
-            "note": "integral between samples"
-          },
           "commits_total": {
-            "value": 11,
+            "value": 12,
             "provenance": "OBSERVED",
             "source": "git",
             "note": null
           },
           "head_sha": {
-            "value": "f296500acbe7e2c43af8e6b9cb6ac4043b34c95e",
+            "value": "b498766adbb06e01e40520af191cf02fba32527d",
             "provenance": "OBSERVED",
             "source": "git",
             "note": null
@@ -4832,7 +4824,7 @@
             "note": null
           },
           "dirty_files": {
-            "value": 2,
+            "value": 21,
             "provenance": "OBSERVED",
             "source": "git",
             "note": null
@@ -4844,7 +4836,7 @@
             "note": null
           },
           "commit_last_time": {
-            "value": "2026-08-22T19:42:43Z",
+            "value": "2026-08-22T20:14:20Z",
             "provenance": "OBSERVED",
             "source": "git",
             "note": null
@@ -4856,49 +4848,49 @@
             "note": null
           },
           "sloc_total": {
-            "value": 5625,
+            "value": 5764,
             "provenance": "OBSERVED",
             "source": "code",
             "note": null
           },
           "sloc_test": {
-            "value": 1060,
+            "value": 1075,
             "provenance": "OBSERVED",
             "source": "code",
             "note": null
           },
           "todo_count": {
-            "value": 7,
+            "value": 8,
             "provenance": "OBSERVED",
             "source": "code",
             "note": null
           },
           "test_to_code_ratio": {
-            "value": 0.2322,
+            "value": 0.2293,
             "provenance": "OBSERVED",
             "source": "code",
             "note": null
           },
           "max_complexity": {
-            "value": 51,
+            "value": 39,
             "provenance": "OBSERVED",
             "source": "code",
             "note": null
           },
           "avg_complexity": {
-            "value": 6.95,
+            "value": 6.84,
             "provenance": "OBSERVED",
             "source": "code",
             "note": null
           },
           "docstring_coverage": {
-            "value": 0.2016,
+            "value": 0.56,
             "provenance": "OBSERVED",
             "source": "code",
             "note": null
           },
           "duplication_ratio": {
-            "value": 0.0077,
+            "value": 0.0075,
             "provenance": "ESTIMATED",
             "source": "code",
             "note": "6-line shingle heuristic"
@@ -4923,7 +4915,7 @@
         },
         {
           "project": "fab-self",
-          "score": 80.95238095238095
+          "score": 80.75471698113208
         },
         {
           "project": "demo-cascade",
@@ -4955,7 +4947,7 @@
       "testing": [
         {
           "project": "fab-self",
-          "score": 99.59075533656438
+          "score": 99.63338466080643
         },
         {
           "project": "demo-atlas",
@@ -4981,7 +4973,7 @@
         },
         {
           "project": "fab-self",
-          "score": 82.3552
+          "score": 82.33691880638446
         },
         {
           "project": "demo-cascade",
@@ -4991,29 +4983,29 @@
       "performance": [
         {
           "project": "demo-atlas",
-          "score": 94.0
+          "score": 100.0
         },
         {
           "project": "demo-cascade",
-          "score": 94.0
+          "score": 100.0
         },
         {
           "project": "demo-volt",
-          "score": 94.0
+          "score": 100.0
         },
         {
           "project": "fab-self",
-          "score": 80.0
+          "score": 88.0
         }
       ],
       "documentation": [
         {
-          "project": "demo-atlas",
-          "score": 60.292
+          "project": "fab-self",
+          "score": 67.8
         },
         {
-          "project": "fab-self",
-          "score": 49.348
+          "project": "demo-atlas",
+          "score": 60.292
         },
         {
           "project": "demo-volt",
@@ -5053,7 +5045,7 @@
         },
         {
           "project": "fab-self",
-          "score": 72.09559090953577
+          "score": 72.92534788961774
         },
         {
           "project": "demo-cascade",
@@ -5063,19 +5055,19 @@
       "overall": [
         {
           "project": "demo-atlas",
-          "score": 92.62338794342132
+          "score": 93.10987442990782
         },
         {
           "project": "fab-self",
-          "score": 81.79999389941254
+          "score": 84.41073801971315
         },
         {
           "project": "demo-volt",
-          "score": 66.01981724048444
+          "score": 66.50630372697093
         },
         {
           "project": "demo-cascade",
-          "score": 52.84897755077529
+          "score": 53.37071668121008
         }
       ]
     },
@@ -5088,10 +5080,10 @@
           "delta": 26.6
         },
         "demo-cascade": {
-          "delta": 39.77
+          "delta": 39.74
         },
         "fab-self": {
-          "delta": 10.82
+          "delta": 8.7
         }
       },
       "demo-volt": {
@@ -5102,35 +5094,35 @@
           "delta": 0.0
         },
         "demo-cascade": {
-          "delta": 13.17
+          "delta": 13.14
         },
         "fab-self": {
-          "delta": -15.78
+          "delta": -17.9
         }
       },
       "demo-cascade": {
         "demo-atlas": {
-          "delta": -39.77
+          "delta": -39.74
         },
         "demo-volt": {
-          "delta": -13.17
+          "delta": -13.14
         },
         "demo-cascade": {
           "delta": 0.0
         },
         "fab-self": {
-          "delta": -28.95
+          "delta": -31.04
         }
       },
       "fab-self": {
         "demo-atlas": {
-          "delta": -10.82
+          "delta": -8.7
         },
         "demo-volt": {
-          "delta": 15.78
+          "delta": 17.9
         },
         "demo-cascade": {
-          "delta": 28.95
+          "delta": 31.04
         },
         "fab-self": {
           "delta": 0.0
@@ -5140,30 +5132,30 @@
     "efficiency": {
       "demo-atlas": {
         "suite_speed_percentile": {
-          "value": 0.6667,
+          "value": 0.3333,
           "provenance": "OBSERVED",
-          "note": "4.12s vs 4-subject cohort (0=slowest, 1=fastest)"
+          "note": "1.03s vs 4-subject cohort (0=slowest, 1=fastest)"
         },
         "cpu_core_seconds": {
-          "value": 2.417,
+          "value": 1.36,
           "provenance": "ESTIMATED",
           "source": "harness",
           "note": "sum over phases of cpu_core_seconds"
         },
         "wall_seconds": {
-          "value": 8.589,
+          "value": 1.945,
           "provenance": "OBSERVED",
           "source": "harness",
           "note": "sum over phases of duration_s"
         },
         "score_per_cpu_second": {
-          "value": 38.322,
+          "value": 68.463,
           "provenance": "ESTIMATED",
           "source": "comparison",
           "note": "overall score / integrated CPU core-seconds"
         },
         "score_per_1k_tokens": {
-          "value": 9.054,
+          "value": 9.102,
           "provenance": "ESTIMATED",
           "source": "comparison",
           "note": "token provenance: OBSERVED"
@@ -5171,30 +5163,30 @@
       },
       "demo-volt": {
         "suite_speed_percentile": {
-          "value": 0.3333,
+          "value": 0.6667,
           "provenance": "OBSERVED",
-          "note": "4.62s vs 4-subject cohort (0=slowest, 1=fastest)"
+          "note": "0.94s vs 4-subject cohort (0=slowest, 1=fastest)"
         },
         "cpu_core_seconds": {
-          "value": 2.474,
+          "value": 1.184,
           "provenance": "ESTIMATED",
           "source": "harness",
           "note": "sum over phases of cpu_core_seconds"
         },
         "wall_seconds": {
-          "value": 9.881,
+          "value": 1.831,
           "provenance": "OBSERVED",
           "source": "harness",
           "note": "sum over phases of duration_s"
         },
         "score_per_cpu_second": {
-          "value": 26.685,
+          "value": 56.171,
           "provenance": "ESTIMATED",
           "source": "comparison",
           "note": "overall score / integrated CPU core-seconds"
         },
         "score_per_1k_tokens": {
-          "value": 52.816,
+          "value": 53.205,
           "provenance": "ESTIMATED",
           "source": "comparison",
           "note": "token provenance: OBSERVED"
@@ -5204,22 +5196,22 @@
         "suite_speed_percentile": {
           "value": 1.0,
           "provenance": "OBSERVED",
-          "note": "2.85s vs 4-subject cohort (0=slowest, 1=fastest)"
+          "note": "0.78s vs 4-subject cohort (0=slowest, 1=fastest)"
         },
         "cpu_core_seconds": {
-          "value": 2.374,
+          "value": 1.204,
           "provenance": "ESTIMATED",
           "source": "harness",
           "note": "sum over phases of cpu_core_seconds"
         },
         "wall_seconds": {
-          "value": 11.738,
+          "value": 1.721,
           "provenance": "OBSERVED",
           "source": "harness",
           "note": "sum over phases of duration_s"
         },
         "score_per_cpu_second": {
-          "value": 22.262,
+          "value": 44.328,
           "provenance": "ESTIMATED",
           "source": "comparison",
           "note": "overall score / integrated CPU core-seconds"
@@ -5235,22 +5227,22 @@
         "suite_speed_percentile": {
           "value": 0.0,
           "provenance": "OBSERVED",
-          "note": "48.93s vs 4-subject cohort (0=slowest, 1=fastest)"
+          "note": "15.72s vs 4-subject cohort (0=slowest, 1=fastest)"
         },
         "cpu_core_seconds": {
-          "value": 23.121,
+          "value": 9.646,
           "provenance": "ESTIMATED",
           "source": "harness",
           "note": "sum over phases of cpu_core_seconds"
         },
         "wall_seconds": {
-          "value": 87.794,
+          "value": 32.548,
           "provenance": "OBSERVED",
           "source": "harness",
           "note": "sum over phases of duration_s"
         },
         "score_per_cpu_second": {
-          "value": 3.538,
+          "value": 8.751,
           "provenance": "ESTIMATED",
           "source": "comparison",
           "note": "overall score / integrated CPU core-seconds"
@@ -5282,7 +5274,7 @@
         "recovered": 1,
         "persisting": 2,
         "recovery_rate": 0.3333,
-        "mean_time_to_recovery_s": 31918255.53
+        "mean_time_to_recovery_s": 31919261.2
       },
       "demo-cascade": {
         "build_failures": 0,
@@ -5320,11 +5312,11 @@
       },
       "best_tests": {
         "project": "fab-self",
-        "score": 99.59075533656438
+        "score": 99.63338466080643
       },
       "best_performance": {
         "project": "demo-atlas",
-        "score": 94.0
+        "score": 100.0
       },
       "strongest_autonomy": {
         "project": "demo-atlas",

@@ -41,6 +41,7 @@ def build_payload(bundles: dict[str, ProjectBundle],
                   cards: dict[str, Scorecard],
                   comparison: ComparisonResult,
                   meta: dict[str, Any]) -> dict[str, Any]:
+    """Assemble the JSON payload consumed by the dashboard JS."""
     projects = {}
     for name in sorted(bundles):
         b, c = bundles[name], cards[name]
@@ -155,6 +156,7 @@ def render_dashboard(bundles: dict[str, ProjectBundle],
                      cards: dict[str, Scorecard],
                      comparison: ComparisonResult,
                      meta: dict[str, Any]) -> str:
+    """Render the self-contained HTML document with embedded payload."""
     payload = build_payload(bundles, cards, comparison, meta)
     data_json = json.dumps(payload).replace("</", "<\\/")
     return _TEMPLATE.replace("__FAB_DATA__", data_json)
@@ -162,6 +164,7 @@ def render_dashboard(bundles: dict[str, ProjectBundle],
 
 def write_dashboard(out_path: Path, bundles, cards, comparison,
                     meta) -> Path:
+    """Write dashboard HTML to out_path; returns it."""
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(render_dashboard(bundles, cards, comparison, meta),
@@ -443,8 +446,31 @@ function gradeColor(g){return {A:"#34d399","A+":"#34d399",B:"#6ea8fe","B+":"#6ea
         · tests: ${tests?`${tests.passed}✓ ${tests.failed}✗ ${tests.errors}⚠`:"none executed"}
         · coverage: ${p.metrics.coverage_pct.value!=null?p.metrics.coverage_pct.value+"%":"n/a"}
       </div>
+      <details style="margin-top:9px"><summary class="small muted" style="cursor:pointer">score components</summary>
+        <div id="comps_${esc(name)}"></div>
+      </details>
     </div>`;
   }).join("");
+  /* fill score-component tables */
+  Object.keys(D.projects).forEach(name=>{
+    const host=document.getElementById("comps_"+name);
+    if(!host)return;
+    const p=D.projects[name];
+    let t='<table style="font-size:11.5px"><thead><tr><th>Dimension</th><th>Component</th><th class="num">Value</th><th>Prov</th><th>Note</th></tr></thead><tbody>';
+    D.dim_order.forEach(d=>{
+      const dim=p.dimensions[d]; if(!dim)return;
+      const comps=(p.components&&p.components[d])||[];
+      comps.forEach((c,i)=>{
+        const cv=c.value==null?"n/a":(Math.round(c.value*10)/10);
+        t+=`<tr>${i===0?`<td rowspan="${comps.length}" style="font-weight:650">${D.dim_labels[d]}<br><span class="muted">${dim.value==null?"n/a":dim.value.toFixed(1)}</span></td>`:""}
+          <td>${esc(c.name)}</td>
+          <td class="num" style="color:${c.value==null?"#475569":scoreColor(c.value)}">${cv}</td>
+          <td>${provPill(c.provenance)}</td>
+          <td class="muted">${esc((c.note||c.formula||"").slice(0,80))}</td></tr>`;
+      });
+    });
+    host.innerHTML=t+"</tbody></table>";
+  });
 })();
 
 /* timeline */

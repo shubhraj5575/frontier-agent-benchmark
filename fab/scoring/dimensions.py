@@ -82,6 +82,7 @@ def _is_test_function(f) -> bool:
 
 
 def score_completion(bundle: ProjectBundle) -> DimensionScore:
+    """Score Completion: build success, entrypoint smoke-run, delivered behaviour."""
     comps: list[Component] = []
     build = _phase(bundle, "build")
     if build is not None:
@@ -183,6 +184,7 @@ def _pass_rates(bundle: ProjectBundle) -> list[float]:
 
 
 def score_reliability(bundle: ProjectBundle) -> DimensionScore:
+    """Score Reliability: pass rate, stability, error density, recovery."""
     comps: list[Component] = []
     rates = _pass_rates(bundle)
     if rates:
@@ -246,6 +248,7 @@ def score_reliability(bundle: ProjectBundle) -> DimensionScore:
 # ---------------------------------------------------------------------------
 
 def score_testing(bundle: ProjectBundle) -> DimensionScore:
+    """Score Testing: suite scale, pass rate, coverage, test/code balance."""
     comps: list[Component] = []
     tp = _phase(bundle, "tests")
     n_tests: int | None = None
@@ -306,6 +309,7 @@ def score_testing(bundle: ProjectBundle) -> DimensionScore:
 # ---------------------------------------------------------------------------
 
 def score_architecture(bundle: ProjectBundle) -> DimensionScore:
+    """Score Architecture: modularity, coupling, layering, deps, complexity ceiling."""
     comps: list[Component] = []
     code = bundle.code
     if code is None or code.n_files == 0:
@@ -399,6 +403,7 @@ def _speed_score(seconds: float) -> float:
 
 
 def score_performance(bundle: ProjectBundle) -> DimensionScore:
+    """Score Performance from monitored runs: wall time, memory, startup latency."""
     comps: list[Component] = []
     tp = _phase(bundle, "tests")
     if tp is not None and tp.run is not None:
@@ -465,6 +470,7 @@ _README_SECTIONS = {
 
 
 def score_documentation(bundle: ProjectBundle) -> DimensionScore:
+    """Score Documentation: readme quality, docstrings, changelog, supporting docs."""
     comps: list[Component] = []
     readme_txt = ""
     readme_present = False
@@ -536,6 +542,7 @@ _SUCCESS_TYPES = {EventType.TASK_COMPLETED, EventType.TEST_PASSED,
 
 
 def score_autonomy(bundle: ProjectBundle) -> DimensionScore:
+    """Score Autonomy from behavioural evidence; UNAVAILABLE without an event stream."""
     comps: list[Component] = []
     evs = bundle.events
 
@@ -612,6 +619,7 @@ def score_autonomy(bundle: ProjectBundle) -> DimensionScore:
 # ---------------------------------------------------------------------------
 
 def score_maintainability(bundle: ProjectBundle) -> DimensionScore:
+    """Score Maintainability: complexity, duplication, file sizes, TODO debt, smells."""
     comps: list[Component] = []
     code = bundle.code
     if code is None or code.n_files == 0:

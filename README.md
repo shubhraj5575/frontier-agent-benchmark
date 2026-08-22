@@ -55,11 +55,24 @@ Autonomy 12.5% · Maintainability 10% · Performance 7.5% · Documentation 7.5%
 Every dimension decomposes into weighted components with formulas, notes and
 provenance - fully specified in [docs/METRICS.md](docs/METRICS.md).
 
+## Installation
+
+Requires Python 3.10+.
+
+```bash
+git clone https://github.com/shubhraj5575/frontier-agent-benchmark.git
+cd frontier-agent-benchmark
+python3 -m venv .venv && . .venv/bin/activate
+pip install -e ".[dev]"          # pytest, psutil, pyyaml, coverage
+fab doctor                       # verify telemetry capabilities
+```
+
+Optional extras: `go` / `cargo` / `npx` on PATH unlock go/rust/js suites.
+
 ## Quickstart
 
 ```bash
-python3 -m venv .venv && . .venv/bin/activate
-pip install -e ".[dev]"          # pytest, psutil, pyyaml, coverage
+python examples/build_demo_subjects.py   # real fixture repos w/ histories
 
 # 1. build the demo subjects (real repos, real multi-commit histories)
 python examples/build_demo_subjects.py
@@ -74,6 +87,23 @@ fab serve --open                 # dashboard at http://localhost:8737
 
 Results land in `output/results/` and `output/dashboard/index.html`
 (self-contained, works offline, no CDN).
+
+## API sketch (library use)
+
+```python
+from fab.config import load_config
+from fab.collector import collect_static, collect_dynamic
+from fab.scoring.engine import score_project
+from fab.analysis.comparison import compare
+from fab.report.final_report import generate_final_report
+
+cfg = load_config("bench.yaml")
+bundle, ws = collect_dynamic(cfg.subject("my-project"), Path("output"), cfg)
+card = score_project(bundle, cfg.scoring_weights)
+print(card.to_dict())            # every component + provenance + formula
+```
+
+Everything is importable; the CLI is a thin wrapper over these calls.
 
 ### Benchmark your own agent-built projects
 
@@ -162,6 +192,13 @@ fab run                 # regenerate results (includes 'fab-self' dogfooding)
 
 The demo configuration benchmarks FAB **against itself** (`fab-self`
 subject) - the platform eats its own cooking every run.
+
+## Contributing
+
+- `pytest -q` must stay green; `python -m pyflakes fab/` clean.
+- New telemetry must carry provenance; new scores need a METRICS.md entry.
+- Never write inside subject repositories - tests enforce this.
+- PRs welcome: keep changes focused and document formulas.
 
 ## Design notes
 

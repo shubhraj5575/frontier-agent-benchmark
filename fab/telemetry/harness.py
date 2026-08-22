@@ -52,6 +52,7 @@ def _python_has_module(name: str) -> bool:
 
 
 def detect_test_plan(root: Path, override: str | None = None) -> TestPlan:
+    """Detect a runnable test command from workspace files (pytest/jest/go/...)."""
     if override:
         import shlex
         return TestPlan(framework="custom", cmd=shlex.split(override), label="tests")
@@ -90,6 +91,7 @@ def detect_test_plan(root: Path, override: str | None = None) -> TestPlan:
 
 
 def detect_build_plan(root: Path, override: str | None = None) -> BuildPlan:
+    """Detect a build command; python projects get compileall as build proxy."""
     if override:
         import shlex
         return BuildPlan("custom", shlex.split(override))
@@ -123,6 +125,7 @@ _PYTEST_SKIP_RE = re.compile(r"(\d+) skipped")
 
 
 def parse_pytest(out: str, err: str) -> dict[str, int]:
+    """Extract pass/fail/error/skip counts from pytest summary text (fallback)."""
     text = out + "\n" + err
     res = {"passed": 0, "failed": 0, "errors": 0, "skipped": 0}
     for key, rx in (("passed", _PYTEST_PASS_RE), ("failed", _PYTEST_FAIL_RE),
@@ -139,6 +142,7 @@ _JEST_SUMMARY_RE = re.compile(
 
 
 def parse_jest(out: str, err: str) -> dict[str, int]:
+    """Extract counts from jest/vitest/mocha style summaries (fallback)."""
     res = {"passed": 0, "failed": 0, "errors": 0, "skipped": 0}
     text = out + "\n" + err
     m = re.search(r"Tests:\s+(.*)", text)
@@ -166,6 +170,7 @@ _GO_TESTCOUNT_RE = re.compile(r"--- (?:PASS|FAIL): \S+")
 
 
 def parse_go(out: str, err: str) -> dict[str, int]:
+    """Extract pass/fail counts from go test verbose output."""
     text = out + "\n" + err
     fails = len(_GO_FAIL_RE.findall(text))
     passes = len(re.findall(r"--- PASS:", text))
@@ -215,6 +220,7 @@ def parse_junit_xml(path: Path) -> dict[str, int] | None:
 
 
 def parse_cargo(out: str, err: str) -> dict[str, int]:
+    """Extract counts from cargo test result lines."""
     res = {"passed": 0, "failed": 0, "errors": 0, "skipped": 0}
     for m in _CARGO_RES_RE.finditer(out + "\n" + err):
         res["passed"] += int(m.group(2))

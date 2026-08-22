@@ -274,6 +274,7 @@ class JsonlAdapter:
         self.estimate_tokens_from_chars = estimate_tokens_from_chars
 
     def ingest_lines(self, lines: Iterable[str]) -> IngestResult:
+        """Stream lines -> IngestResult(events, tokens, tools, retries)."""
         res = IngestResult()
         prev_error_idx: int | None = None
         char_volume = 0
@@ -354,6 +355,7 @@ class JsonlAdapter:
         return res
 
     def ingest_file(self, path: str | Path) -> IngestResult:
+        """Ingest one file path."""
         with open(path, encoding="utf-8", errors="replace") as fh:
             return self.ingest_lines(fh)
 
@@ -379,6 +381,7 @@ def detect_log_format(path: str | Path) -> str:
 
 def ingest(path: str | Path, project: str, session_id: str,
            estimate_tokens_from_chars: bool = False) -> IngestResult:
+    """Ingest a log file with format sniffing into canonical events."""
     fmt = detect_log_format(path)
     adapter = JsonlAdapter(project, session_id,
                            estimate_tokens_from_chars=(

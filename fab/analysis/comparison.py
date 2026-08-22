@@ -68,80 +68,12 @@ def compare(bundles: dict[str, ProjectBundle],
                 {"delta": round(oa - ob, 2)} if (oa is not None and ob is not None)
                 else {"delta": None})
 
-    # ---- cohort-relative suite speed ---------------------------------------
-    wall_times = {}
+    _cohort_speed(bundles, res)
     for p, bundle in bundles.items():
-        for ph in getattr(bundle, "phases", []):
-            if ph.phase == "tests" and ph.run is not None:
-                wall_times[p] = ph.run.duration_s
-                break
-    if len(wall_times) >= 2:
-        vals = sorted(wall_times.values())
-        n = len(vals)
-        for p, t in wall_times.items():
-            slower = sum(1 for v in vals if v > t)
-            pct = slower / (n - 1) if n > 1 else 0.0
-            res.efficiency.setdefault(p, {})
-            res.efficiency[p]["suite_speed_percentile"] = {
-                "value": round(pct, 4),
-                "provenance": "OBSERVED",
-                "note": f"{t:.2f}s vs {n}-subject cohort "
-                        f"(0=slowest, 1=fastest)",
-            }
-
-    # ---- compute efficiency ------------------------------------------------
-    for p, bundle in bundles.items():
-        entry: dict[str, Any] = {}
-        cpu_s = _sum_cpu(bundle, "cpu_core_seconds")
-        wall = _sum_cpu(bundle, "duration_s")
-        score = cards[p].overall
-        entry["cpu_core_seconds"] = cpu_s.to_dict()
-        entry["wall_seconds"] = wall.to_dict()
-        if score is not None and cpu_s.available and cpu_s.value > 0:
-            entry["score_per_cpu_second"] = Measurement.estimated(
-                round(score / cpu_s.value, 3), "comparison",
-                note="overall score / integrated CPU core-seconds").to_dict()
-        elif score is not None:
-            entry["score_per_cpu_second"] = Measurement.unavailable(
-                "comparison", "no CPU sampling available for this subject").to_dict()
-        tokens = getattr(bundle, "measurements", {}).get("tokens.total")
-        if tokens and tokens.available and score is not None and tokens.value > 0:
-            entry["score_per_1k_tokens"] = Measurement.estimated(
-                round(score / (tokens.value / 1000.0), 3), "comparison",
-                note=f"token provenance: {tokens.provenance.value}").to_dict()
-        else:
-            note = tokens.note if tokens else "not ingested"
-            entry["score_per_1k_tokens"] = Measurement.unavailable(
-                "comparison", f"token usage unavailable ({note})").to_dict()
-        res.efficiency.setdefault(p, {}).update(entry)
-
-    # ---- failure & recovery -------------------------------------------------
-    for p, bundle in bundles.items():
-        fails = [e for e in bundle.events
-                 if e.type in {EventType.TEST_FAILED, EventType.BUILD_FAILED}]
-        errors = [e for e in bundle.events if e.type == EventType.ERROR_OBSERVED]
-        fixes = [e for e in bundle.events
-                 if e.type in {EventType.BUG_FIXED, EventType.TEST_PASSED,
-                               EventType.BUILD_SUCCEEDED}
-                 and e.ts is not None]
-        recovered, mttrs = 0, []
-        for f in fails:
-            if f.ts is None:
-                continue
-            later = [x.ts - f.ts for x in fixes if x.ts >= f.ts]
-            if later:
-                recovered += 1
-                mttrs.append(min(later))
-        res.failure_analysis[p] = {
-            "build_failures": sum(1 for e in fails if e.type == EventType.BUILD_FAILED),
-            "test_failures": sum(1 for e in fails if e.type == EventType.TEST_FAILED),
-            "errors_observed": len(errors),
-            "failures_total": len(fails),
-            "recovered": recovered,
-            "persisting": max(0, len([f for f in fails if f.ts is not None]) - recovered),
-            "recovery_rate": round(recovered / len(fails), 4) if fails else None,
-            "mean_time_to_recovery_s": round(sum(mttrs) / len(mttrs), 2) if mttrs else None,
-        }
+        res.efficiency.setdefault(p, {}).update(
+            _compute_efficiency(p, bundle, cards[p]))
+    res.failure_analysis.update(
+        {p: _failure_stats(bundle) for p, bundle in bundles.items()})
 
     # ---- verdicts -------------------------------------------------------------
     def best(dim: str):
@@ -182,6 +114,90 @@ def compare(bundles: dict[str, ProjectBundle],
                                   if best_recoverer else {"project": None}),
     }
     return res
+
+
+def _cohort_speed(bundles: dict, res: ComparisonResult) -> None:
+    """Percentile of each subject's suite wall time within the cohort."""
+    wall_times = {}
+    for p, bundle in bundles.items():
+        for ph in getattr(bundle, "phases", []):
+            if ph.phase == "tests" and ph.run is not None:
+                wall_times[p] = ph.run.duration_s
+                break
+    if len(wall_times) < 2:
+        return
+    vals = sorted(wall_times.values())
+    n = len(vals)
+    for p, t in wall_times.items():
+        slower = sum(1 for v in vals if v > t)
+        pct = slower / (n - 1) if n > 1 else 0.0
+        res.efficiency.setdefault(p, {})
+        res.efficiency[p]["suite_speed_percentile"] = {
+            "value": round(pct, 4),
+            "provenance": "OBSERVED",
+            "note": f"{t:.2f}s vs {n}-subject cohort (0=slowest, 1=fastest)",
+        }
+
+
+def _compute_efficiency(project: str, bundle, card: Scorecard) -> dict:
+    """Score per unit compute / tokens, with honest provenance."""
+    entry: dict[str, Any] = {}
+    cpu_s = _sum_cpu(bundle, "cpu_core_seconds")
+    wall = _sum_cpu(bundle, "duration_s")
+    score = card.overall
+    entry["cpu_core_seconds"] = cpu_s.to_dict()
+    entry["wall_seconds"] = wall.to_dict()
+    if score is not None and cpu_s.available and cpu_s.value > 0:
+        entry["score_per_cpu_second"] = Measurement.estimated(
+            round(score / cpu_s.value, 3), "comparison",
+            note="overall score / integrated CPU core-seconds").to_dict()
+    elif score is not None:
+        entry["score_per_cpu_second"] = Measurement.unavailable(
+            "comparison", "no CPU sampling available for this subject").to_dict()
+    tokens = getattr(bundle, "measurements", {}).get("tokens.total")
+    if tokens and tokens.available and score is not None and tokens.value > 0:
+        entry["score_per_1k_tokens"] = Measurement.estimated(
+            round(score / (tokens.value / 1000.0), 3), "comparison",
+            note=f"token provenance: {tokens.provenance.value}").to_dict()
+    else:
+        note = tokens.note if tokens else "not ingested"
+        entry["score_per_1k_tokens"] = Measurement.unavailable(
+            "comparison", f"token usage unavailable ({note})").to_dict()
+    return entry
+
+
+def _failure_stats(bundle) -> dict[str, Any]:
+    """Failure counts plus recovery rate and mean time to recovery."""
+    events = getattr(bundle, "events", [])
+    fails = [e for e in events
+             if e.type in {EventType.TEST_FAILED, EventType.BUILD_FAILED}]
+    errors = [e for e in events if e.type == EventType.ERROR_OBSERVED]
+    fixes = [e for e in events
+             if e.type in {EventType.BUG_FIXED, EventType.TEST_PASSED,
+                           EventType.BUILD_SUCCEEDED}
+             and e.ts is not None]
+    recovered, mttrs = 0, []
+    for f in fails:
+        if f.ts is None:
+            continue
+        later = [x.ts - f.ts for x in fixes if x.ts >= f.ts]
+        if later:
+            recovered += 1
+            mttrs.append(min(later))
+    dated_fails = [f for f in fails if f.ts is not None]
+    return {
+        "build_failures": sum(1 for e in fails
+                              if e.type == EventType.BUILD_FAILED),
+        "test_failures": sum(1 for e in fails
+                             if e.type == EventType.TEST_FAILED),
+        "errors_observed": len(errors),
+        "failures_total": len(fails),
+        "recovered": recovered,
+        "persisting": max(0, len(dated_fails) - recovered),
+        "recovery_rate": round(recovered / len(fails), 4) if fails else None,
+        "mean_time_to_recovery_s": (round(sum(mttrs) / len(mttrs), 2)
+                                    if mttrs else None),
+    }
 
 
 def _sum_cpu(bundle: ProjectBundle, key_suffix: str) -> Measurement:

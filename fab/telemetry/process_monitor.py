@@ -74,6 +74,7 @@ class MonitoredRun:
         return total
 
     def summary(self) -> dict[str, Any]:
+        """Compact dict view of a monitored run."""
         return {
             "cmd": " ".join(self.cmd),
             "exit_code": self.exit_code,
@@ -193,9 +194,11 @@ class TreeMonitor(threading.Thread):
         self._proc_cache: dict[int, Any] = {}
 
     def stop(self) -> None:
+        """Signal the sampler thread to halt."""
         self._halt.set()
 
     def run(self) -> None:
+        """Sampler loop until stopped."""
         while not self._halt.is_set():
             started = time.time()
             cpu = rss = None

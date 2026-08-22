@@ -91,3 +91,22 @@ def test_run_static_only_end_to_end(tmp_path, monkeypatch, capsys):
     assert "leaderboard" in out
     assert (Path("output/results/results.json")).exists()
     assert (Path("output/dashboard/index.html")).exists()
+
+
+def test_doctor_reports_capabilities(capsys):
+    rc = main(["doctor"])
+    out = capsys.readouterr().out
+    assert "environment check" in out
+    assert "git" in out
+    assert rc in (0, 1)
+
+
+def test_pages_publishes(tmp_path, monkeypatch):
+    from fab.cli import DEFAULT_OUT
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    dash = DEFAULT_OUT / "dashboard"
+    dash.mkdir(parents=True, exist_ok=True)
+    (dash / "index.html").write_text("<html>test dashboard</html>")
+    rc = main(["pages"])
+    assert rc == 0
+    assert (Path("docs/index.html")).read_text().startswith("<html>")

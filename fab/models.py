@@ -48,14 +48,17 @@ class Measurement:
 
     @staticmethod
     def observed(value: Any, source: str, note: str | None = None) -> "Measurement":
+        """Build an OBSERVED measurement."""
         return Measurement(value=value, provenance=Provenance.OBSERVED, source=source, note=note)
 
     @staticmethod
     def estimated(value: Any, source: str, note: str | None = None) -> "Measurement":
+        """Build an ESTIMATED measurement."""
         return Measurement(value=value, provenance=Provenance.ESTIMATED, source=source, note=note)
 
     @staticmethod
     def unavailable(source: str = "", note: str | None = None) -> "Measurement":
+        """Build an UNAVAILABLE measurement (no fabricated value)."""
         return Measurement(value=None, provenance=Provenance.UNAVAILABLE, source=source, note=note)
 
     @property
@@ -217,16 +220,19 @@ def stable_id(*parts: Any) -> str:
 
 
 def utc_iso(ts: float | None) -> str | None:
+    """Format an epoch timestamp as UTC ISO-8601 (None-safe)."""
     if ts is None:
         return None
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(ts))
 
 
 def safe_div(a: float, b: float, default: float = 0.0) -> float:
+    """Division that survives a zero denominator."""
     return a / b if b else default
 
 
 def clamp(value: float, lo: float = 0.0, hi: float = 100.0) -> float:
+    """Constrain value to [lo, hi]."""
     return max(lo, min(hi, value))
 
 

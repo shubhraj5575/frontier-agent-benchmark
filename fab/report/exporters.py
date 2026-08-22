@@ -21,6 +21,7 @@ def export_json(bundles: dict[str, ProjectBundle],
                 cards: dict[str, Scorecard],
                 comparison: ComparisonResult,
                 meta: dict[str, Any]) -> str:
+    """Serialise bundles + scorecards + comparison into a full JSON payload."""
     payload = {
         "meta": meta,
         "leaderboard": [
@@ -43,6 +44,7 @@ def export_json(bundles: dict[str, ProjectBundle],
 def export_csv(bundles: dict[str, ProjectBundle],
                cards: dict[str, Scorecard],
                comparison: ComparisonResult) -> str:
+    """Flatten everything to CSV rows carrying provenance columns."""
     buf = io.StringIO()
     w = csv.writer(buf)
     w.writerow(["project", "section", "metric", "value",
@@ -85,6 +87,7 @@ def export_csv(bundles: dict[str, ProjectBundle],
 def export_markdown(bundles: dict[str, ProjectBundle],
                     cards: dict[str, Scorecard],
                     comparison: ComparisonResult) -> str:
+    """Render results as a Markdown summary with provenance discipline."""
     lines: list[str] = []
     ap = lines.append
     ap("# Frontier Agent Benchmark - Results")
@@ -166,6 +169,7 @@ def export_markdown(bundles: dict[str, ProjectBundle],
 
 
 def write_exports(out_dir: Path, bundles, cards, comparison, meta) -> dict[str, Path]:
+    """Write JSON/CSV/Markdown exports into out_dir; returns their paths."""
     out_dir.mkdir(parents=True, exist_ok=True)
     paths = {}
     j = out_dir / "results.json"

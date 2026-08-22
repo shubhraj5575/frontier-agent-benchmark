@@ -25,9 +25,11 @@ class Component:
 
     @property
     def available(self) -> bool:
+        """True when this component has data."""
         return self.value is not None
 
     def to_dict(self) -> dict[str, Any]:
+        """Serializable form."""
         return {
             "name": self.name,
             "weight": self.weight,
@@ -69,6 +71,7 @@ def aggregate(components: list[Component]) -> tuple[float | None, float]:
 
 
 def grade(value: float | None) -> str:
+    """Map a 0-100 score to a letter grade; None -> "n/a"."""
     if value is None:
         return "n/a"
     bands = [(93, "A+"), (85, "A"), (78, "B+"), (70, "B"),
@@ -112,6 +115,11 @@ class Scorecard:
 
 def compute_overall(dims: dict[str, DimensionScore],
                     weights: dict[str, float]) -> tuple[float | None, float]:
+    """Aggregate dimension scores with configured weights.
+
+Partially-observed dimensions contribute proportionally to their
+coverage (floored at 0.5); fully-unavailable dimensions drop out and
+lower the returned coverage fraction."""
     num = den = 0.0
     for name, w in weights.items():
         dim = dims.get(name)

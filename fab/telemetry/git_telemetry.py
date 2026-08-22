@@ -85,6 +85,7 @@ class GitTelemetry:
     # -- derived measurements -------------------------------------------------
 
     def measurements(self) -> dict[str, Measurement]:
+        """Provenance-tagged measurements derived from collected history."""
         out: dict[str, Measurement] = {}
         if not self.is_git_repo:
             note = "directory is not a git repository"
