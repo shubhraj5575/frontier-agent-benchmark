@@ -141,3 +141,16 @@ def test_smoke_success_does_not_claim_task_completion(tmp_path):
     types = {e.type for e in pr.events("p", "s")}
     assert EventType.RUN_FINISHED in types
     assert EventType.TASK_COMPLETED not in types
+
+
+def test_cpu_sampling_reports_nonzero_for_busy_process():
+    """Regression: psutil cpu_percent() needs cached Process objects across
+    samples; a busy loop must yield real CPU readings, not zeros."""
+    from fab.telemetry.process_monitor import run_monitored
+    mr = run_monitored(
+        [sys.executable, "-c", "x=0\nfor i in range(10_000_000): x+=i"],
+        timeout_s=60, sample_interval_s=0.05)
+    assert mr.samples, "monitor must collect samples"
+    busy = [s.cpu_pct for s in mr.samples]
+    assert max(busy) > 10.0, f"cpu readings all ~zero: {busy[:5]}"
+    assert mr.peak_rss_mb and mr.peak_rss_mb > 1.0

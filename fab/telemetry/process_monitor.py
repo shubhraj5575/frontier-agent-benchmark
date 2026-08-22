@@ -89,17 +89,51 @@ class MonitoredRun:
         }
 
 
-def _descendants_psutil(root_pid: int):
+def _sample_tree_psutil(root_pid: int, proc_cache: dict[int, Any]
+                        ) -> tuple[float, float] | None:
+    """CPU%% + RSS(MB) of the process tree via psutil.
+
+    Process objects are cached between samples: ``cpu_percent()`` measures
+    against the previous call, so re-creating them every sample would
+    always yield 0.
+    """
     try:
-        parent = psutil.Process(root_pid)
+        root = psutil.Process(root_pid)
     except psutil.Error:
-        return []
-    procs = [parent]
+        return None
+
+    wanted: list[psutil.Process] = [root]  # type: ignore[list-item]
     try:
-        procs.extend(parent.children(recursive=True))
+        wanted.extend(root.children(recursive=True))
     except psutil.Error:
         pass
-    return procs
+
+    cpu_val = rss_val = 0.0
+    alive = False
+    seen_pids = set()
+    for p in wanted:
+        try:
+            with p.oneshot():
+                cached = proc_cache.get(p.pid)
+                if cached is None:
+                    # first sighting: prime the counter, count as 0 load,
+                    # and KEEP it cached so the next tick can measure
+                    p.cpu_percent()
+                    proc_cache[p.pid] = p
+                    seen_pids.add(p.pid)
+                    continue
+                cpu_val += cached.cpu_percent() or 0.0
+                mem = p.memory_info().rss
+                rss_val += mem
+                alive = True
+            seen_pids.add(p.pid)
+        except psutil.Error:
+            continue
+    # forget dead processes so a recycled pid starts fresh
+    for pid in list(proc_cache):
+        if pid not in seen_pids:
+            del proc_cache[pid]
+    return (cpu_val, rss_val / (1024 * 1024)) if alive else None
 
 
 _PS_PATH = shutil.which("ps")
@@ -156,6 +190,7 @@ class TreeMonitor(threading.Thread):
         self.t0 = start_time if start_time is not None else time.time()
         self.samples: list[ResourceSample] = []
         self._halt = threading.Event()
+        self._proc_cache: dict[int, Any] = {}
 
     def stop(self) -> None:
         self._halt.set()
@@ -165,20 +200,9 @@ class TreeMonitor(threading.Thread):
             started = time.time()
             cpu = rss = None
             if HAS_PSUTIL:
-                procs = _descendants_psutil(self.root_pid)
-                cpu_val = rss_val = 0.0
-                alive = False
-                for p in procs:
-                    try:
-                        with p.oneshot():
-                            cpu_val += p.cpu_percent() or 0.0
-                            mem = p.memory_info().rss
-                            rss_val += mem
-                            alive = True
-                    except psutil.Error:
-                        continue
-                if alive:
-                    cpu, rss = cpu_val, rss_val / (1024 * 1024)
+                got = _sample_tree_psutil(self.root_pid, self._proc_cache)
+                if got is not None:
+                    cpu, rss = got
             else:
                 got = _sample_tree_ps(self.root_pid)
                 if got is not None:

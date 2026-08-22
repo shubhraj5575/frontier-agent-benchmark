@@ -3,16 +3,16 @@
 | Rank | Project | Overall | Grade | Data coverage |
 |-----:|---------|--------:|:------|--------------:|
 | 1 | demo-atlas | 92.62 | A | 92% |
-| 2 | fab-self | 82.59 | B+ | 78% |
-| 3 | demo-volt | 66.51 | C+ | 92% |
-| 4 | demo-cascade | 53.37 | D | 86% |
+| 2 | fab-self | 81.8 | B+ | 78% |
+| 3 | demo-volt | 66.02 | C+ | 92% |
+| 4 | demo-cascade | 52.85 | D | 86% |
 
 | Project | Completion | Reliability | Testing | Architecture | Performance | Documentation | Autonomy | Maintainability |
 |---|---|---|---|---|---|---|---|---|
 | demo-atlas | 100.0 | 100.0 | 77.3 | 95.5 | 94.0 | 60.3 | 100.0 | 97.2 |
-| fab-self | 81.0 | 100.0 | 99.6 | 82.3 | 88.0 | 49.3 | - | 72.3 |
-| demo-volt | 70.0 | 77.8 | 68.3 | 87.2 | 100.0 | 7.8 | 22.5 | 92.8 |
-| demo-cascade | 73.3 | 44.4 | 40.6 | 73.2 | 100.0 | 0.0 | 0.0 | 51.4 |
+| fab-self | 81.0 | 100.0 | 99.6 | 82.4 | 80.0 | 49.3 | - | 72.1 |
+| demo-volt | 70.0 | 77.8 | 68.3 | 87.2 | 94.0 | 7.8 | 22.5 | 92.8 |
+| demo-cascade | 73.3 | 44.4 | 40.6 | 73.2 | 94.0 | 0.0 | 0.0 | 51.4 |
 
 *`-` = UNAVAILABLE (no data; never treated as zero).*
 
@@ -27,24 +27,24 @@
 
 ## fab-self
 
-- Overall engineering score: **82.59** (B+), data coverage 78%
-- Git: repo, 10 commits (OBSERVED)
-- Code: 5596 SLOC across 37 files
-- Tests executed: 79 passed / 0 failed
+- Overall engineering score: **81.8** (B+), data coverage 78%
+- Git: repo, 11 commits (OBSERVED)
+- Code: 5625 SLOC across 37 files
+- Tests executed: 80 passed / 0 failed
 - Failures observed: 0 (recovered 0, MTTR n/as)
 
 ## demo-volt
 
-- Overall engineering score: **66.51** (C+), data coverage 92%
+- Overall engineering score: **66.02** (C+), data coverage 92%
 - Git: repo, 6 commits (OBSERVED)
 - Code: 62 SLOC across 9 files
 - Tests executed: 5 passed / 1 failed
 - Tokens: 1250 (OBSERVED)
-- Failures observed: 3 (recovered 1, MTTR 31916592.74s)
+- Failures observed: 3 (recovered 1, MTTR 31918255.53s)
 
 ## demo-cascade
 
-- Overall engineering score: **53.37** (D), data coverage 86%
+- Overall engineering score: **52.85** (D), data coverage 86%
 - Git: repo, 4 commits (OBSERVED)
 - Code: 63 SLOC across 5 files
 - Tests executed: 1 passed / 2 failed
@@ -56,9 +56,9 @@
 - **Most Reliable**: demo-atlas (100.0)
 - **Strongest Architecture**: demo-atlas (95.5)
 - **Best Tests**: fab-self (99.6)
-- **Best Performance**: demo-cascade (100.0)
+- **Best Performance**: demo-atlas (94.0)
 - **Strongest Autonomy**: demo-atlas (100.0)
 - **Most Maintainable**: demo-atlas (97.2)
-- **Most Efficient Compute**: unavailable
+- **Most Efficient Compute**: demo-atlas
 - **Most Failures**: demo-volt
 - **Best Failure Recovery**: demo-atlas
