@@ -12,9 +12,9 @@ from __future__ import annotations
 import json
 import re
 import shutil
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable
 
 from ..models import Event, EventType, Measurement, Provenance
 from .process_monitor import MonitoredRun, measurements_from_run, run_monitored
@@ -43,14 +43,29 @@ def _has(root: Path, *names: str) -> bool:
     return any(root.joinpath(n).exists() for n in names)
 
 
+def _python_has_module(name: str) -> bool:
+    import importlib.util
+    try:
+        return importlib.util.find_spec(name) is not None
+    except (ImportError, ValueError):
+        return False
+
+
 def detect_test_plan(root: Path, override: str | None = None) -> TestPlan:
     if override:
         import shlex
         return TestPlan(framework="custom", cmd=shlex.split(override), label="tests")
-    if _has(root, "pyproject.toml", "pytest.ini", "setup.cfg") or root.joinpath("tests").is_dir():
-        if shutil.which("pytest"):
-            return TestPlan("pytest", ["pytest", "-q", "--no-header"], "pytest")
-        return TestPlan("unittest", ["python3", "-m", "unittest", "discover",
+    py = sys.executable or "python3"
+    has_py_tests = (
+        _has(root, "pyproject.toml", "pytest.ini", "setup.cfg")
+        or root.joinpath("tests").is_dir()
+        or bool(list(root.glob("test_*.py")) + list(root.glob("*_test.py")))
+    )
+    if has_py_tests:
+        if _python_has_module("pytest"):
+            return TestPlan("pytest", [py, "-m", "pytest", "-q", "--no-header"],
+                            "pytest")
+        return TestPlan("unittest", [py, "-m", "unittest", "discover",
                                      "-s", "tests", "-v"], "unittest")
     pkg = root / "package.json"
     if pkg.exists():
@@ -161,6 +176,44 @@ _CARGO_RES_RE = re.compile(
     r"test result:\s*(\w+)\.\s*(\d+) passed;\s*(\d+) failed;\s*(\d+) ignored;")
 
 
+def parse_junit_xml(path: Path) -> dict[str, int] | None:
+    """Counts from a JUnit XML report (machine-readable -> exact).
+
+    Returns None when the file is missing/unparsable so callers fall back
+    to text parsing.
+    """
+    import xml.etree.ElementTree as ET
+
+    if not path.exists():
+        return None
+    try:
+        root = ET.parse(path).getroot()
+    except ET.ParseError:
+        return None
+    if root.tag == "testsuites":
+        suites = list(root.findall("testsuite"))
+    elif root.tag == "testsuite":
+        suites = [root]
+    else:
+        suites = list(root.findall(".//testsuite"))
+    res = {"passed": 0, "failed": 0, "errors": 0, "skipped": 0}
+    seen = False
+    for s in suites:
+        try:
+            total = int(s.get("tests", 0))
+            fails = int(s.get("failures", 0))
+            errs = int(s.get("errors", 0))
+            skip = int(s.get("skipped", 0)) + int(s.get("xfails", 0))
+        except (TypeError, ValueError):
+            continue
+        seen = True
+        res["failed"] += fails
+        res["errors"] += errs
+        res["skipped"] += skip
+        res["passed"] += max(0, total - fails - errs - skip)
+    return res if seen else None
+
+
 def parse_cargo(out: str, err: str) -> dict[str, int]:
     res = {"passed": 0, "failed": 0, "errors": 0, "skipped": 0}
     for m in _CARGO_RES_RE.finditer(out + "\n" + err):
@@ -218,7 +271,9 @@ def extract_coverage(workspace: Path) -> tuple[float | None, str]:
 
 
 def has_coverage_tool() -> bool:
-    return shutil.which("coverage") is not None
+    import importlib.util
+    return (shutil.which("coverage") is not None
+            or importlib.util.find_spec("coverage") is not None)
 
 
 # ---------------------------------------------------------------------------
@@ -295,7 +350,10 @@ class PhaseResult:
                                        "source": self.coverage_source},
                                  provenance=Provenance.OBSERVED, **base))
         elif self.phase == "smoke":
-            etype = EventType.TASK_COMPLETED if self.ok else EventType.ERROR_OBSERVED
+            # NOTE: a successful smoke-run is a *harness* observation, not
+            # agent task-completion evidence - it must not feed autonomy
+            # scoring, so it emits RUN_FINISHED rather than TASK_COMPLETED.
+            etype = EventType.RUN_FINISHED if self.ok else EventType.ERROR_OBSERVED
             evs.append(Event(type=etype, ts=ts,
                              severity="success" if self.ok else "critical",
                              message=("entrypoint smoke-run ok"
@@ -347,8 +405,24 @@ class Harness:
     def test_phase(self, plan: TestPlan, project: str, session_id: str,
                    cwd: Path) -> PhaseResult:
         parser = PARSERS.get(plan.framework)
-        run = self._exec(plan.cmd, cwd)
-        counts = parser(run.stdout_tail, run.stderr_tail) if parser else {}
+        cmd = list(plan.cmd)
+        junit_path = None
+        if plan.framework == "pytest":
+            # Normalized, hermetic invocation:
+            #  * subject addopts ignored -> identical invocation for every
+            #    subject (benchmark reproducibility over subject quirks)
+            #  * JUnit XML report -> machine-readable counts, immune to
+            #    verbosity flags
+            junit_path = cwd / "junit-fab.xml"
+            cmd += ["-o", "addopts=", "-p", "no:cacheprovider",
+                    "--rootdir=" + str(cwd),
+                    f"--junitxml={junit_path}"]
+        run = self._exec(cmd, cwd)
+        counts: dict[str, int] = {}
+        if junit_path is not None:
+            counts = parse_junit_xml(junit_path) or {}
+        if not counts and parser:
+            counts = parser(run.stdout_tail, run.stderr_tail)
         pr = PhaseResult("tests", run, counts=counts)
         pr.ok = (not run.timed_out and run.exit_code == 0
                  and not counts.get("failed") and not counts.get("errors"))
@@ -356,11 +430,19 @@ class Harness:
         # optional coverage pass (rerun tests under coverage.py when present)
         if (self.use_coverage and plan.framework == "pytest"
                 and has_coverage_tool()):
-            cov_run = self._exec(
-                ["coverage", "run", "--branch", "-m", "pytest", "-q"],
-                cwd)
+            py = sys.executable or "python3"
+            cov_cmd = ([sys.executable, "-m", "coverage", "run", "--branch",
+                        "-m", "pytest", "-q", "-o", "addopts=",
+                        "-p", "no:cacheprovider",
+                        "--rootdir=" + str(cwd),
+                        f"--junitxml={cwd / 'junit-fab-cov.xml'}"]
+                       if _python_has_module("coverage")
+                       else ["coverage", "run", "--branch", "-m", "pytest",
+                             "-q"])
+            cov_run = self._exec(cov_cmd, cwd)
             if cov_run.exit_code == 0 or cov_run.exit_code == 1:
-                self._exec(["coverage", "json", "-o", "coverage.json"], cwd)
+                self._exec([py, "-m", "coverage", "json", "-o",
+                            "coverage.json"], cwd)
                 pct, src = extract_coverage(cwd)
                 if pct is not None:
                     pr.coverage_pct = pct

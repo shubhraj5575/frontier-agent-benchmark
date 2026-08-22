@@ -12,14 +12,12 @@ from pathlib import Path
 from typing import Any
 
 from .config import BenchConfig
-from .models import (Event, Measurement, Provenance, SessionMeta, SubjectSpec,
-                     utc_iso)
+from .models import Event, Measurement, SessionMeta, SubjectSpec
 from .telemetry.code_analysis import CodeTelemetry, collect_code_telemetry
 from .telemetry.git_telemetry import GitTelemetry, collect_git_telemetry, \
     commit_activity_series
 from .telemetry.harness import Harness, detect_build_plan, detect_test_plan
 from .telemetry.log_ingest import IngestResult
-from .telemetry.process_monitor import HAS_PSUTIL
 from .telemetry.workspace import cleanup_workspace, make_workspace
 
 COLLECTOR_VERSION = "1.0"
@@ -76,7 +74,7 @@ def collect_static(spec: SubjectSpec, data_root: Path) -> ProjectBundle:
     bundle = ProjectBundle(spec=spec, session=session)
     path = Path(spec.path)
     bundle.git = collect_git_telemetry(path)
-    bundle.code = collect_code_telemetry(path)
+    bundle.code = collect_code_telemetry(path, exclude=spec.exclude)
     bundle.events.extend(bundle.git.events(spec.name, session.session_id))
     bundle.measurements.update(bundle.git.measurements())
     bundle.measurements.update(bundle.code.measurements())
@@ -94,7 +92,8 @@ def collect_dynamic(spec: SubjectSpec, data_root: Path, cfg: BenchConfig,
 
     Returns (bundle, workspace_path).  Caller decides whether to clean up.
     """
-    ws, meta = make_workspace(spec.name, spec.path, data_root)
+    ws, meta = make_workspace(spec.name, spec.path, data_root,
+                              exclude=spec.exclude)
     meta.collector_versions = {"fab": COLLECTOR_VERSION}
     meta.host = platform.node()
     bundle = ProjectBundle(spec=spec, session=meta)
@@ -132,7 +131,8 @@ def collect_dynamic(spec: SubjectSpec, data_root: Path, cfg: BenchConfig,
 
     # refresh static telemetry against the pristine original (read-only)
     bundle.git = collect_git_telemetry(Path(spec.path))
-    bundle.code = collect_code_telemetry(Path(spec.path))
+    bundle.code = collect_code_telemetry(Path(spec.path),
+                                         exclude=spec.exclude)
     bundle.measurements.update(bundle.git.measurements())
     bundle.measurements.update(bundle.code.measurements())
     if not keep_workspaces:
@@ -145,7 +145,6 @@ def collect_dynamic(spec: SubjectSpec, data_root: Path, cfg: BenchConfig,
 
 def merge_ingest(bundle: ProjectBundle, result: IngestResult) -> None:
     """Attach agent-log ingestion results to a bundle."""
-    sid = bundle.session.session_id if bundle.session else ""
     bundle.ingest = result
     bundle.events.extend(result.events)
     bundle.measurements.update(result.measurements())

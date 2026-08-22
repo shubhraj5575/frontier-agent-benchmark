@@ -20,13 +20,11 @@ from __future__ import annotations
 
 import enum
 import hashlib
-import json
 import math
 import time
 import uuid
 from dataclasses import dataclass, field, asdict
-from pathlib import Path
-from typing import Any, Iterable, Optional
+from typing import Any
 
 
 # ---------------------------------------------------------------------------
@@ -183,6 +181,7 @@ class SubjectSpec:
     build_cmd: str | None = None
     entrypoint: str | None = None   # smoke-run command proving it works
     features_file: str | None = None  # optional manifest of declared features
+    exclude: list[str] = field(default_factory=list)  # top-level dirs to skip
     notes: str = ""
 
     def to_dict(self) -> dict[str, Any]:

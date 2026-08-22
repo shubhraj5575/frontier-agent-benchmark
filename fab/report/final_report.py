@@ -57,13 +57,40 @@ def generate_final_report(
 ) -> str:
     meta = meta or {}
     L: list[str] = []
-    ap = L.append
+    ranked = _ranked(cards)
+    L += _render_header(bundles, meta)
+    L += _render_leaderboard(ranked)
+    L += _render_dimensions(ranked)
+    L += _render_verdicts(comparison, cards)
+    for c in ranked:
+        L += _render_project_detail(c, bundles.get(c.project), comparison)
+    L += _render_event_stream(bundles)
+    L += _render_repro()
+    return "\n".join(L)
 
+
+def _ranked(cards: dict[str, Scorecard]) -> list[Scorecard]:
+    return sorted(cards.values(), key=lambda c: (-(c.overall or -1), c.project))
+
+
+def _render_header(bundles, meta) -> list[str]:
+    L: list[str] = []
+    ap = L.append
     ap("# Frontier Agent Benchmark - Final Report")
     ap("")
     generated = meta.get("generated_iso") or \
         time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
     ap(f"*Generated {generated} - FAB v{meta.get('version', '1.0')}*")
+    if meta.get("ingested_logs"):
+        ap("")
+        ap("Session logs ingested as evidence: "
+           + ", ".join(f"`{i['path']}` -> {i['project']} ({i['records']} records)"
+                       for i in meta["ingested_logs"]))
+        ap("")
+        ap("*Fixture transcripts included in the demo config are synthetic "
+           "examples of agent logs, ingested to exercise the pipeline; their "
+           "contents are tagged by the provenance system like any other "
+           "source.*")
     ap("")
     ap("---")
     ap("")
@@ -84,13 +111,14 @@ def generate_final_report(
        f"**{dq['ESTIMATED']}** estimated, **{dq['UNAVAILABLE']}** unavailable "
        f"measurements/events ({dq['OBSERVED'] / total:.0%} observed).")
     ap("")
-    ap("---")
-    ap("")
+    return L
 
-    # ------------------------------------------------------------------ board
+
+def _render_leaderboard(ranked) -> list[str]:
+    L: list[str] = []
+    ap = L.append
     ap("## Leaderboard")
     ap("")
-    ranked = sorted(cards.values(), key=lambda c: (-(c.overall or -1), c.project))
     ap("| Rank | Project | Overall Engineering Score | Grade | Backed by data |")
     ap("|-----:|---------|--------------------------:|:------|---------------:|")
     for i, c in enumerate(ranked, 1):
@@ -105,9 +133,13 @@ def generate_final_report(
        "excluded rather than zeroed, so `Backed by data` shows how much of "
        "the weight was actually evidenced.")
     ap("")
+    return L
 
-    # -------------------------------------------------------------- dimension
+
+def _render_dimensions(ranked) -> list[str]:
     dim_names = list(DIM_TITLES)
+    L: list[str] = []
+    ap = L.append
     ap("## Dimension scores")
     ap("")
     ap("| Project | " + " | ".join(DIM_TITLES[d] for d in dim_names) + " |")
@@ -117,27 +149,30 @@ def generate_final_report(
         for d in dim_names:
             v = c.dimensions[d].value
             covg = c.dimensions[d].coverage
-            cell = "-" if v is None else f"{v:.1f}"
             if v is None:
                 cell = "n/a"
-            elif covg < 1.0:
-                cell += f" ({covg:.0%})"
+            else:
+                cell = f"{v:.1f}"
+                if covg < 1.0:
+                    cell += f" ({covg:.0%})"
             row.append(cell)
         ap("| " + " | ".join(row) + " |")
     ap("")
     ap("`n/a` = UNAVAILABLE. `(xx%)` after a value = share of that "
        "dimension's weight backed by collected data.")
     ap("")
+    return L
 
-    # --------------------------------------------------------------- verdicts
+
+def _render_verdicts(comparison, cards) -> list[str]:
+    L: list[str] = []
+    ap = L.append
     ap("## Answers to the nine questions")
     ap("")
     v = comparison.verdicts
 
     def cite(dim: str, project: str | None) -> str:
-        if not project:
-            return ""
-        card = cards.get(project)
+        card = cards.get(project or "")
         if not card:
             return ""
         d = card.dimensions.get(dim)
@@ -184,9 +219,10 @@ def generate_final_report(
             br = max(rec, key=lambda kv: (kv[1]["recovery_rate"],
                                           -(kv[1]["persisting"])))
             mttr = br[1]["mean_time_to_recovery_s"]
+            mttr_txt = mttr if mttr is not None else "n/a"
             ap(f"- **Which recovers from failures most effectively?** -> "
                f"`{br[0]}` ({br[1]['recovery_rate']:.0%} recovery rate, MTTR "
-               f"{mttr if mttr is not None else 'n/a'}s, OBSERVED).")
+               f"{mttr_txt}s, OBSERVED).")
         else:
             ap("- **Which recovers from failures most effectively?** -> "
                "**UNAVAILABLE**: failures occurred but none were followed by "
@@ -198,147 +234,155 @@ def generate_final_report(
         ap("- **Which recovers from failures most effectively?** -> "
            "**UNAVAILABLE**: there were no failures to recover from.")
     ap("")
-    ap("---")
+    return L
+
+
+def _render_project_detail(c, b, comparison) -> list[str]:
+    L: list[str] = []
+    ap = L.append
+    d = c.to_dict()
+    ap("## Project detail - " + c.project)
     ap("")
+    ov = d["overall"]
+    ap(f"- Overall: **{ov if ov is not None else 'n/a'}** ({d['grade']}) - "
+       f"{d['overall_coverage']:.0%} of scoring weight backed by data")
+    if b:
+        m = b.measurements
 
-    # ------------------------------------------------------------ per project
-    ap("## Project detail")
+        def mm(key: str) -> str:
+            mes = m.get(key)
+            if not mes:
+                return "n/a *(UNAVAILABLE)*"
+            if not mes.available:
+                note = f": {mes.note}" if mes.note else ""
+                return f"n/a *(UNAVAILABLE{note})*"
+            tag = mes.provenance.value
+            note = f"; {mes.note}" if mes.note else ""
+            return f"{mes.value} *({tag}{note})*"
+
+        ap("")
+        ap("**Telemetry**")
+        ap("")
+        ap("| Metric | Value |")
+        ap("|--------|-------|")
+        start = b.session.started_at if b.session else None
+        runtime = b.session.runtime_seconds if b.session else None
+        runtime_txt = f"{runtime:.1f}s" if runtime is not None else "n/a"
+        ap("| Session start | " + (utc_iso(start) or "n/a") + " |")
+        ap("| Runtime (collection session) | " + runtime_txt + " |")
+        code = b.code
+        ap("| Git commits | " + mm("commits_total") + " |")
+        ap("| First commit | " + mm("commit_first_time") + " |")
+        ap("| Last commit | " + mm("commit_last_time") + " |")
+        files_txt = str(code.n_files) if code else "n/a"
+        ap("| Files | " + files_txt + " |")
+        ap("| Lines of code (SLOC) | " + mm("sloc_total") + " |")
+        ap("| Test SLOC | " + mm("sloc_test") + " |")
+        tp = next((ph.counts for ph in b.phases if ph.phase == "tests"), None)
+        tests_txt = (
+            f"{tp.get('passed', 0)} passed / {tp.get('failed', 0)} failed"
+            f" / {tp.get('errors', 0)} errors (OBSERVED)" if tp
+            else "none *(no runnable suite detected)*")
+        ap("| Tests executed | " + tests_txt + " |")
+        ap("| Test coverage | " + mm("coverage.percent") + " |")
+        build_ok = next((ph.ok for ph in b.phases
+                         if ph.phase == "build"), None)
+        build_txt = ("success (OBSERVED)" if build_ok else
+                     "failure (OBSERVED)" if build_ok is False else
+                     "not attempted (UNAVAILABLE)")
+        ap("| Build result | " + build_txt + " |")
+        peak = [ph.run.peak_rss_mb for ph in b.phases
+                if ph.run is not None and ph.run.peak_rss_mb is not None]
+        peak_txt = (f"{max(peak):.0f} MB (OBSERVED)" if peak
+                    else "n/a *(UNAVAILABLE: not sampled)*")
+        ap("| Peak RAM across phases | " + peak_txt + " |")
+        ap("| Token usage | " + mm("tokens.total") + " |")
+        ap("| Tool calls | " + mm("tools.calls") + " |")
+        errs = sum(1 for e in b.events if e.type == EventType.ERROR_OBSERVED)
+        retries = sum(1 for e in b.events
+                      if e.type == EventType.RETRY_ATTEMPTED)
+        ap(f"| Errors observed | {errs} (OBSERVED event count) |")
+        retries_txt = (f"{retries} (OBSERVED)" if retries
+                       else "none observed (distinct from unknown)")
+        ap("| Retries | " + retries_txt + " |")
+        fa = comparison.failure_analysis.get(c.project, {})
+        if fa:
+            mttr = fa["mean_time_to_recovery_s"]
+            mttr_txt = f", MTTR {mttr}s" if mttr is not None else ""
+            ap(f"| Failure/recovery | {fa['failures_total']} failures, "
+               f"{fa['recovered']} recovered" + mttr_txt + " |")
+        feats_file = b.spec.features_file
+        has_manifest = bool(feats_file and Path(b.spec.path,
+                                                feats_file).exists())
+        manifest_txt = feats_file if has_manifest else "none declared"
+        ap("| Feature manifest | " + manifest_txt + " |")
     ap("")
-    for c in ranked:
-        b = bundles.get(c.project)
-        d = c.to_dict()
-        ap(f"### {c.project}")
-        ap("")
-        ov = d["overall"]
-        ap(f"- Overall: **{ov if ov is not None else 'n/a'}** ({d['grade']}) - "
-           f"{d['overall_coverage']:.0%} of scoring weight backed by data")
-        if b:
-            g, code = b.git, b.code
-            m = b.measurements
+    ap("**Score components**")
+    ap("")
+    for name, dim in c.dimensions.items():
+        val = _fmt_score(dim.value)
+        ap(f"- {DIM_TITLES[name]}: **{val}** "
+           f"(data coverage {dim.coverage:.0%})")
+        for comp in dim.components:
+            pv = comp.provenance.value
+            cv = "-" if comp.value is None else f"{comp.value:.0f}"
+            note = f" - {comp.note}" if comp.note else ""
+            ap(f"  - {comp.name}: {cv} [{pv}]{note}")
+    ap("")
+    return L
 
-            def mm(key: str) -> str:
-                mes = m.get(key)
-                if not mes:
-                    return "n/a *(UNAVAILABLE)*"
-                if not mes.available:
-                    return f"n/a *(UNAVAILABLE: {mes.note})*"
-                tag = "OBSERVED" if mes.provenance.value == "OBSERVED" \
-                    else "ESTIMATED"
-                note = f"; {mes.note}" if mes.note else ""
-                return f"{mes.value} *({tag}{note})*"
 
-            ap("")
-            ap("**Telemetry**")
-            ap("")
-            ap("| Metric | Value |")
-            ap("|--------|-------|")
-            start = b.session.started_at if b.session else None
-            runtime = b.session.runtime_seconds if b.session else None
-            ap(f"| Session start | {utc_iso(start) or 'n/a'} |")
-            ap(f"| Runtime (collection session) | "
-               f"{f'{runtime:.1f}s' if runtime is not None else 'n/a'} |")
-            commits = m.get("commits_total")
-            ap(f"| Git commits | {mm('commits_total')} |")
-            ap(f"| First commit | {mm('commit_first_time')} |")
-            ap(f"| Last commit | {mm('commit_last_time')} |")
-            ap(f"| Files | {code.n_files if code else 'n/a'} |")
-            ap(f"| Lines of code (SLOC) | {mm('sloc_total')} |")
-            ap(f"| Test SLOC | {mm('sloc_test')} |")
-            tp = next((ph.counts for ph in b.phases if ph.phase == "tests"), None)
-            ap(f"| Tests executed | "
-               + (f"{tp.get('passed', 0)} passed / {tp.get('failed', 0)} failed"
-                  f" / {tp.get('errors', 0)} errors (OBSERVED)" if tp
-                  else "none *(no runnable suite detected)*") + " |")
-            covm = m.get("coverage.percent")
-            ap(f"| Test coverage | {mm('coverage.percent')} |")
-            build_ok = next((ph.ok for ph in b.phases if ph.phase == "build"), None)
-            ap(f"| Build result | "
-               + ("success (OBSERVED)" if build_ok else
-                  "failure (OBSERVED)" if build_ok is False else
-                  "not attempted (UNAVAILABLE)") + " |")
-            peak = [ph.run.peak_rss_mb for ph in b.phases
-                    if ph.run is not None and ph.run.peak_rss_mb is not None]
-            ap(f"| Peak RAM across phases | "
-               + (f"{max(peak):.0f} MB (OBSERVED)" if peak
-                  else "n/a *(UNAVAILABLE: not sampled)*") + " |")
-            tokens = m.get("tokens.total")
-            ap(f"| Token usage | {mm('tokens.total')} |")
-            tools = m.get("tools.calls")
-            ap(f"| Tool calls | {mm('tools.calls')} |")
-            errs = sum(1 for e in b.events
-                       if e.type == EventType.ERROR_OBSERVED)
-            retries = sum(1 for e in b.events
-                          if e.type == EventType.RETRY_ATTEMPTED)
-            ap(f"| Errors observed | {errs} (OBSERVED event count) |")
-            ap(f"| Retries | "
-               + (f"{retries} (OBSERVED)" if retries
-                  else "none observed (distinct from unknown)") + " |")
-            fa = comparison.failure_analysis.get(c.project, {})
-            if fa:
-                ap(f"| Failure/recovery | {fa['failures_total']} failures, "
-                   f"{fa['recovered']} recovered"
-                   + (f", MTTR {fa['mean_time_to_recovery_s']}s"
-                      if fa["mean_time_to_recovery_s"] is not None else "")
-                   + " |")
-            feats_file = b.spec.features_file
-            has_manifest = bool(feats_file and Path(b.spec.path,
-                                                    feats_file).exists())
-            ap(f"| Feature manifest | "
-               f"{feats_file if has_manifest else 'none declared'} |")
-        ap("")
-        ap("**Score components**")
-        ap("")
-        for name, dim in c.dimensions.items():
-            val = _fmt_score(dim.value)
-            ap(f"- {DIM_TITLES[name]}: **{val}** "
-               f"(data coverage {dim.coverage:.0%})")
-            for comp in dim.components:
-                pv = comp.provenance.value
-                cv = "-" if comp.value is None else f"{comp.value:.0f}"
-                note = f" - {comp.note}" if comp.note else ""
-                ap(f"  - {comp.name}: {cv} [{pv}]{note}")
-        ap("")
+_INTERESTING_EVENTS = {
+    EventType.AGENT_STARTED, EventType.TASK_COMPLETED,
+    EventType.TEST_FAILED, EventType.BUG_DISCOVERED, EventType.BUG_FIXED,
+    EventType.COMMIT_CREATED, EventType.BENCHMARK_COMPLETED,
+    EventType.BUILD_FAILED, EventType.MILESTONE_REACHED,
+    EventType.INTERVENTION_REQUESTED, EventType.RETRY_ATTEMPTED,
+    EventType.BUILD_SUCCEEDED,
+}
 
-    # ----------------------------------------------------------- event stream
+
+def _render_event_stream(bundles) -> list[str]:
+    L: list[str] = []
+    ap = L.append
     ap("## Event stream highlights")
     ap("")
-    interesting = {
-        EventType.AGENT_STARTED, EventType.TASK_COMPLETED,
-        EventType.TEST_FAILED, EventType.BUG_DISCOVERED, EventType.BUG_FIXED,
-        EventType.COMMIT_CREATED, EventType.BENCHMARK_COMPLETED,
-        EventType.BUILD_FAILED, EventType.MILESTONE_REACHED,
-        EventType.INTERVENTION_REQUESTED, EventType.RETRY_ATTEMPTED,
-        EventType.BUILD_SUCCEEDED,
-    }
-    shown = 0
-    LIMIT = 120
     ap("| Time (UTC) | Project | Event | Detail | Provenance |")
     ap("|------------|---------|-------|--------|------------|")
+    shown = 0
+    per_project_cap = 120
+    global_cap = 400
     for p in sorted(bundles):
         evs = sort_events([e for e in bundles[p].events
-                           if e.type in interesting])
-        for e in evs[:LIMIT]:
+                           if e.type in _INTERESTING_EVENTS])
+        for e in evs[:per_project_cap]:
             ts = utc_iso(e.ts) or "(undated)"
             msg = (e.message or "").replace("|", "/")[:90]
             ap(f"| {ts} | {e.project} | {e.type.value} | {msg} | "
                f"{e.provenance.value} |")
             shown += 1
-            if shown >= 400:
+            if shown >= global_cap:
                 break
-        if shown >= 400:
+        if shown >= global_cap:
             break
     ap("")
+    return L
+
+
+def _render_repro() -> list[str]:
+    L: list[str] = []
+    ap = L.append
     ap("---")
     ap("")
     ap("## Reproducibility notes")
     ap("")
     ap("- Subjects were analysed read-only; dynamic phases executed inside "
-       "isolated workspace copies under `<output>/workspaces/`.")
+       "isolated workspace copies under the system temp directory.")
     ap("- Scores are deterministic functions of telemetry: same inputs, same "
        "scores. Formulas per component are embedded in each scorecard above "
        "and specified in docs/METRICS.md.")
     ap("- Anything marked UNAVAILABLE can be made available by supplying the "
        "missing source (agent session logs, coverage tooling, entrypoint "
-       "config) and re-running `fab pipeline`.")
+       "config) and re-running `fab run`.")
     ap("")
-    return "\n".join(L)
+    return L

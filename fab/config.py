@@ -80,6 +80,7 @@ def _parse_subject(d: dict[str, Any]) -> SubjectSpec:
         build_cmd=d.get("build_cmd"),
         entrypoint=d.get("entrypoint"),
         features_file=d.get("features_file"),
+        exclude=[str(x) for x in (d.get("exclude") or [])],
         notes=str(d.get("notes", "")),
     )
 

@@ -1,0 +1,51 @@
+version: 1
+
+# Demo benchmark subjects.
+# Rebuild them any time with:
+#   python examples/build_demo_subjects.py --force
+#
+# Every datum FAB collects about these projects is genuinely observed:
+# real git histories, real executed tests, real process samples.
+# Token usage is honestly UNAVAILABLE here because no agent session logs
+# are provided - supply logs via `fab run --ingest <file>` to add evidence.
+
+subjects:
+  - name: demo-atlas
+    path: examples/subjects/demo-atlas
+    language: python
+    entrypoint: >-
+      python3 -c "import sys; from atlas.queue import Queue;
+      q=Queue(); q.push('job'); t=q.pop(); assert t.name=='job';
+      print('atlas ok')"
+    notes: high-quality fixture - green suite, docs, manifest
+
+  - name: demo-volt
+    path: examples/subjects/demo-volt
+    language: python
+    entrypoint: python3 -m volt.cli --help
+    notes: medium fixture - works but ships one failing test
+
+  - name: demo-cascade
+    path: examples/subjects/demo-cascade
+    language: python
+    entrypoint: python3 -c "import processor; print('cascade loads')"
+    notes: poor fixture - duplication, TODO debt, red suite
+
+  - name: fab-self
+    path: .
+    language: python
+    entrypoint: python3 -m fab.cli --help
+    exclude: [examples, output, docs]
+    notes: >-
+      dogfooding - FAB benchmarking its own repository; nested demo
+      fixtures are excluded so the analysis scopes to the platform itself
+
+scoring_weights:
+  completion: 0.20
+  reliability: 0.15
+  testing: 0.15
+  architecture: 0.125
+  performance: 0.075
+  documentation: 0.075
+  autonomy: 0.125
+  maintainability: 0.10

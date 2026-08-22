@@ -35,3 +35,5 @@ include = ["fab*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+norecursedirs = [".*", "*.egg", "*.egg-info", "build", "dist",
+                 "node_modules", "venv", "examples/subjects"]

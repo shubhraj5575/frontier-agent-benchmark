@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..models import Measurement, Provenance, clamp
+from ..models import Provenance, clamp
 
 
 @dataclass

@@ -128,3 +128,16 @@ def test_measurements_provenance_on_real_run(tmp_path):
     mr = run_monitored([sys.executable, "-c", "print('ok')"], timeout_s=30)
     m = measurements_from_run(mr, "smoke")
     assert m["smoke.exit_code"].provenance.value == "OBSERVED"
+
+
+def test_smoke_success_does_not_claim_task_completion(tmp_path):
+    """Harness smoke-runs must never feed autonomy's task lifecycle."""
+    import shlex
+    from fab.models import EventType
+    h = Harness()
+    entry = f"{shlex.quote(sys.executable)} -c \"print('hi')\""
+    pr = h.smoke_phase(entry, "p", "s", tmp_path)
+    assert pr.ok
+    types = {e.type for e in pr.events("p", "s")}
+    assert EventType.RUN_FINISHED in types
+    assert EventType.TASK_COMPLETED not in types

@@ -19,7 +19,8 @@ from pathlib import Path
 from typing import Any
 
 from ..collector import ProjectBundle
-from ..models import EventType, Provenance, band_score, penalty_band, saturate
+from ..models import (EventType, Measurement, Provenance, band_score,
+                      clamp, penalty_band, saturate)
 from .base import Component, DimensionScore, aggregate
 
 O = Provenance.OBSERVED
@@ -76,6 +77,10 @@ def _feature_manifest(path: Path) -> list[dict[str, Any]] | None:
     return None
 
 
+def _is_test_function(f) -> bool:
+    return f.name.startswith(("test_", "Test")) or f.name.endswith("_test")
+
+
 def score_completion(bundle: ProjectBundle) -> DimensionScore:
     comps: list[Component] = []
     build = _phase(bundle, "build")
@@ -123,14 +128,18 @@ def score_completion(bundle: ProjectBundle) -> DimensionScore:
         hits = 0
         for feat in feats:
             slug = _SLUG_RE.sub("_", str(feat["name"]).lower()).strip("_")
-            token = slug.split("_")[0] if slug else ""
-            if token and len(token) > 2 and token in test_text:
+            words = [w for w in slug.split("_") if len(w) > 2]
+            if not words:
+                continue
+            overlap = sum(1 for w in words if w in test_text)
+            if overlap / len(words) >= 0.5:
                 hits += 1
         delivered = 100.0 * (hits / len(feats)) * (1.0 if tests_ok else 0.5)
     elif code and code.python_functions:
-        public = [f for f in code.python_functions
-                  if f.is_public and not f.file.startswith("tests")]
-        if public:
+        public_names = sorted({f.name.lower() for f in code.python_functions
+                               if f.is_public and not f.file.startswith("tests")
+                               and not _is_test_function(f)})
+        if public_names:
             test_blob = ""
             for fi in code.files:
                 if fi.is_test:
@@ -138,8 +147,13 @@ def score_completion(bundle: ProjectBundle) -> DimensionScore:
                         test_blob += Path(fi.path).read_text(encoding="utf-8").lower()
                     except OSError:
                         pass
-            covered = sum(1 for f in public if f.name.lower() in test_blob)
-            delivered = 100.0 * covered / len(public)
+            covered = sum(1 for n in public_names if n in test_blob)
+            delivered = 100.0 * covered / len(public_names)
+            # shipping a red suite undermines any delivery claim
+            tp = _phase(bundle, "tests")
+            if tp is not None and (tp.counts.get("failed")
+                                   or tp.counts.get("errors")):
+                delivered *= 0.5
     if delivered is not None:
         comps.append(Component("behavior_delivered", 0.40, delivered, prov,
                                note=note,
@@ -239,9 +253,9 @@ def score_testing(bundle: ProjectBundle) -> DimensionScore:
         c = tp.counts
         n_tests = sum(c.get(k, 0) for k in ("passed", "failed", "errors", "skipped"))
         comps.append(Component("suite_scale", 0.25,
-                               100.0 * saturate(n_tests, cap=80), O,
+                               100.0 * saturate(n_tests, cap=40), O,
                                note=f"{n_tests} tests executed",
-                               formula="saturating(n_tests, cap=80)"))
+                               formula="saturating(n_tests, cap=40)"))
     elif bundle.code and bundle.code.n_test_files:
         comps.append(Component("suite_scale", 0.25,
                                20.0 * min(bundle.code.n_test_files, 5), O,
@@ -397,7 +411,9 @@ def score_performance(bundle: ProjectBundle) -> DimensionScore:
         rss = tp.run.peak_rss_mb
         kloc = (bundle.code.total_sloc / 1000.0
                 if bundle.code and bundle.code.total_sloc else None)
-        if rss is not None and kloc:
+        # per-kLOC normalisation only makes sense once the interpreter
+        # baseline is amortised; tiny projects are judged on absolute RSS.
+        if rss is not None and kloc and kloc >= 10:
             rss_per_kloc = rss / kloc
             comps.append(Component("memory_efficiency", 0.30,
                                    100.0 * penalty_band(rss_per_kloc, 60, 400), O,
@@ -407,7 +423,8 @@ def score_performance(bundle: ProjectBundle) -> DimensionScore:
         elif rss is not None:
             comps.append(Component("memory_efficiency", 0.30,
                                    100.0 * penalty_band(rss, 400, 2000), O,
-                                   note=f"peak RSS {rss:.0f}MB (no LOC baseline)",
+                                   note=f"peak RSS {rss:.0f}MB (absolute; "
+                                        f"project below 10kLOC)",
                                    formula="absolute MB band"))
         else:
             comps.append(Component("memory_efficiency", 0.30, None, O,

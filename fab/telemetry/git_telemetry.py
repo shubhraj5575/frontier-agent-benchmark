@@ -7,7 +7,6 @@ no checkout, no config writes, no index refresh.
 
 from __future__ import annotations
 
-import json
 import re
 import subprocess
 import time

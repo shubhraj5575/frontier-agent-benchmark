@@ -417,11 +417,13 @@ def _pinned_deps(root: Path) -> tuple[int, int]:
 
 # -- main entry -----------------------------------------------------------------
 
-def collect_code_telemetry(path: str | Path) -> CodeTelemetry:
+def collect_code_telemetry(path: str | Path,
+                           exclude: list[str] | None = None) -> CodeTelemetry:
     root = Path(path).resolve()
     tel = CodeTelemetry(root=str(root))
     if not root.exists():
         return tel
+    excl = set(exclude or [])
 
     entries = list(root.iterdir()) if root.is_dir() else []
     names = {e.name.lower() for e in entries}
@@ -451,6 +453,9 @@ def collect_code_telemetry(path: str | Path) -> CodeTelemetry:
         "package.json", "go.mod", "Cargo.toml", "Gemfile") if root.joinpath(m).exists()]
 
     for fpath in _iter_code_files(root):
+        rel_parts = fpath.relative_to(root).parts
+        if excl and rel_parts and rel_parts[0] in excl:
+            continue
         fi = analyze_file(fpath, root)
         if fi is None:
             continue

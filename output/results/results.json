@@ -1,0 +1,4725 @@
+{
+  "meta": {
+    "generated_iso": "2026-08-22T19:19:37Z",
+    "version": "0.1.0",
+    "host": "shubhrajs-MacBook-Air.local",
+    "python": "3.12.6",
+    "monitor_backend": "psutil",
+    "ingested_logs": [
+      {
+        "path": "examples/demo_logs/demo-atlas-session.jsonl",
+        "project": "demo-atlas",
+        "records": 15
+      },
+      {
+        "path": "examples/demo_logs/demo-volt-session.jsonl",
+        "project": "demo-volt",
+        "records": 10
+      }
+    ]
+  },
+  "leaderboard": [
+    {
+      "project": "demo-atlas",
+      "overall": 92.88,
+      "grade": "A",
+      "coverage": 0.895
+    },
+    {
+      "project": "fab-self",
+      "overall": 81.07,
+      "grade": "B+",
+      "coverage": 0.7625
+    },
+    {
+      "project": "demo-volt",
+      "overall": 65.8,
+      "grade": "C+",
+      "coverage": 0.895
+    },
+    {
+      "project": "demo-cascade",
+      "overall": 51.69,
+      "grade": "D",
+      "coverage": 0.8325
+    }
+  ],
+  "projects": {
+    "demo-atlas": {
+      "scorecard": {
+        "project": "demo-atlas",
+        "dimensions": {
+          "completion": {
+            "name": "completion",
+            "title": "Completion",
+            "value": 100.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "build_succeeds",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "exit code of build/compile phase",
+                "formula": "100 if build exit==0 else 0"
+              },
+              {
+                "name": "entrypoint_runs",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint: python3 -c \"import sys; from atlas.queue import Queue; q=Queue(); q.push('job'); t=q.pop(); assert t.name=='job'; print('atlas ok')\"",
+                "formula": "100 if entrypoint exit==0 else 0"
+              },
+              {
+                "name": "behavior_delivered",
+                "weight": 0.4,
+                "value": 100.0,
+                "provenance": "ESTIMATED",
+                "note": "declared features with matching passing tests",
+                "formula": "matched references / declared-or-public surface"
+              }
+            ],
+            "notes": []
+          },
+          "reliability": {
+            "name": "reliability",
+            "title": "Reliability",
+            "value": 100.0,
+            "coverage": 0.55,
+            "components": [
+              {
+                "name": "test_pass_rate",
+                "weight": 0.4,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "1 test run(s)",
+                "formula": "passed / (passed+failed+errors)"
+              },
+              {
+                "name": "stability_across_runs",
+                "weight": 0.2,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "needs >=2 test runs",
+                "formula": ""
+              },
+              {
+                "name": "error_density",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no error/build-failure events observed",
+                "formula": ""
+              },
+              {
+                "name": "recovery_after_failures",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "1/1 failures followed by a later success event",
+                "formula": "failures followed by success / failures"
+              }
+            ],
+            "notes": []
+          },
+          "testing": {
+            "name": "testing",
+            "title": "Testing",
+            "value": 77.32,
+            "coverage": 0.75,
+            "components": [
+              {
+                "name": "suite_scale",
+                "weight": 0.25,
+                "value": 31.95,
+                "provenance": "OBSERVED",
+                "note": "7 tests executed",
+                "formula": "saturating(n_tests, cap=40)"
+              },
+              {
+                "name": "pass_rate",
+                "weight": 0.35,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "",
+                "formula": "passed / attempted"
+              },
+              {
+                "name": "line_coverage",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no machine-readable coverage report found",
+                "formula": ""
+              },
+              {
+                "name": "test_to_code_balance",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "ratio=0.582",
+                "formula": "trapezoid band [0.12..0.8 ideal]"
+              }
+            ],
+            "notes": []
+          },
+          "architecture": {
+            "name": "architecture",
+            "title": "Architecture",
+            "value": 95.5,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "module_size_discipline",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "avg file 12 sloc; 0 file(s) >500",
+                "formula": "0.6*(1-big-file share)+0.4*band(avg size)"
+              },
+              {
+                "name": "coupling_control",
+                "weight": 0.25,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0 circular cycle(s); avg fan-out 0.5",
+                "formula": "(100-12*cycles) * fanout-band-factor"
+              },
+              {
+                "name": "layering_and_layout",
+                "weight": 0.2,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "src/tests/config separated",
+                "formula": "checklist 40+30+30"
+              },
+              {
+                "name": "dependency_hygiene",
+                "weight": 0.15,
+                "value": 70.0,
+                "provenance": "OBSERVED",
+                "note": "manifest(s) present but no unpinned deps detected",
+                "formula": ""
+              },
+              {
+                "name": "complexity_ceiling",
+                "weight": 0.1,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "max cyclomatic complexity 6",
+                "formula": "penalty above 14, floor at 26"
+              }
+            ],
+            "notes": []
+          },
+          "performance": {
+            "name": "performance",
+            "title": "Performance",
+            "value": 100.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "suite_wall_time",
+                "weight": 0.4,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "tests finished in 0.48s",
+                "formula": "threshold bands 2/10/30/120/600s"
+              },
+              {
+                "name": "memory_efficiency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "peak RSS 34MB (absolute; project below 10kLOC)",
+                "formula": "absolute MB band"
+              },
+              {
+                "name": "startup_latency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint responded in 0.07s",
+                "formula": "band on startup wall time"
+              }
+            ],
+            "notes": []
+          },
+          "documentation": {
+            "name": "documentation",
+            "title": "Documentation",
+            "value": 60.29,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "readme_quality",
+                "weight": 0.35,
+                "value": 79.0,
+                "provenance": "OBSERVED",
+                "note": "46 words, 4/6 core sections",
+                "formula": "(35 + 11*sections) * word-band factor"
+              },
+              {
+                "name": "docstring_coverage",
+                "weight": 0.3,
+                "value": 57.14,
+                "provenance": "OBSERVED",
+                "note": "57% of public functions documented",
+                "formula": ""
+              },
+              {
+                "name": "changelog_versioning",
+                "weight": 0.15,
+                "value": 50.0,
+                "provenance": "OBSERVED",
+                "note": "changelog",
+                "formula": ""
+              },
+              {
+                "name": "supporting_docs",
+                "weight": 0.2,
+                "value": 40.0,
+                "provenance": "OBSERVED",
+                "note": "1 extra markdown file(s)",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "autonomy": {
+            "name": "autonomy",
+            "title": "Autonomy",
+            "value": 100.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "self_correction_ratio",
+                "weight": 0.35,
+                "value": 100.0,
+                "provenance": "ESTIMATED",
+                "note": "2 fix(es) vs 1 discovered bug(s) (some labels derived heuristically)",
+                "formula": "bug_fixed / bug_discovered, capped at 1"
+              },
+              {
+                "name": "unattended_completion",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "3 task completion(s), 0 intervention request(s)",
+                "formula": ""
+              },
+              {
+                "name": "retry_effectiveness",
+                "weight": 0.2,
+                "value": 100.0,
+                "provenance": "ESTIMATED",
+                "note": "1/1 retry(ies) followed by success within 15min window",
+                "formula": "retries followed by success / retries"
+              },
+              {
+                "name": "tool_success_rate",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "ESTIMATED",
+                "note": "2/2 tool calls with explicit success flag",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "maintainability": {
+            "name": "maintainability",
+            "title": "Maintainability",
+            "value": 97.19,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "avg_complexity",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "avg cyclomatic complexity 2.43",
+                "formula": "band [ideal 2..5]"
+              },
+              {
+                "name": "low_duplication",
+                "weight": 0.25,
+                "value": 100.0,
+                "provenance": "ESTIMATED",
+                "note": "no duplicated blocks detected",
+                "formula": "1 - duplication fraction"
+              },
+              {
+                "name": "file_size_distribution",
+                "weight": 0.2,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0/9 files exceed 500 sloc",
+                "formula": ""
+              },
+              {
+                "name": "todo_debt",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0 TODO/FIXME (0.0/kLOC)",
+                "formula": ""
+              },
+              {
+                "name": "code_smell_count",
+                "weight": 0.1,
+                "value": 71.89,
+                "provenance": "ESTIMATED",
+                "note": "0 mutable-default args, 0 bare excepts, ~3 unused imports (est.)",
+                "formula": "decay of weighted smell count"
+              }
+            ],
+            "notes": []
+          }
+        },
+        "overall": 92.88,
+        "grade": "A",
+        "overall_coverage": 0.895,
+        "weights": {
+          "completion": 0.2,
+          "reliability": 0.15,
+          "testing": 0.15,
+          "architecture": 0.125,
+          "performance": 0.075,
+          "documentation": 0.075,
+          "autonomy": 0.125,
+          "maintainability": 0.1
+        }
+      },
+      "telemetry": {
+        "spec": {
+          "name": "demo-atlas",
+          "path": "examples/subjects/demo-atlas",
+          "language": "python",
+          "build_cmd": null,
+          "entrypoint": "python3 -c \"import sys; from atlas.queue import Queue; q=Queue(); q.push('job'); t=q.pop(); assert t.name=='job'; print('atlas ok')\"",
+          "features_file": null,
+          "exclude": [],
+          "notes": "high-quality fixture - green suite, docs, manifest"
+        },
+        "session": {
+          "session_id": "f009a1f20f554295",
+          "project": "demo-atlas",
+          "started_at": 1787426377.4428911,
+          "finished_at": 1787426379.6771781,
+          "collector_versions": {
+            "fab": "1.0"
+          },
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-f009a1f20f",
+          "host": "shubhrajs-MacBook-Air.local"
+        },
+        "git": {
+          "is_git_repo": true,
+          "head_sha": "41f20baab13d35b7cc530a10320d72b641a4fa99",
+          "branch": "master",
+          "dirty_files": 0,
+          "total_commits": 8,
+          "first_commit_iso": "2026-08-20T16:59:47Z",
+          "last_commit_iso": "2026-08-21T18:53:47Z",
+          "commits": [
+            {
+              "sha": "41f20baab13d35b7cc530a10320d72b641a4fa99",
+              "ts": 1787338427.0,
+              "iso": "2026-08-21T18:53:47Z",
+              "author": "Demo Agent",
+              "subject": "chore: release v0.1.0 milestone",
+              "files_changed": 0,
+              "insertions": 0,
+              "deletions": 0,
+              "files": []
+            },
+            {
+              "sha": "60ca95fc3bc2fb4396ea57dc743045dce6ce1fe3",
+              "ts": 1787325107.0,
+              "iso": "2026-08-21T15:11:47Z",
+              "author": "Demo Agent",
+              "subject": "docs: full readme, changelog and pinned requirements",
+              "files_changed": 3,
+              "insertions": 28,
+              "deletions": 1,
+              "files": [
+                "CHANGELOG.md",
+                "README.md",
+                "requirements.txt"
+              ]
+            },
+            {
+              "sha": "85f2bcaf81767c8cb16344bae8573ca6d3226707",
+              "ts": 1787311787.0,
+              "iso": "2026-08-21T11:29:47Z",
+              "author": "Demo Agent",
+              "subject": "feat: comprehensive test suite",
+              "files_changed": 4,
+              "insertions": 59,
+              "deletions": 0,
+              "files": [
+                "features.yaml",
+                "tests/test_queue.py",
+                "tests/test_retry.py",
+                "tests/test_worker.py"
+              ]
+            },
+            {
+              "sha": "010b5a90a1ed1e494e4546af57617d15e6b1054a",
+              "ts": 1787298467.0,
+              "iso": "2026-08-21T07:47:47Z",
+              "author": "Demo Agent",
+              "subject": "fix: restore attempt accounting in pop()",
+              "files_changed": 2,
+              "insertions": 16,
+              "deletions": 6,
+              "files": [
+                "atlas/queue.py",
+                "atlas/queue_prio.py"
+              ]
+            },
+            {
+              "sha": "07c00f6384b68ede1373b7b76e46e063a0ec5d0b",
+              "ts": 1787285147.0,
+              "iso": "2026-08-21T04:05:47Z",
+              "author": "Demo Agent",
+              "subject": "feat: worker loop and stats module",
+              "files_changed": 2,
+              "insertions": 28,
+              "deletions": 0,
+              "files": [
+                "atlas/stats.py",
+                "atlas/worker.py"
+              ]
+            },
+            {
+              "sha": "db4d35dc3a74a5b0e79e2db41b4c6f6e6e87cb11",
+              "ts": 1787271827.0,
+              "iso": "2026-08-21T00:23:47Z",
+              "author": "Demo Agent",
+              "subject": "feat: priority scheduling",
+              "files_changed": 1,
+              "insertions": 6,
+              "deletions": 5,
+              "files": [
+                "atlas/queue.py"
+              ]
+            },
+            {
+              "sha": "501df347f66a526739afaa0dfd19ff0a86a61c40",
+              "ts": 1787258507.0,
+              "iso": "2026-08-20T20:41:47Z",
+              "author": "Demo Agent",
+              "subject": "feat: implement core queue with push/pop",
+              "files_changed": 2,
+              "insertions": 42,
+              "deletions": 0,
+              "files": [
+                "atlas/queue.py",
+                "atlas/retry.py"
+              ]
+            },
+            {
+              "sha": "94cd2813ade694d6fcb6a77a43d9a1f277161623",
+              "ts": 1787245187.0,
+              "iso": "2026-08-20T16:59:47Z",
+              "author": "Demo Agent",
+              "subject": "feat: scaffold package skeleton",
+              "files_changed": 2,
+              "insertions": 4,
+              "deletions": 0,
+              "files": [
+                "README.md",
+                "atlas/__init__.py"
+              ]
+            }
+          ]
+        },
+        "code": {
+          "root": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/examples/subjects/demo-atlas",
+          "n_files": 9,
+          "total_sloc": 106,
+          "test_sloc": 39,
+          "languages": {
+            "python": 106
+          },
+          "n_test_files": 3,
+          "todo_count": 0,
+          "long_file_count": 0,
+          "duplicate_sloc_fraction_est": 0.0,
+          "avg_internal_fanout": 0.5,
+          "circular_imports": [],
+          "n_circular_import_cycles": 0,
+          "has_tests_dir": true,
+          "has_src_layout": true,
+          "has_ci_config": false,
+          "readme": "README.md",
+          "changelog": "CHANGELOG.md",
+          "license_present": false,
+          "dependency_manifests": [
+            "requirements.txt"
+          ],
+          "pinned_deps": {
+            "pinned": 0,
+            "total": 0
+          },
+          "mutable_default_args": 0,
+          "bare_excepts": 0,
+          "unused_imports_est": 3
+        },
+        "phases": [
+          {
+            "phase": "build",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -m compileall -q .",
+              "exit_code": 0,
+              "duration_s": 0.076,
+              "timed_out": false,
+              "peak_rss_mb": 0.23,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "tests",
+            "ok": true,
+            "counts": {
+              "passed": 7,
+              "failed": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "coverage_pct": 94.79166666666667,
+            "coverage_source": "coverage.py json",
+            "run": {
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-f009a1f20f --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-atlas-f009a1f20f/junit-fab.xml",
+              "exit_code": 0,
+              "duration_s": 0.482,
+              "timed_out": false,
+              "peak_rss_mb": 34.12,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": 0.0,
+              "n_samples": 5,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "smoke",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -c import sys; from atlas.queue import Queue; q=Queue(); q.push('job'); t=q.pop(); assert t.name=='job'; print('atlas ok')",
+              "exit_code": 0,
+              "duration_s": 0.069,
+              "timed_out": false,
+              "peak_rss_mb": 6.58,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
+              "monitor_backend": "psutil"
+            }
+          }
+        ],
+        "events": [
+          {
+            "type": "build_succeeded",
+            "project": "demo-atlas",
+            "session_id": "f009a1f20f554295",
+            "ts": 1787426377.51886,
+            "severity": "success",
+            "message": "build ok (0.1s)",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "3cdc4ecfb2254a88"
+          },
+          {
+            "type": "test_run",
+            "project": "demo-atlas",
+            "session_id": "f009a1f20f554295",
+            "ts": 1787426378.001264,
+            "severity": "success",
+            "message": "7 passed, 0 failed, 0 errors",
+            "data": {
+              "passed": 7,
+              "failed": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "42b349c20c9748b5"
+          },
+          {
+            "type": "test_passed",
+            "project": "demo-atlas",
+            "session_id": "f009a1f20f554295",
+            "ts": 1787426378.001264,
+            "severity": "success",
+            "message": "7 passed",
+            "data": {
+              "passed": 7,
+              "failed": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "64f9458364024923"
+          },
+          {
+            "type": "coverage_reported",
+            "project": "demo-atlas",
+            "session_id": "f009a1f20f554295",
+            "ts": 1787426378.001264,
+            "severity": "info",
+            "message": "coverage 94.79166666666667%",
+            "data": {
+              "coverage_pct": 94.79166666666667,
+              "source": "coverage.py json"
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "92a45cb6e7b5441f"
+          },
+          {
+            "type": "run_started",
+            "project": "demo-atlas",
+            "session_id": "f009a1f20f554295",
+            "ts": 1787426379.490918,
+            "severity": "info",
+            "message": "smoke-run start",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "522b3bc075cc4011"
+          },
+          {
+            "type": "run_finished",
+            "project": "demo-atlas",
+            "session_id": "f009a1f20f554295",
+            "ts": 1787426379.559453,
+            "severity": "success",
+            "message": "entrypoint smoke-run ok",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "79fd78108a66478f"
+          },
+          {
+            "type": "agent_started",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755500000.0,
+            "severity": "info",
+            "message": "",
+            "data": {},
+            "raw_type": "agent_started",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "ab580b78e52741e8"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "tool: bash",
+            "data": {
+              "tool": "bash",
+              "ok": true
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "c9bf18985cf140ee"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "python -m venv .venv",
+            "data": {},
+            "raw_type": "tool_call",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "152cfe72c2f94cd5"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "tool: write_file",
+            "data": {
+              "tool": "write_file",
+              "ok": true
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "2242c5f11e3c42a2"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "atlas/queue.py",
+            "data": {},
+            "raw_type": "tool_call",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "3af49fd0299f4a6f"
+          },
+          {
+            "type": "tokens_reported",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755500300.0,
+            "severity": "info",
+            "message": "usage record",
+            "data": {
+              "in": 1840,
+              "out": 640
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "dce104301d554186"
+          },
+          {
+            "type": "task_completed",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755500300.0,
+            "severity": "success",
+            "message": "Implemented core queue with push/pop semantics.",
+            "data": {},
+            "raw_type": "assistant",
+            "provenance": "ESTIMATED",
+            "source": "log_ingest",
+            "note": "classified by keyword heuristic",
+            "id": "454e297cda84420e"
+          },
+          {
+            "type": "tokens_reported",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755501200.0,
+            "severity": "info",
+            "message": "usage record",
+            "data": {
+              "in": 1210,
+              "out": 430
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "2af05a4cdf7e4002"
+          },
+          {
+            "type": "test_failed",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755501900.0,
+            "severity": "error",
+            "message": "FAILED tests/test_queue.py::test_pop_attempts - assert 2 == 1",
+            "data": {},
+            "raw_type": "test_failed",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "9d35b4ec29484d88"
+          },
+          {
+            "type": "tokens_reported",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755501910.0,
+            "severity": "info",
+            "message": "usage record",
+            "data": {
+              "in": 980,
+              "out": 210
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "2a127404d761472d"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755501910.0,
+            "severity": "warn",
+            "message": "Found bug: pop() increments attempts twice, breaking retry budget.",
+            "data": {},
+            "raw_type": "assistant",
+            "provenance": "ESTIMATED",
+            "source": "log_ingest",
+            "note": "classified by keyword heuristic",
+            "id": "31cb98fce56c42aa"
+          },
+          {
+            "type": "retry_attempted",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755502000.0,
+            "severity": "warn",
+            "message": "re-running suite after edit",
+            "data": {},
+            "raw_type": "retry",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "1300d51e9669458f"
+          },
+          {
+            "type": "tokens_reported",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755502400.0,
+            "severity": "info",
+            "message": "usage record",
+            "data": {
+              "in": 1520,
+              "out": 520
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "7af23af6d0054e3b"
+          },
+          {
+            "type": "bug_fixed",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755502400.0,
+            "severity": "success",
+            "message": "Patched attempt accounting; extracted priority pick to queue_prio.",
+            "data": {},
+            "raw_type": "assistant",
+            "provenance": "ESTIMATED",
+            "source": "log_ingest",
+            "note": "classified by keyword heuristic",
+            "id": "e70b7f6754a14bf2"
+          },
+          {
+            "type": "bug_fixed",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755502500.0,
+            "severity": "success",
+            "message": "attempts off-by-one fixed",
+            "data": {},
+            "raw_type": "bug_fixed",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "614ed14c5b3a4162"
+          },
+          {
+            "type": "test_passed",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755502600.0,
+            "severity": "success",
+            "message": "7 passed",
+            "data": {},
+            "raw_type": "test_passed",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "675fbc28b0604b96"
+          },
+          {
+            "type": "commit_created",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755502700.0,
+            "severity": "info",
+            "message": "fix: restore attempt accounting in pop()",
+            "data": {},
+            "raw_type": "commit_created",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "81c2e52233624a9b"
+          },
+          {
+            "type": "tokens_reported",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755503000.0,
+            "severity": "info",
+            "message": "usage record",
+            "data": {
+              "in": 2100,
+              "out": 780
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "ae2ca89660ad4a53"
+          },
+          {
+            "type": "task_completed",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755503000.0,
+            "severity": "success",
+            "message": "Task complete: queue, retry policy and worker delivered with green suite.",
+            "data": {},
+            "raw_type": "assistant",
+            "provenance": "ESTIMATED",
+            "source": "log_ingest",
+            "note": "classified by keyword heuristic",
+            "id": "3eadfa291ceb4de3"
+          },
+          {
+            "type": "task_completed",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755503010.0,
+            "severity": "success",
+            "message": "",
+            "data": {},
+            "raw_type": "task_completed",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "109d1e9ef3b94f86"
+          },
+          {
+            "type": "milestone_reached",
+            "project": "demo-atlas",
+            "session_id": "ingest-1787426418",
+            "ts": 1755503100.0,
+            "severity": "success",
+            "message": "v0.1.0 tagged",
+            "data": {},
+            "raw_type": "milestone_reached",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "b96f216b11164ce4"
+          }
+        ],
+        "measurements": {
+          "build.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.duration_s": {
+            "value": 0.076,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.peak_rss_mb": {
+            "value": 0.23,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "coverage.percent": {
+            "value": null,
+            "provenance": "UNAVAILABLE",
+            "source": "harness",
+            "note": "no machine-readable coverage report found"
+          },
+          "tests.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.duration_s": {
+            "value": 0.482,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.peak_rss_mb": {
+            "value": 34.12,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.cpu_core_seconds": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "procmon",
+            "note": "integral between samples"
+          },
+          "tests.passed": {
+            "value": 7,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.failed": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.errors": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.skipped": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "smoke.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.duration_s": {
+            "value": 0.069,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.peak_rss_mb": {
+            "value": 6.58,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "commits_total": {
+            "value": 8,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "head_sha": {
+            "value": "41f20baab13d35b7cc530a10320d72b641a4fa99",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "branch": {
+            "value": "master",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "dirty_files": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_first_time": {
+            "value": "2026-08-20T16:59:47Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_last_time": {
+            "value": "2026-08-21T18:53:47Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "files_total": {
+            "value": 9,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_total": {
+            "value": 106,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_test": {
+            "value": 39,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "todo_count": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "test_to_code_ratio": {
+            "value": 0.5821,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "max_complexity": {
+            "value": 6,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "avg_complexity": {
+            "value": 2.43,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "docstring_coverage": {
+            "value": 0.5714,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "duplication_ratio": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "code",
+            "note": "6-line shingle heuristic"
+          },
+          "tokens.total": {
+            "value": 10230,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": "from agent usage records"
+          },
+          "tokens.provenance": {
+            "value": "OBSERVED",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tokens.input": {
+            "value": 7650,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tokens.output": {
+            "value": 2580,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tools.calls": {
+            "value": 2,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tools.success_rate": {
+            "value": 1.0,
+            "provenance": "ESTIMATED",
+            "source": "log_ingest",
+            "note": "only calls with explicit success flags counted"
+          },
+          "retries": {
+            "value": 1,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          }
+        },
+        "activity": []
+      }
+    },
+    "demo-cascade": {
+      "scorecard": {
+        "project": "demo-cascade",
+        "dimensions": {
+          "completion": {
+            "name": "completion",
+            "title": "Completion",
+            "value": 73.33,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "build_succeeds",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "exit code of build/compile phase",
+                "formula": "100 if build exit==0 else 0"
+              },
+              {
+                "name": "entrypoint_runs",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint: python3 -c \"import processor; print('cascade loads')\"",
+                "formula": "100 if entrypoint exit==0 else 0"
+              },
+              {
+                "name": "behavior_delivered",
+                "weight": 0.4,
+                "value": 33.33,
+                "provenance": "ESTIMATED",
+                "note": "public functions referenced by test files",
+                "formula": "matched references / declared-or-public surface"
+              }
+            ],
+            "notes": []
+          },
+          "reliability": {
+            "name": "reliability",
+            "title": "Reliability",
+            "value": 24.24,
+            "coverage": 0.55,
+            "components": [
+              {
+                "name": "test_pass_rate",
+                "weight": 0.4,
+                "value": 33.33,
+                "provenance": "OBSERVED",
+                "note": "1 test run(s)",
+                "formula": "passed / (passed+failed+errors)"
+              },
+              {
+                "name": "stability_across_runs",
+                "weight": 0.2,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "needs >=2 test runs",
+                "formula": ""
+              },
+              {
+                "name": "error_density",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no error/build-failure events observed",
+                "formula": ""
+              },
+              {
+                "name": "recovery_after_failures",
+                "weight": 0.15,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "0/1 failures followed by a later success event",
+                "formula": "failures followed by success / failures"
+              }
+            ],
+            "notes": []
+          },
+          "testing": {
+            "name": "testing",
+            "title": "Testing",
+            "value": 40.63,
+            "coverage": 0.75,
+            "components": [
+              {
+                "name": "suite_scale",
+                "weight": 0.25,
+                "value": 15.21,
+                "provenance": "OBSERVED",
+                "note": "3 tests executed",
+                "formula": "saturating(n_tests, cap=40)"
+              },
+              {
+                "name": "pass_rate",
+                "weight": 0.35,
+                "value": 33.33,
+                "provenance": "OBSERVED",
+                "note": "",
+                "formula": "passed / attempted"
+              },
+              {
+                "name": "line_coverage",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no machine-readable coverage report found",
+                "formula": ""
+              },
+              {
+                "name": "test_to_code_balance",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "ratio=0.260",
+                "formula": "trapezoid band [0.12..0.8 ideal]"
+              }
+            ],
+            "notes": []
+          },
+          "architecture": {
+            "name": "architecture",
+            "title": "Architecture",
+            "value": 73.25,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "module_size_discipline",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "avg file 13 sloc; 0 file(s) >500",
+                "formula": "0.6*(1-big-file share)+0.4*band(avg size)"
+              },
+              {
+                "name": "coupling_control",
+                "weight": 0.25,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0 circular cycle(s); avg fan-out 0.0",
+                "formula": "(100-12*cycles) * fanout-band-factor"
+              },
+              {
+                "name": "layering_and_layout",
+                "weight": 0.2,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "no src/package layout; no separate tests dir; no dependency manifest / CI config",
+                "formula": "checklist 40+30+30"
+              },
+              {
+                "name": "dependency_hygiene",
+                "weight": 0.15,
+                "value": 55.0,
+                "provenance": "OBSERVED",
+                "note": "no dependency manifest; treated as minimal-dependency project",
+                "formula": ""
+              },
+              {
+                "name": "complexity_ceiling",
+                "weight": 0.1,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "max cyclomatic complexity 7",
+                "formula": "penalty above 14, floor at 26"
+              }
+            ],
+            "notes": []
+          },
+          "performance": {
+            "name": "performance",
+            "title": "Performance",
+            "value": 100.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "suite_wall_time",
+                "weight": 0.4,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "tests finished in 0.70s",
+                "formula": "threshold bands 2/10/30/120/600s"
+              },
+              {
+                "name": "memory_efficiency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "peak RSS 35MB (absolute; project below 10kLOC)",
+                "formula": "absolute MB band"
+              },
+              {
+                "name": "startup_latency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint responded in 0.09s",
+                "formula": "band on startup wall time"
+              }
+            ],
+            "notes": []
+          },
+          "documentation": {
+            "name": "documentation",
+            "title": "Documentation",
+            "value": 0.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "readme_quality",
+                "weight": 0.35,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "no README file",
+                "formula": ""
+              },
+              {
+                "name": "docstring_coverage",
+                "weight": 0.3,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "0% of public functions documented",
+                "formula": ""
+              },
+              {
+                "name": "changelog_versioning",
+                "weight": 0.15,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "no changelog",
+                "formula": ""
+              },
+              {
+                "name": "supporting_docs",
+                "weight": 0.2,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "0 extra markdown file(s)",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "autonomy": {
+            "name": "autonomy",
+            "title": "Autonomy",
+            "value": 0.0,
+            "coverage": 0.35,
+            "components": [
+              {
+                "name": "self_correction_ratio",
+                "weight": 0.35,
+                "value": 0.0,
+                "provenance": "ESTIMATED",
+                "note": "0 fix(es) vs 5 discovered bug(s) (some labels derived heuristically)",
+                "formula": "bug_fixed / bug_discovered, capped at 1"
+              },
+              {
+                "name": "unattended_completion",
+                "weight": 0.3,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no task lifecycle events observed",
+                "formula": ""
+              },
+              {
+                "name": "retry_effectiveness",
+                "weight": 0.2,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no retry signals observed",
+                "formula": ""
+              },
+              {
+                "name": "tool_success_rate",
+                "weight": 0.15,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no tool-call records ingested",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "maintainability": {
+            "name": "maintainability",
+            "title": "Maintainability",
+            "value": 51.39,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "avg_complexity",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "avg cyclomatic complexity 4.6",
+                "formula": "band [ideal 2..5]"
+              },
+              {
+                "name": "low_duplication",
+                "weight": 0.25,
+                "value": 0.0,
+                "provenance": "ESTIMATED",
+                "note": "100.0% duplicated SLOC (shingle estimate)",
+                "formula": "1 - duplication fraction"
+              },
+              {
+                "name": "file_size_distribution",
+                "weight": 0.2,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0/5 files exceed 500 sloc",
+                "formula": ""
+              },
+              {
+                "name": "todo_debt",
+                "weight": 0.15,
+                "value": 5.0,
+                "provenance": "OBSERVED",
+                "note": "2 TODO/FIXME (31.7/kLOC)",
+                "formula": ""
+              },
+              {
+                "name": "code_smell_count",
+                "weight": 0.1,
+                "value": 6.39,
+                "provenance": "ESTIMATED",
+                "note": "5 mutable-default args, 0 bare excepts, ~0 unused imports (est.)",
+                "formula": "decay of weighted smell count"
+              }
+            ],
+            "notes": []
+          }
+        },
+        "overall": 51.69,
+        "grade": "D",
+        "overall_coverage": 0.8325,
+        "weights": {
+          "completion": 0.2,
+          "reliability": 0.15,
+          "testing": 0.15,
+          "architecture": 0.125,
+          "performance": 0.075,
+          "documentation": 0.075,
+          "autonomy": 0.125,
+          "maintainability": 0.1
+        }
+      },
+      "telemetry": {
+        "spec": {
+          "name": "demo-cascade",
+          "path": "examples/subjects/demo-cascade",
+          "language": "python",
+          "build_cmd": null,
+          "entrypoint": "python3 -c \"import processor; print('cascade loads')\"",
+          "features_file": null,
+          "exclude": [],
+          "notes": "poor fixture - duplication, TODO debt, red suite"
+        },
+        "session": {
+          "session_id": "af4c243fd38ceaa3",
+          "project": "demo-cascade",
+          "started_at": 1787426382.6655161,
+          "finished_at": 1787426386.003814,
+          "collector_versions": {
+            "fab": "1.0"
+          },
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-af4c243fd3",
+          "host": "shubhrajs-MacBook-Air.local"
+        },
+        "git": {
+          "is_git_repo": true,
+          "head_sha": "4d50c315e9238da94e95b6241e4a298a03a82f6d",
+          "branch": "master",
+          "dirty_files": 0,
+          "total_commits": 4,
+          "first_commit_iso": "2026-08-20T16:59:47Z",
+          "last_commit_iso": "2026-08-21T04:05:47Z",
+          "commits": [
+            {
+              "sha": "4d50c315e9238da94e95b6241e4a298a03a82f6d",
+              "ts": 1787285147.0,
+              "iso": "2026-08-21T04:05:47Z",
+              "author": "Demo Agent",
+              "subject": "wip: exporter stub",
+              "files_changed": 2,
+              "insertions": 12,
+              "deletions": 0,
+              "files": [
+                "exporter.py",
+                "test_exporter.py"
+              ]
+            },
+            {
+              "sha": "e8169af06fc565c87eaac643854b9c9f914b7df2",
+              "ts": 1787271827.0,
+              "iso": "2026-08-21T00:23:47Z",
+              "author": "Demo Agent",
+              "subject": "quick tests",
+              "files_changed": 1,
+              "insertions": 12,
+              "deletions": 0,
+              "files": [
+                "test_processor.py"
+              ]
+            },
+            {
+              "sha": "ab39859564fb4696d2095656ba6ec37ef3a2accf",
+              "ts": 1787258507.0,
+              "iso": "2026-08-20T20:41:47Z",
+              "author": "Demo Agent",
+              "subject": "add second processor variant (copy)",
+              "files_changed": 1,
+              "insertions": 28,
+              "deletions": 0,
+              "files": [
+                "processor_v2.py"
+              ]
+            },
+            {
+              "sha": "40421c337da978fc50f2391beed3019fe0dc0867",
+              "ts": 1787245187.0,
+              "iso": "2026-08-20T16:59:47Z",
+              "author": "Demo Agent",
+              "subject": "first version of processor",
+              "files_changed": 1,
+              "insertions": 28,
+              "deletions": 0,
+              "files": [
+                "processor.py"
+              ]
+            }
+          ]
+        },
+        "code": {
+          "root": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/examples/subjects/demo-cascade",
+          "n_files": 5,
+          "total_sloc": 63,
+          "test_sloc": 13,
+          "languages": {
+            "python": 63
+          },
+          "n_test_files": 2,
+          "todo_count": 2,
+          "long_file_count": 0,
+          "duplicate_sloc_fraction_est": 1.0,
+          "avg_internal_fanout": 0.0,
+          "circular_imports": [],
+          "n_circular_import_cycles": 0,
+          "has_tests_dir": false,
+          "has_src_layout": false,
+          "has_ci_config": false,
+          "readme": null,
+          "changelog": null,
+          "license_present": false,
+          "dependency_manifests": [],
+          "pinned_deps": {
+            "pinned": 0,
+            "total": 0
+          },
+          "mutable_default_args": 5,
+          "bare_excepts": 0,
+          "unused_imports_est": 0
+        },
+        "phases": [
+          {
+            "phase": "build",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -m compileall -q .",
+              "exit_code": 0,
+              "duration_s": 0.13,
+              "timed_out": false,
+              "peak_rss_mb": 0.28,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "tests",
+            "ok": false,
+            "counts": {
+              "passed": 1,
+              "failed": 2,
+              "errors": 0,
+              "skipped": 0
+            },
+            "coverage_pct": 65.3061224489796,
+            "coverage_source": "coverage.py json",
+            "run": {
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-af4c243fd3 --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-af4c243fd3/junit-fab.xml",
+              "exit_code": 1,
+              "duration_s": 0.697,
+              "timed_out": false,
+              "peak_rss_mb": 34.94,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": 0.0,
+              "n_samples": 7,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "smoke",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -c import processor; print('cascade loads')",
+              "exit_code": 0,
+              "duration_s": 0.087,
+              "timed_out": false,
+              "peak_rss_mb": 0.16,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
+              "monitor_backend": "psutil"
+            }
+          }
+        ],
+        "events": [
+          {
+            "type": "build_succeeded",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426382.7969012,
+            "severity": "success",
+            "message": "build ok (0.1s)",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "42126038b2c14026"
+          },
+          {
+            "type": "test_run",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "warn",
+            "message": "1 passed, 2 failed, 0 errors",
+            "data": {
+              "passed": 1,
+              "failed": 2,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "08e956e967c8445a"
+          },
+          {
+            "type": "test_failed",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "error",
+            "message": "2 failed / 0 errors",
+            "data": {
+              "passed": 1,
+              "failed": 2,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "4cf2cef3130d4038"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "warn",
+            "message": "E       NotImplementedError: soon",
+            "data": {
+              "index": 0
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "c48beb4f00f04267"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "warn",
+            "message": "E       assert 27 == (9 * 2)",
+            "data": {
+              "index": 1
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "80c62e8791174f9c"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "warn",
+            "message": "E        +  where 9 = len('{\"id\": 2}')",
+            "data": {
+              "index": 2
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "22705439a2f4400e"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "warn",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-af4c243fd3/test_exporter.py::test_export_writes_file",
+            "data": {
+              "index": 3
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "0aa05d3e296e4cdd"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "warn",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-af4c243fd3/test_processor.py::test_score_multiplier_spec",
+            "data": {
+              "index": 4
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "dc5511ac6b8b4692"
+          },
+          {
+            "type": "coverage_reported",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426383.494463,
+            "severity": "info",
+            "message": "coverage 65.3061224489796%",
+            "data": {
+              "coverage_pct": 65.3061224489796,
+              "source": "coverage.py json"
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "31c1ba7d6a5a4b94"
+          },
+          {
+            "type": "run_started",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426385.768288,
+            "severity": "info",
+            "message": "smoke-run start",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "55c5c84a809846de"
+          },
+          {
+            "type": "run_finished",
+            "project": "demo-cascade",
+            "session_id": "af4c243fd38ceaa3",
+            "ts": 1787426385.85535,
+            "severity": "success",
+            "message": "entrypoint smoke-run ok",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "886016506d014175"
+          }
+        ],
+        "measurements": {
+          "build.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.duration_s": {
+            "value": 0.13,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.peak_rss_mb": {
+            "value": 0.28,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "coverage.percent": {
+            "value": null,
+            "provenance": "UNAVAILABLE",
+            "source": "harness",
+            "note": "no machine-readable coverage report found"
+          },
+          "tests.exit_code": {
+            "value": 1,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.duration_s": {
+            "value": 0.697,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.peak_rss_mb": {
+            "value": 34.94,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.cpu_core_seconds": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "procmon",
+            "note": "integral between samples"
+          },
+          "tests.passed": {
+            "value": 1,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.failed": {
+            "value": 2,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.errors": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.skipped": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "smoke.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.duration_s": {
+            "value": 0.087,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.peak_rss_mb": {
+            "value": 0.16,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "commits_total": {
+            "value": 4,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "head_sha": {
+            "value": "4d50c315e9238da94e95b6241e4a298a03a82f6d",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "branch": {
+            "value": "master",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "dirty_files": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_first_time": {
+            "value": "2026-08-20T16:59:47Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_last_time": {
+            "value": "2026-08-21T04:05:47Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "files_total": {
+            "value": 5,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_total": {
+            "value": 63,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_test": {
+            "value": 13,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "todo_count": {
+            "value": 2,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "test_to_code_ratio": {
+            "value": 0.26,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "max_complexity": {
+            "value": 7,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "avg_complexity": {
+            "value": 4.6,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "docstring_coverage": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "duplication_ratio": {
+            "value": 1.0,
+            "provenance": "ESTIMATED",
+            "source": "code",
+            "note": "6-line shingle heuristic"
+          }
+        },
+        "activity": []
+      }
+    },
+    "demo-volt": {
+      "scorecard": {
+        "project": "demo-volt",
+        "dimensions": {
+          "completion": {
+            "name": "completion",
+            "title": "Completion",
+            "value": 70.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "build_succeeds",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "exit code of build/compile phase",
+                "formula": "100 if build exit==0 else 0"
+              },
+              {
+                "name": "entrypoint_runs",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint: python3 -m volt.cli --help",
+                "formula": "100 if entrypoint exit==0 else 0"
+              },
+              {
+                "name": "behavior_delivered",
+                "weight": 0.4,
+                "value": 25.0,
+                "provenance": "ESTIMATED",
+                "note": "declared features with matching passing tests",
+                "formula": "matched references / declared-or-public surface"
+              }
+            ],
+            "notes": []
+          },
+          "reliability": {
+            "name": "reliability",
+            "title": "Reliability",
+            "value": 74.24,
+            "coverage": 0.55,
+            "components": [
+              {
+                "name": "test_pass_rate",
+                "weight": 0.4,
+                "value": 83.33,
+                "provenance": "OBSERVED",
+                "note": "1 test run(s)",
+                "formula": "passed / (passed+failed+errors)"
+              },
+              {
+                "name": "stability_across_runs",
+                "weight": 0.2,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "needs >=2 test runs",
+                "formula": ""
+              },
+              {
+                "name": "error_density",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no error/build-failure events observed",
+                "formula": ""
+              },
+              {
+                "name": "recovery_after_failures",
+                "weight": 0.15,
+                "value": 50.0,
+                "provenance": "OBSERVED",
+                "note": "1/2 failures followed by a later success event",
+                "formula": "failures followed by success / failures"
+              }
+            ],
+            "notes": []
+          },
+          "testing": {
+            "name": "testing",
+            "title": "Testing",
+            "value": 68.26,
+            "coverage": 0.75,
+            "components": [
+              {
+                "name": "suite_scale",
+                "weight": 0.25,
+                "value": 28.11,
+                "provenance": "OBSERVED",
+                "note": "6 tests executed",
+                "formula": "saturating(n_tests, cap=40)"
+              },
+              {
+                "name": "pass_rate",
+                "weight": 0.35,
+                "value": 83.33,
+                "provenance": "OBSERVED",
+                "note": "",
+                "formula": "passed / attempted"
+              },
+              {
+                "name": "line_coverage",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no machine-readable coverage report found",
+                "formula": ""
+              },
+              {
+                "name": "test_to_code_balance",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "ratio=0.378",
+                "formula": "trapezoid band [0.12..0.8 ideal]"
+              }
+            ],
+            "notes": []
+          },
+          "architecture": {
+            "name": "architecture",
+            "title": "Architecture",
+            "value": 87.25,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "module_size_discipline",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "avg file 7 sloc; 0 file(s) >500",
+                "formula": "0.6*(1-big-file share)+0.4*band(avg size)"
+              },
+              {
+                "name": "coupling_control",
+                "weight": 0.25,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0 circular cycle(s); avg fan-out 0.4",
+                "formula": "(100-12*cycles) * fanout-band-factor"
+              },
+              {
+                "name": "layering_and_layout",
+                "weight": 0.2,
+                "value": 70.0,
+                "provenance": "OBSERVED",
+                "note": "no dependency manifest / CI config",
+                "formula": "checklist 40+30+30"
+              },
+              {
+                "name": "dependency_hygiene",
+                "weight": 0.15,
+                "value": 55.0,
+                "provenance": "OBSERVED",
+                "note": "no dependency manifest; treated as minimal-dependency project",
+                "formula": ""
+              },
+              {
+                "name": "complexity_ceiling",
+                "weight": 0.1,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "max cyclomatic complexity 5",
+                "formula": "penalty above 14, floor at 26"
+              }
+            ],
+            "notes": []
+          },
+          "performance": {
+            "name": "performance",
+            "title": "Performance",
+            "value": 100.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "suite_wall_time",
+                "weight": 0.4,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "tests finished in 0.69s",
+                "formula": "threshold bands 2/10/30/120/600s"
+              },
+              {
+                "name": "memory_efficiency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "peak RSS 34MB (absolute; project below 10kLOC)",
+                "formula": "absolute MB band"
+              },
+              {
+                "name": "startup_latency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint responded in 0.07s",
+                "formula": "band on startup wall time"
+              }
+            ],
+            "notes": []
+          },
+          "documentation": {
+            "name": "documentation",
+            "title": "Documentation",
+            "value": 7.84,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "readme_quality",
+                "weight": 0.35,
+                "value": 5.25,
+                "provenance": "OBSERVED",
+                "note": "5 words, 0/6 core sections",
+                "formula": "(35 + 11*sections) * word-band factor"
+              },
+              {
+                "name": "docstring_coverage",
+                "weight": 0.3,
+                "value": 20.0,
+                "provenance": "OBSERVED",
+                "note": "20% of public functions documented",
+                "formula": ""
+              },
+              {
+                "name": "changelog_versioning",
+                "weight": 0.15,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "no changelog",
+                "formula": ""
+              },
+              {
+                "name": "supporting_docs",
+                "weight": 0.2,
+                "value": 0.0,
+                "provenance": "OBSERVED",
+                "note": "0 extra markdown file(s)",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "autonomy": {
+            "name": "autonomy",
+            "title": "Autonomy",
+            "value": 22.5,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "self_correction_ratio",
+                "weight": 0.35,
+                "value": 0.0,
+                "provenance": "ESTIMATED",
+                "note": "0 fix(es) vs 4 discovered bug(s) (some labels derived heuristically)",
+                "formula": "bug_fixed / bug_discovered, capped at 1"
+              },
+              {
+                "name": "unattended_completion",
+                "weight": 0.3,
+                "value": 50.0,
+                "provenance": "OBSERVED",
+                "note": "1 task completion(s), 1 intervention request(s)",
+                "formula": ""
+              },
+              {
+                "name": "retry_effectiveness",
+                "weight": 0.2,
+                "value": 0.0,
+                "provenance": "ESTIMATED",
+                "note": "0/1 retry(ies) followed by success within 15min window",
+                "formula": "retries followed by success / retries"
+              },
+              {
+                "name": "tool_success_rate",
+                "weight": 0.15,
+                "value": 50.0,
+                "provenance": "ESTIMATED",
+                "note": "1/2 tool calls with explicit success flag",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "maintainability": {
+            "name": "maintainability",
+            "title": "Maintainability",
+            "value": 92.83,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "avg_complexity",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "avg cyclomatic complexity 3.2",
+                "formula": "band [ideal 2..5]"
+              },
+              {
+                "name": "low_duplication",
+                "weight": 0.25,
+                "value": 100.0,
+                "provenance": "ESTIMATED",
+                "note": "no duplicated blocks detected",
+                "formula": "1 - duplication fraction"
+              },
+              {
+                "name": "file_size_distribution",
+                "weight": 0.2,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0/9 files exceed 500 sloc",
+                "formula": ""
+              },
+              {
+                "name": "todo_debt",
+                "weight": 0.15,
+                "value": 52.18,
+                "provenance": "OBSERVED",
+                "note": "1 TODO/FIXME (16.1/kLOC)",
+                "formula": ""
+              },
+              {
+                "name": "code_smell_count",
+                "weight": 0.1,
+                "value": 100.0,
+                "provenance": "ESTIMATED",
+                "note": "0 mutable-default args, 0 bare excepts, ~0 unused imports (est.)",
+                "formula": "decay of weighted smell count"
+              }
+            ],
+            "notes": []
+          }
+        },
+        "overall": 65.8,
+        "grade": "C+",
+        "overall_coverage": 0.895,
+        "weights": {
+          "completion": 0.2,
+          "reliability": 0.15,
+          "testing": 0.15,
+          "architecture": 0.125,
+          "performance": 0.075,
+          "documentation": 0.075,
+          "autonomy": 0.125,
+          "maintainability": 0.1
+        }
+      },
+      "telemetry": {
+        "spec": {
+          "name": "demo-volt",
+          "path": "examples/subjects/demo-volt",
+          "language": "python",
+          "build_cmd": null,
+          "entrypoint": "python3 -m volt.cli --help",
+          "features_file": null,
+          "exclude": [],
+          "notes": "medium fixture - works but ships one failing test"
+        },
+        "session": {
+          "session_id": "4f974d91cee0a7f3",
+          "project": "demo-volt",
+          "started_at": 1787426379.686773,
+          "finished_at": 1787426382.653526,
+          "collector_versions": {
+            "fab": "1.0"
+          },
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-4f974d91ce",
+          "host": "shubhrajs-MacBook-Air.local"
+        },
+        "git": {
+          "is_git_repo": true,
+          "head_sha": "771dc688d5238921698d133f5a3d74fc08516278",
+          "branch": "master",
+          "dirty_files": 0,
+          "total_commits": 6,
+          "first_commit_iso": "2026-08-20T16:59:47Z",
+          "last_commit_iso": "2026-08-21T11:29:47Z",
+          "commits": [
+            {
+              "sha": "771dc688d5238921698d133f5a3d74fc08516278",
+              "ts": 1787311787.0,
+              "iso": "2026-08-21T11:29:47Z",
+              "author": "Demo Agent",
+              "subject": "test: median edge case expectation",
+              "files_changed": 1,
+              "insertions": 6,
+              "deletions": 0,
+              "files": [
+                "tests/test_median_edge.py"
+              ]
+            },
+            {
+              "sha": "025d7f94c2d7fff1e39aab0ba12fff69b8b82062",
+              "ts": 1787298467.0,
+              "iso": "2026-08-21T07:47:47Z",
+              "author": "Demo Agent",
+              "subject": "wip: column filter (broken comparison)",
+              "files_changed": 2,
+              "insertions": 20,
+              "deletions": 0,
+              "files": [
+                "tests/test_filter.py",
+                "volt/filter.py"
+              ]
+            },
+            {
+              "sha": "f5b7251b839e348da357de108bb29761bd7154a8",
+              "ts": 1787285147.0,
+              "iso": "2026-08-21T04:05:47Z",
+              "author": "Demo Agent",
+              "subject": "tests for stats and cli",
+              "files_changed": 3,
+              "insertions": 22,
+              "deletions": 0,
+              "files": [
+                "features.yaml",
+                "tests/test_reader.py",
+                "tests/test_stats.py"
+              ]
+            },
+            {
+              "sha": "10312dbc04f3d937984690bcf981ead0791f6063",
+              "ts": 1787271827.0,
+              "iso": "2026-08-21T00:23:47Z",
+              "author": "Demo Agent",
+              "subject": "cli entrypoint",
+              "files_changed": 1,
+              "insertions": 18,
+              "deletions": 0,
+              "files": [
+                "volt/cli.py"
+              ]
+            },
+            {
+              "sha": "e8aeeda9ba293b39a7db8d148fcf3dafb3c77cf2",
+              "ts": 1787258507.0,
+              "iso": "2026-08-20T20:41:47Z",
+              "author": "Demo Agent",
+              "subject": "add mean and median stats",
+              "files_changed": 1,
+              "insertions": 14,
+              "deletions": 0,
+              "files": [
+                "volt/stats.py"
+              ]
+            },
+            {
+              "sha": "0a6cc7394b5cf1047fa3994963e8513dea44c71d",
+              "ts": 1787245187.0,
+              "iso": "2026-08-20T16:59:47Z",
+              "author": "Demo Agent",
+              "subject": "initial csv reader",
+              "files_changed": 3,
+              "insertions": 10,
+              "deletions": 0,
+              "files": [
+                "README.md",
+                "volt/__init__.py",
+                "volt/reader.py"
+              ]
+            }
+          ]
+        },
+        "code": {
+          "root": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/examples/subjects/demo-volt",
+          "n_files": 9,
+          "total_sloc": 62,
+          "test_sloc": 17,
+          "languages": {
+            "python": 62
+          },
+          "n_test_files": 4,
+          "todo_count": 1,
+          "long_file_count": 0,
+          "duplicate_sloc_fraction_est": 0.0,
+          "avg_internal_fanout": 0.4,
+          "circular_imports": [],
+          "n_circular_import_cycles": 0,
+          "has_tests_dir": true,
+          "has_src_layout": true,
+          "has_ci_config": false,
+          "readme": "README.md",
+          "changelog": null,
+          "license_present": false,
+          "dependency_manifests": [],
+          "pinned_deps": {
+            "pinned": 0,
+            "total": 0
+          },
+          "mutable_default_args": 0,
+          "bare_excepts": 0,
+          "unused_imports_est": 0
+        },
+        "phases": [
+          {
+            "phase": "build",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -m compileall -q .",
+              "exit_code": 0,
+              "duration_s": 0.092,
+              "timed_out": false,
+              "peak_rss_mb": 0.12,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "tests",
+            "ok": false,
+            "counts": {
+              "passed": 5,
+              "failed": 1,
+              "errors": 0,
+              "skipped": 0
+            },
+            "coverage_pct": 95.83333333333333,
+            "coverage_source": "coverage.py json",
+            "run": {
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-4f974d91ce --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-4f974d91ce/junit-fab.xml",
+              "exit_code": 1,
+              "duration_s": 0.69,
+              "timed_out": false,
+              "peak_rss_mb": 33.53,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": 0.0,
+              "n_samples": 7,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "smoke",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -m volt.cli --help",
+              "exit_code": 0,
+              "duration_s": 0.067,
+              "timed_out": false,
+              "peak_rss_mb": 0.62,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": null,
+              "n_samples": 1,
+              "monitor_backend": "psutil"
+            }
+          }
+        ],
+        "events": [
+          {
+            "type": "build_succeeded",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426379.7795808,
+            "severity": "success",
+            "message": "build ok (0.1s)",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "983bc575c991420c"
+          },
+          {
+            "type": "test_run",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426380.469394,
+            "severity": "warn",
+            "message": "5 passed, 1 failed, 0 errors",
+            "data": {
+              "passed": 5,
+              "failed": 1,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "ebb84c8c6a6f4f68"
+          },
+          {
+            "type": "test_failed",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426380.469394,
+            "severity": "error",
+            "message": "1 failed / 0 errors",
+            "data": {
+              "passed": 5,
+              "failed": 1,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "020fb3c7fb444b24"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426380.469394,
+            "severity": "warn",
+            "message": "E       assert 0.0 is None",
+            "data": {
+              "index": 0
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "14378688935047b7"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426380.469394,
+            "severity": "warn",
+            "message": "E        +  where 0.0 = median([])",
+            "data": {
+              "index": 1
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "463791919a904208"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426380.469394,
+            "severity": "warn",
+            "message": "FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-4f974d91ce/tests/test_median_edge.py::test_median_empty_should_be_none",
+            "data": {
+              "index": 2
+            },
+            "raw_type": null,
+            "provenance": "ESTIMATED",
+            "source": "harness",
+            "note": "failing-test line interpreted as bug signal",
+            "id": "00b818e2c39d4f44"
+          },
+          {
+            "type": "coverage_reported",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426380.469394,
+            "severity": "info",
+            "message": "coverage 95.83333333333333%",
+            "data": {
+              "coverage_pct": 95.83333333333333,
+              "source": "coverage.py json"
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "7f4e08dc71e947db"
+          },
+          {
+            "type": "run_started",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426382.469014,
+            "severity": "info",
+            "message": "smoke-run start",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "9e6b7bc5d6444f59"
+          },
+          {
+            "type": "run_finished",
+            "project": "demo-volt",
+            "session_id": "4f974d91cee0a7f3",
+            "ts": 1787426382.536443,
+            "severity": "success",
+            "message": "entrypoint smoke-run ok",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "930688b2847f42eb"
+          },
+          {
+            "type": "agent_started",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755510000.0,
+            "severity": "info",
+            "message": "",
+            "data": {},
+            "raw_type": "agent_started",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "fef08e5c7c384d20"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "tool: bash",
+            "data": {
+              "tool": "bash",
+              "ok": false
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "f9826715b16c44dd"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "pytest -q (collection error)",
+            "data": {},
+            "raw_type": "tool_call",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "dde19642613c4855"
+          },
+          {
+            "type": "retry_attempted",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755510050.0,
+            "severity": "warn",
+            "message": "retrying after fixing imports",
+            "data": {},
+            "raw_type": "retry",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "7357ddcd0e2a4d17"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "tool: bash",
+            "data": {
+              "tool": "bash",
+              "ok": true
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "521c08157a6e4d7a"
+          },
+          {
+            "type": "tool_call",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": null,
+            "severity": "info",
+            "message": "pytest -q",
+            "data": {},
+            "raw_type": "tool_call",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "e249e427e5a543ae"
+          },
+          {
+            "type": "tokens_reported",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755511000.0,
+            "severity": "info",
+            "message": "usage record",
+            "data": {
+              "in": 900,
+              "out": 350
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "1e1543d257b64eab"
+          },
+          {
+            "type": "bug_discovered",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755511000.0,
+            "severity": "warn",
+            "message": "Stats implemented; median edge case still failing, deferring.",
+            "data": {},
+            "raw_type": "assistant",
+            "provenance": "ESTIMATED",
+            "source": "log_ingest",
+            "note": "classified by keyword heuristic",
+            "id": "f480d52560554e37"
+          },
+          {
+            "type": "test_failed",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755511100.0,
+            "severity": "error",
+            "message": "FAILED tests/test_median_edge.py - expected None",
+            "data": {},
+            "raw_type": "test_failed",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "6ffd50890c244d8c"
+          },
+          {
+            "type": "intervention_requested",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755511600.0,
+            "severity": "critical",
+            "message": "clarify spec for empty-input median",
+            "data": {},
+            "raw_type": "intervention_requested",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "e49d615f2b1d42a9"
+          },
+          {
+            "type": "commit_created",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755512000.0,
+            "severity": "info",
+            "message": "wip: column filter",
+            "data": {},
+            "raw_type": "commit_created",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "bd84cbb0a0b0492d"
+          },
+          {
+            "type": "task_completed",
+            "project": "demo-volt",
+            "session_id": "ingest-1787426418",
+            "ts": 1755512500.0,
+            "severity": "success",
+            "message": "cli usable for basic mean reporting",
+            "data": {},
+            "raw_type": "task_completed",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null,
+            "id": "f1a0468990e4405f"
+          }
+        ],
+        "measurements": {
+          "build.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.duration_s": {
+            "value": 0.092,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.peak_rss_mb": {
+            "value": 0.12,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "coverage.percent": {
+            "value": null,
+            "provenance": "UNAVAILABLE",
+            "source": "harness",
+            "note": "no machine-readable coverage report found"
+          },
+          "tests.exit_code": {
+            "value": 1,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.duration_s": {
+            "value": 0.69,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.peak_rss_mb": {
+            "value": 33.53,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.cpu_core_seconds": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "procmon",
+            "note": "integral between samples"
+          },
+          "tests.passed": {
+            "value": 5,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.failed": {
+            "value": 1,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.errors": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.skipped": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "smoke.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.duration_s": {
+            "value": 0.067,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.peak_rss_mb": {
+            "value": 0.62,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "commits_total": {
+            "value": 6,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "head_sha": {
+            "value": "771dc688d5238921698d133f5a3d74fc08516278",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "branch": {
+            "value": "master",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "dirty_files": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_first_time": {
+            "value": "2026-08-20T16:59:47Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_last_time": {
+            "value": "2026-08-21T11:29:47Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "files_total": {
+            "value": 9,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_total": {
+            "value": 62,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_test": {
+            "value": 17,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "todo_count": {
+            "value": 1,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "test_to_code_ratio": {
+            "value": 0.3778,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "max_complexity": {
+            "value": 5,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "avg_complexity": {
+            "value": 3.2,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "docstring_coverage": {
+            "value": 0.2,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "duplication_ratio": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "code",
+            "note": "6-line shingle heuristic"
+          },
+          "tokens.total": {
+            "value": 1250,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": "from agent usage records"
+          },
+          "tokens.provenance": {
+            "value": "OBSERVED",
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tokens.input": {
+            "value": 900,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tokens.output": {
+            "value": 350,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tools.calls": {
+            "value": 2,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          },
+          "tools.success_rate": {
+            "value": 0.5,
+            "provenance": "ESTIMATED",
+            "source": "log_ingest",
+            "note": "only calls with explicit success flags counted"
+          },
+          "retries": {
+            "value": 1,
+            "provenance": "OBSERVED",
+            "source": "log_ingest",
+            "note": null
+          }
+        },
+        "activity": []
+      }
+    },
+    "fab-self": {
+      "scorecard": {
+        "project": "fab-self",
+        "dimensions": {
+          "completion": {
+            "name": "completion",
+            "title": "Completion",
+            "value": 80.78,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "build_succeeds",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "exit code of build/compile phase",
+                "formula": "100 if build exit==0 else 0"
+              },
+              {
+                "name": "entrypoint_runs",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint: python3 -m fab.cli --help",
+                "formula": "100 if entrypoint exit==0 else 0"
+              },
+              {
+                "name": "behavior_delivered",
+                "weight": 0.4,
+                "value": 51.96,
+                "provenance": "ESTIMATED",
+                "note": "public functions referenced by test files",
+                "formula": "matched references / declared-or-public surface"
+              }
+            ],
+            "notes": []
+          },
+          "reliability": {
+            "name": "reliability",
+            "title": "Reliability",
+            "value": 100.0,
+            "coverage": 0.4,
+            "components": [
+              {
+                "name": "test_pass_rate",
+                "weight": 0.4,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "1 test run(s)",
+                "formula": "passed / (passed+failed+errors)"
+              },
+              {
+                "name": "stability_across_runs",
+                "weight": 0.2,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "needs >=2 test runs",
+                "formula": ""
+              },
+              {
+                "name": "error_density",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no error/build-failure events observed",
+                "formula": ""
+              },
+              {
+                "name": "recovery_after_failures",
+                "weight": 0.15,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no failure events to assess recovery from",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "testing": {
+            "name": "testing",
+            "title": "Testing",
+            "value": 99.46,
+            "coverage": 0.75,
+            "components": [
+              {
+                "name": "suite_scale",
+                "weight": 0.25,
+                "value": 98.38,
+                "provenance": "OBSERVED",
+                "note": "75 tests executed",
+                "formula": "saturating(n_tests, cap=40)"
+              },
+              {
+                "name": "pass_rate",
+                "weight": 0.35,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "",
+                "formula": "passed / attempted"
+              },
+              {
+                "name": "line_coverage",
+                "weight": 0.25,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no machine-readable coverage report found",
+                "formula": ""
+              },
+              {
+                "name": "test_to_code_balance",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "ratio=0.220",
+                "formula": "trapezoid band [0.12..0.8 ideal]"
+              }
+            ],
+            "notes": []
+          },
+          "architecture": {
+            "name": "architecture",
+            "title": "Architecture",
+            "value": 82.3,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "module_size_discipline",
+                "weight": 0.3,
+                "value": 87.65,
+                "provenance": "OBSERVED",
+                "note": "avg file 148 sloc; 2 file(s) >500",
+                "formula": "0.6*(1-big-file share)+0.4*band(avg size)"
+              },
+              {
+                "name": "coupling_control",
+                "weight": 0.25,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "0 circular cycle(s); avg fan-out 2.2",
+                "formula": "(100-12*cycles) * fanout-band-factor"
+              },
+              {
+                "name": "layering_and_layout",
+                "weight": 0.2,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "src/tests/config separated",
+                "formula": "checklist 40+30+30"
+              },
+              {
+                "name": "dependency_hygiene",
+                "weight": 0.15,
+                "value": 70.0,
+                "provenance": "OBSERVED",
+                "note": "manifest(s) present but no unpinned deps detected",
+                "formula": ""
+              },
+              {
+                "name": "complexity_ceiling",
+                "weight": 0.1,
+                "value": 5.0,
+                "provenance": "OBSERVED",
+                "note": "max cyclomatic complexity 43",
+                "formula": "penalty above 14, floor at 26"
+              }
+            ],
+            "notes": []
+          },
+          "performance": {
+            "name": "performance",
+            "title": "Performance",
+            "value": 88.0,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "suite_wall_time",
+                "weight": 0.4,
+                "value": 70.0,
+                "provenance": "OBSERVED",
+                "note": "tests finished in 15.28s",
+                "formula": "threshold bands 2/10/30/120/600s"
+              },
+              {
+                "name": "memory_efficiency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "peak RSS 75MB (absolute; project below 10kLOC)",
+                "formula": "absolute MB band"
+              },
+              {
+                "name": "startup_latency",
+                "weight": 0.3,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "entrypoint responded in 0.20s",
+                "formula": "band on startup wall time"
+              }
+            ],
+            "notes": []
+          },
+          "documentation": {
+            "name": "documentation",
+            "title": "Documentation",
+            "value": 37.55,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "readme_quality",
+                "weight": 0.35,
+                "value": 46.0,
+                "provenance": "OBSERVED",
+                "note": "198 words, 1/6 core sections",
+                "formula": "(35 + 11*sections) * word-band factor"
+              },
+              {
+                "name": "docstring_coverage",
+                "weight": 0.3,
+                "value": 19.83,
+                "provenance": "OBSERVED",
+                "note": "20% of public functions documented",
+                "formula": ""
+              },
+              {
+                "name": "changelog_versioning",
+                "weight": 0.15,
+                "value": 50.0,
+                "provenance": "OBSERVED",
+                "note": "no changelog + version declared",
+                "formula": ""
+              },
+              {
+                "name": "supporting_docs",
+                "weight": 0.2,
+                "value": 40.0,
+                "provenance": "OBSERVED",
+                "note": "0 extra markdown file(s), docs/",
+                "formula": ""
+              }
+            ],
+            "notes": []
+          },
+          "autonomy": {
+            "name": "autonomy",
+            "title": "Autonomy",
+            "value": null,
+            "coverage": 0.0,
+            "components": [
+              {
+                "name": "self_correction_ratio",
+                "weight": 0.35,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no bug lifecycle events observed",
+                "formula": ""
+              },
+              {
+                "name": "unattended_completion",
+                "weight": 0.3,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no task lifecycle events observed",
+                "formula": ""
+              },
+              {
+                "name": "retry_effectiveness",
+                "weight": 0.2,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no retry signals observed",
+                "formula": ""
+              },
+              {
+                "name": "tool_success_rate",
+                "weight": 0.15,
+                "value": null,
+                "provenance": "OBSERVED",
+                "note": "no tool-call records ingested",
+                "formula": ""
+              }
+            ],
+            "notes": [
+              "Autonomy requires behavioural evidence from an event stream; none was available for this subject."
+            ]
+          },
+          "maintainability": {
+            "name": "maintainability",
+            "title": "Maintainability",
+            "value": 72.63,
+            "coverage": 1.0,
+            "components": [
+              {
+                "name": "avg_complexity",
+                "weight": 0.3,
+                "value": 53.0,
+                "provenance": "OBSERVED",
+                "note": "avg cyclomatic complexity 6.88",
+                "formula": "band [ideal 2..5]"
+              },
+              {
+                "name": "low_duplication",
+                "weight": 0.25,
+                "value": 99.19,
+                "provenance": "ESTIMATED",
+                "note": "0.8% duplicated SLOC (shingle estimate)",
+                "formula": "1 - duplication fraction"
+              },
+              {
+                "name": "file_size_distribution",
+                "weight": 0.2,
+                "value": 77.78,
+                "provenance": "OBSERVED",
+                "note": "2/36 files exceed 500 sloc",
+                "formula": ""
+              },
+              {
+                "name": "todo_debt",
+                "weight": 0.15,
+                "value": 100.0,
+                "provenance": "OBSERVED",
+                "note": "7 TODO/FIXME (1.3/kLOC)",
+                "formula": ""
+              },
+              {
+                "name": "code_smell_count",
+                "weight": 0.1,
+                "value": 13.81,
+                "provenance": "ESTIMATED",
+                "note": "0 mutable-default args, 0 bare excepts, ~18 unused imports (est.)",
+                "formula": "decay of weighted smell count"
+              }
+            ],
+            "notes": []
+          }
+        },
+        "overall": 81.07,
+        "grade": "B+",
+        "overall_coverage": 0.7625,
+        "weights": {
+          "completion": 0.2,
+          "reliability": 0.15,
+          "testing": 0.15,
+          "architecture": 0.125,
+          "performance": 0.075,
+          "documentation": 0.075,
+          "autonomy": 0.125,
+          "maintainability": 0.1
+        }
+      },
+      "telemetry": {
+        "spec": {
+          "name": "fab-self",
+          "path": ".",
+          "language": "python",
+          "build_cmd": null,
+          "entrypoint": "python3 -m fab.cli --help",
+          "features_file": null,
+          "exclude": [
+            "examples",
+            "output",
+            "docs"
+          ],
+          "notes": "dogfooding - FAB benchmarking its own repository; nested demo fixtures are excluded so the analysis scopes to the platform itself"
+        },
+        "session": {
+          "session_id": "eee2e68abda775dc",
+          "project": "fab-self",
+          "started_at": 1787426386.1175199,
+          "finished_at": 1787426418.617954,
+          "collector_versions": {
+            "fab": "1.0"
+          },
+          "workspace": "/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-eee2e68abd",
+          "host": "shubhrajs-MacBook-Air.local"
+        },
+        "git": {
+          "is_git_repo": true,
+          "head_sha": "f5996af38df7e89e808740ffe82c29d9799ff687",
+          "branch": "main",
+          "dirty_files": 18,
+          "total_commits": 5,
+          "first_commit_iso": "2026-08-22T17:38:32Z",
+          "last_commit_iso": "2026-08-22T18:41:07Z",
+          "commits": [
+            {
+              "sha": "f5996af38df7e89e808740ffe82c29d9799ff687",
+              "ts": 1787424067.0,
+              "iso": "2026-08-22T18:41:07Z",
+              "author": "Shubhraj Bhartiya",
+              "subject": "feat: dashboard (offline SVG/JS), CLI (run/collect/ingest/watch/serve), 74 tests",
+              "files_changed": 5,
+              "insertions": 1058,
+              "deletions": 1,
+              "files": [
+                "fab/cli.py",
+                "fab/dashboard/generator.py",
+                "pyproject.toml",
+                "tests/test_cli.py",
+                "tests/test_dashboard.py"
+              ]
+            },
+            {
+              "sha": "00ac6567ca1e13e12b1c9b05cf0cbe9b8ae6895b",
+              "ts": 1787423134.0,
+              "iso": "2026-08-22T18:25:34Z",
+              "author": "Shubhraj Bhartiya",
+              "subject": "feat: SQLite store, JSON/CSV/MD exporters, narrative final report with provenance discipline",
+              "files_changed": 4,
+              "insertions": 764,
+              "deletions": 0,
+              "files": [
+                "fab/report/exporters.py",
+                "fab/report/final_report.py",
+                "fab/store.py",
+                "tests/test_reports.py"
+              ]
+            },
+            {
+              "sha": "cc551270800f9a68cdf78ee1e095da263fc59809",
+              "ts": 1787422698.0,
+              "iso": "2026-08-22T18:18:18Z",
+              "author": "Shubhraj Bhartiya",
+              "subject": "feat: scoring engine (8 dimensions + overall w/ coverage), comparative analysis, 59 tests",
+              "files_changed": 9,
+              "insertions": 1492,
+              "deletions": 1,
+              "files": [
+                "fab/analysis/comparison.py",
+                "fab/collector.py",
+                "fab/models.py",
+                "fab/scoring/base.py",
+                "fab/scoring/dimensions.py",
+                "fab/scoring/engine.py",
+                "fab/telemetry/code_analysis.py",
+                "tests/test_comparison.py",
+                "tests/test_scoring.py"
+              ]
+            },
+            {
+              "sha": "2b8a4ee025f709465a031030ea4004b6991a31ea",
+              "ts": 1787421834.0,
+              "iso": "2026-08-22T18:03:54Z",
+              "author": "Shubhraj Bhartiya",
+              "subject": "feat: telemetry collectors (git/code/procmon/harness/log-ingest) + workspace isolation + 47 tests",
+              "files_changed": 19,
+              "insertions": 693,
+              "deletions": 59,
+              "files": [
+                "fab/analysis/__init__.py",
+                "fab/config.py",
+                "fab/dashboard/__init__.py",
+                "fab/models.py",
+                "fab/report/__init__.py",
+                "fab/scoring/__init__.py",
+                "fab/telemetry/__init__.py",
+                "fab/telemetry/code_analysis.py",
+                "fab/telemetry/git_telemetry.py",
+                "fab/telemetry/harness.py",
+                "fab/telemetry/process_monitor.py",
+                "fab/telemetry/workspace.py",
+                "tests/__init__.py",
+                "tests/test_code_analysis.py",
+                "tests/test_config.py",
+                "tests/test_git_telemetry.py",
+                "tests/test_harness.py",
+                "tests/test_log_ingest.py",
+                "tests/test_models.py"
+              ]
+            },
+            {
+              "sha": "70b79e6becbc7e925dc4cee25529c0415ece0e0b",
+              "ts": 1787420312.0,
+              "iso": "2026-08-22T17:38:32Z",
+              "author": "Shubhraj Bhartiya",
+              "subject": "feat: scaffold FAB core - provenance model, config, git/code/procmon/log collectors",
+              "files_changed": 13,
+              "insertions": 2280,
+              "deletions": 0,
+              "files": [
+                ".gitignore",
+                "LICENSE",
+                "README.md",
+                "fab/__init__.py",
+                "fab/config.py",
+                "fab/models.py",
+                "fab/telemetry/code_analysis.py",
+                "fab/telemetry/git_telemetry.py",
+                "fab/telemetry/harness.py",
+                "fab/telemetry/log_ingest.py",
+                "fab/telemetry/process_monitor.py",
+                "fab/telemetry/workspace.py",
+                "pyproject.toml"
+              ]
+            }
+          ]
+        },
+        "code": {
+          "root": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark",
+          "n_files": 36,
+          "total_sloc": 5335,
+          "test_sloc": 961,
+          "languages": {
+            "python": 5335
+          },
+          "n_test_files": 12,
+          "todo_count": 7,
+          "long_file_count": 2,
+          "duplicate_sloc_fraction_est": 0.0081,
+          "avg_internal_fanout": 2.167,
+          "circular_imports": [],
+          "n_circular_import_cycles": 0,
+          "has_tests_dir": true,
+          "has_src_layout": true,
+          "has_ci_config": false,
+          "readme": "README.md",
+          "changelog": null,
+          "license_present": true,
+          "dependency_manifests": [
+            "pyproject.toml"
+          ],
+          "pinned_deps": {
+            "pinned": 0,
+            "total": 0
+          },
+          "mutable_default_args": 0,
+          "bare_excepts": 0,
+          "unused_imports_est": 18
+        },
+        "phases": [
+          {
+            "phase": "build",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -m compileall -q .",
+              "exit_code": 0,
+              "duration_s": 0.315,
+              "timed_out": false,
+              "peak_rss_mb": 21.86,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": 0.0,
+              "n_samples": 3,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "tests",
+            "ok": true,
+            "counts": {
+              "passed": 75,
+              "failed": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "coverage_pct": 82.15124471582902,
+            "coverage_source": "coverage.py json",
+            "run": {
+              "cmd": "/Users/shubhraj/Downloads/frontier agent benchmark/frontier-agent-benchmark/.venv/bin/python -m pytest -q --no-header -o addopts= -p no:cacheprovider --rootdir=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-eee2e68abd --junitxml=/var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/fab-self-eee2e68abd/junit-fab.xml",
+              "exit_code": 0,
+              "duration_s": 15.282,
+              "timed_out": false,
+              "peak_rss_mb": 75.12,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": 0.0,
+              "n_samples": 147,
+              "monitor_backend": "psutil"
+            }
+          },
+          {
+            "phase": "smoke",
+            "ok": true,
+            "counts": {},
+            "coverage_pct": null,
+            "coverage_source": "",
+            "run": {
+              "cmd": "python3 -m fab.cli --help",
+              "exit_code": 0,
+              "duration_s": 0.197,
+              "timed_out": false,
+              "peak_rss_mb": 23.81,
+              "peak_cpu_pct": 0.0,
+              "avg_cpu_pct": 0.0,
+              "cpu_core_seconds_est": 0.0,
+              "n_samples": 2,
+              "monitor_backend": "psutil"
+            }
+          }
+        ],
+        "events": [
+          {
+            "type": "build_succeeded",
+            "project": "fab-self",
+            "session_id": "eee2e68abda775dc",
+            "ts": 1787426386.433314,
+            "severity": "success",
+            "message": "build ok (0.3s)",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "dc625be8167d40b7"
+          },
+          {
+            "type": "test_run",
+            "project": "fab-self",
+            "session_id": "eee2e68abda775dc",
+            "ts": 1787426401.7156339,
+            "severity": "success",
+            "message": "75 passed, 0 failed, 0 errors",
+            "data": {
+              "passed": 75,
+              "failed": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "5ba21f736cb64d05"
+          },
+          {
+            "type": "test_passed",
+            "project": "fab-self",
+            "session_id": "eee2e68abda775dc",
+            "ts": 1787426401.7156339,
+            "severity": "success",
+            "message": "75 passed",
+            "data": {
+              "passed": 75,
+              "failed": 0,
+              "errors": 0,
+              "skipped": 0
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "825ee12eb1584072"
+          },
+          {
+            "type": "coverage_reported",
+            "project": "fab-self",
+            "session_id": "eee2e68abda775dc",
+            "ts": 1787426401.7156339,
+            "severity": "info",
+            "message": "coverage 82.15124471582902%",
+            "data": {
+              "coverage_pct": 82.15124471582902,
+              "source": "coverage.py json"
+            },
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "93bef72e870347a1"
+          },
+          {
+            "type": "run_started",
+            "project": "fab-self",
+            "session_id": "eee2e68abda775dc",
+            "ts": 1787426417.7273421,
+            "severity": "info",
+            "message": "smoke-run start",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "cfcc2d68f36641b0"
+          },
+          {
+            "type": "run_finished",
+            "project": "fab-self",
+            "session_id": "eee2e68abda775dc",
+            "ts": 1787426417.924837,
+            "severity": "success",
+            "message": "entrypoint smoke-run ok",
+            "data": {},
+            "raw_type": null,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null,
+            "id": "c56f1f14b6f54576"
+          }
+        ],
+        "measurements": {
+          "build.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.duration_s": {
+            "value": 0.315,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.peak_rss_mb": {
+            "value": 21.86,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "build.cpu_core_seconds": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "procmon",
+            "note": "integral between samples"
+          },
+          "coverage.percent": {
+            "value": null,
+            "provenance": "UNAVAILABLE",
+            "source": "harness",
+            "note": "no machine-readable coverage report found"
+          },
+          "tests.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.duration_s": {
+            "value": 15.282,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.peak_rss_mb": {
+            "value": 75.12,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "tests.cpu_core_seconds": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "procmon",
+            "note": "integral between samples"
+          },
+          "tests.passed": {
+            "value": 75,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.failed": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.errors": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "tests.skipped": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "harness",
+            "note": null
+          },
+          "smoke.exit_code": {
+            "value": 0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.duration_s": {
+            "value": 0.197,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.timed_out": {
+            "value": false,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.peak_rss_mb": {
+            "value": 23.81,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.avg_cpu_pct": {
+            "value": 0.0,
+            "provenance": "OBSERVED",
+            "source": "procmon",
+            "note": null
+          },
+          "smoke.cpu_core_seconds": {
+            "value": 0.0,
+            "provenance": "ESTIMATED",
+            "source": "procmon",
+            "note": "integral between samples"
+          },
+          "commits_total": {
+            "value": 5,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "head_sha": {
+            "value": "f5996af38df7e89e808740ffe82c29d9799ff687",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "branch": {
+            "value": "main",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "dirty_files": {
+            "value": 18,
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_first_time": {
+            "value": "2026-08-22T17:38:32Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "commit_last_time": {
+            "value": "2026-08-22T18:41:07Z",
+            "provenance": "OBSERVED",
+            "source": "git",
+            "note": null
+          },
+          "files_total": {
+            "value": 36,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_total": {
+            "value": 5335,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "sloc_test": {
+            "value": 961,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "todo_count": {
+            "value": 7,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "test_to_code_ratio": {
+            "value": 0.2197,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "max_complexity": {
+            "value": 43,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "avg_complexity": {
+            "value": 6.88,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "docstring_coverage": {
+            "value": 0.1983,
+            "provenance": "OBSERVED",
+            "source": "code",
+            "note": null
+          },
+          "duplication_ratio": {
+            "value": 0.0081,
+            "provenance": "ESTIMATED",
+            "source": "code",
+            "note": "6-line shingle heuristic"
+          }
+        },
+        "activity": []
+      }
+    }
+  },
+  "comparison": {
+    "projects": [
+      "demo-atlas",
+      "demo-cascade",
+      "demo-volt",
+      "fab-self"
+    ],
+    "rankings": {
+      "completion": [
+        {
+          "project": "demo-atlas",
+          "score": 100.0
+        },
+        {
+          "project": "fab-self",
+          "score": 80.7843137254902
+        },
+        {
+          "project": "demo-cascade",
+          "score": 73.33333333333334
+        },
+        {
+          "project": "demo-volt",
+          "score": 70.0
+        }
+      ],
+      "reliability": [
+        {
+          "project": "fab-self",
+          "score": 100.0
+        },
+        {
+          "project": "demo-atlas",
+          "score": 99.99999999999999
+        },
+        {
+          "project": "demo-volt",
+          "score": 74.24242424242424
+        },
+        {
+          "project": "demo-cascade",
+          "score": 24.24242424242424
+        }
+      ],
+      "testing": [
+        {
+          "project": "fab-self",
+          "score": 99.46121684706115
+        },
+        {
+          "project": "demo-atlas",
+          "score": 77.31831212651375
+        },
+        {
+          "project": "demo-volt",
+          "score": 68.25809777449136
+        },
+        {
+          "project": "demo-cascade",
+          "score": 40.62576541929169
+        }
+      ],
+      "architecture": [
+        {
+          "project": "demo-atlas",
+          "score": 95.5
+        },
+        {
+          "project": "demo-volt",
+          "score": 87.25
+        },
+        {
+          "project": "fab-self",
+          "score": 82.29540768509841
+        },
+        {
+          "project": "demo-cascade",
+          "score": 73.25
+        }
+      ],
+      "performance": [
+        {
+          "project": "demo-atlas",
+          "score": 100.0
+        },
+        {
+          "project": "demo-cascade",
+          "score": 100.0
+        },
+        {
+          "project": "demo-volt",
+          "score": 100.0
+        },
+        {
+          "project": "fab-self",
+          "score": 88.0
+        }
+      ],
+      "documentation": [
+        {
+          "project": "demo-atlas",
+          "score": 60.292
+        },
+        {
+          "project": "fab-self",
+          "score": 37.549
+        },
+        {
+          "project": "demo-volt",
+          "score": 7.8375
+        },
+        {
+          "project": "demo-cascade",
+          "score": 0.0
+        }
+      ],
+      "autonomy": [
+        {
+          "project": "demo-atlas",
+          "score": 100.0
+        },
+        {
+          "project": "demo-volt",
+          "score": 22.5
+        },
+        {
+          "project": "demo-cascade",
+          "score": 0.0
+        },
+        {
+          "project": "fab-self",
+          "score": null
+        }
+      ],
+      "maintainability": [
+        {
+          "project": "demo-atlas",
+          "score": 97.18923733431926
+        },
+        {
+          "project": "demo-volt",
+          "score": 92.82732447817837
+        },
+        {
+          "project": "fab-self",
+          "score": 72.63374069626333
+        },
+        {
+          "project": "demo-cascade",
+          "score": 51.38927861206707
+        }
+      ],
+      "overall": [
+        {
+          "project": "demo-atlas",
+          "score": 92.87892050018405
+        },
+        {
+          "project": "fab-self",
+          "score": 81.06586842053254
+        },
+        {
+          "project": "demo-volt",
+          "score": 65.80260441055655
+        },
+        {
+          "project": "demo-cascade",
+          "score": 51.69038214719963
+        }
+      ]
+    },
+    "matrix": {
+      "demo-atlas": {
+        "demo-atlas": {
+          "delta": 0.0
+        },
+        "demo-volt": {
+          "delta": 27.08
+        },
+        "demo-cascade": {
+          "delta": 41.19
+        },
+        "fab-self": {
+          "delta": 11.81
+        }
+      },
+      "demo-volt": {
+        "demo-atlas": {
+          "delta": -27.08
+        },
+        "demo-volt": {
+          "delta": 0.0
+        },
+        "demo-cascade": {
+          "delta": 14.11
+        },
+        "fab-self": {
+          "delta": -15.26
+        }
+      },
+      "demo-cascade": {
+        "demo-atlas": {
+          "delta": -41.19
+        },
+        "demo-volt": {
+          "delta": -14.11
+        },
+        "demo-cascade": {
+          "delta": 0.0
+        },
+        "fab-self": {
+          "delta": -29.38
+        }
+      },
+      "fab-self": {
+        "demo-atlas": {
+          "delta": -11.81
+        },
+        "demo-volt": {
+          "delta": 15.26
+        },
+        "demo-cascade": {
+          "delta": 29.38
+        },
+        "fab-self": {
+          "delta": 0.0
+        }
+      }
+    },
+    "efficiency": {
+      "demo-atlas": {
+        "cpu_core_seconds": {
+          "value": 0.0,
+          "provenance": "ESTIMATED",
+          "source": "harness",
+          "note": "sum over phases of cpu_core_seconds"
+        },
+        "wall_seconds": {
+          "value": 0.627,
+          "provenance": "OBSERVED",
+          "source": "harness",
+          "note": "sum over phases of duration_s"
+        },
+        "score_per_cpu_second": {
+          "value": null,
+          "provenance": "UNAVAILABLE",
+          "source": "comparison",
+          "note": "no CPU sampling available for this subject"
+        },
+        "score_per_1k_tokens": {
+          "value": 9.079,
+          "provenance": "ESTIMATED",
+          "source": "comparison",
+          "note": "token provenance: OBSERVED"
+        }
+      },
+      "demo-volt": {
+        "cpu_core_seconds": {
+          "value": 0.0,
+          "provenance": "ESTIMATED",
+          "source": "harness",
+          "note": "sum over phases of cpu_core_seconds"
+        },
+        "wall_seconds": {
+          "value": 0.849,
+          "provenance": "OBSERVED",
+          "source": "harness",
+          "note": "sum over phases of duration_s"
+        },
+        "score_per_cpu_second": {
+          "value": null,
+          "provenance": "UNAVAILABLE",
+          "source": "comparison",
+          "note": "no CPU sampling available for this subject"
+        },
+        "score_per_1k_tokens": {
+          "value": 52.642,
+          "provenance": "ESTIMATED",
+          "source": "comparison",
+          "note": "token provenance: OBSERVED"
+        }
+      },
+      "demo-cascade": {
+        "cpu_core_seconds": {
+          "value": 0.0,
+          "provenance": "ESTIMATED",
+          "source": "harness",
+          "note": "sum over phases of cpu_core_seconds"
+        },
+        "wall_seconds": {
+          "value": 0.914,
+          "provenance": "OBSERVED",
+          "source": "harness",
+          "note": "sum over phases of duration_s"
+        },
+        "score_per_cpu_second": {
+          "value": null,
+          "provenance": "UNAVAILABLE",
+          "source": "comparison",
+          "note": "no CPU sampling available for this subject"
+        },
+        "score_per_1k_tokens": {
+          "value": null,
+          "provenance": "UNAVAILABLE",
+          "source": "comparison",
+          "note": "token usage unavailable (not ingested)"
+        }
+      },
+      "fab-self": {
+        "cpu_core_seconds": {
+          "value": 0.0,
+          "provenance": "ESTIMATED",
+          "source": "harness",
+          "note": "sum over phases of cpu_core_seconds"
+        },
+        "wall_seconds": {
+          "value": 15.794,
+          "provenance": "OBSERVED",
+          "source": "harness",
+          "note": "sum over phases of duration_s"
+        },
+        "score_per_cpu_second": {
+          "value": null,
+          "provenance": "UNAVAILABLE",
+          "source": "comparison",
+          "note": "no CPU sampling available for this subject"
+        },
+        "score_per_1k_tokens": {
+          "value": null,
+          "provenance": "UNAVAILABLE",
+          "source": "comparison",
+          "note": "token usage unavailable (not ingested)"
+        }
+      }
+    },
+    "failure_analysis": {
+      "demo-atlas": {
+        "build_failures": 0,
+        "test_failures": 1,
+        "errors_observed": 0,
+        "failures_total": 1,
+        "recovered": 1,
+        "persisting": 0,
+        "recovery_rate": 1.0,
+        "mean_time_to_recovery_s": 500.0
+      },
+      "demo-volt": {
+        "build_failures": 0,
+        "test_failures": 2,
+        "errors_observed": 0,
+        "failures_total": 2,
+        "recovered": 1,
+        "persisting": 1,
+        "recovery_rate": 0.5,
+        "mean_time_to_recovery_s": 31915279.78
+      },
+      "demo-cascade": {
+        "build_failures": 0,
+        "test_failures": 1,
+        "errors_observed": 0,
+        "failures_total": 1,
+        "recovered": 0,
+        "persisting": 1,
+        "recovery_rate": 0.0,
+        "mean_time_to_recovery_s": null
+      },
+      "fab-self": {
+        "build_failures": 0,
+        "test_failures": 0,
+        "errors_observed": 0,
+        "failures_total": 0,
+        "recovered": 0,
+        "persisting": 0,
+        "recovery_rate": null,
+        "mean_time_to_recovery_s": null
+      }
+    },
+    "verdicts": {
+      "most_complete": {
+        "project": "demo-atlas",
+        "score": 100.0
+      },
+      "most_reliable": {
+        "project": "fab-self",
+        "score": 100.0
+      },
+      "strongest_architecture": {
+        "project": "demo-atlas",
+        "score": 95.5
+      },
+      "best_tests": {
+        "project": "fab-self",
+        "score": 99.46121684706115
+      },
+      "best_performance": {
+        "project": "demo-atlas",
+        "score": 100.0
+      },
+      "strongest_autonomy": {
+        "project": "demo-atlas",
+        "score": 100.0
+      },
+      "most_maintainable": {
+        "project": "demo-atlas",
+        "score": 97.18923733431926
+      },
+      "most_efficient_compute": {
+        "project": null
+      },
+      "most_failures": {
+        "project": "demo-volt"
+      },
+      "best_failure_recovery": {
+        "project": "demo-atlas"
+      }
+    }
+  }
+}

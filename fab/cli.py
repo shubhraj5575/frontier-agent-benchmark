@@ -24,11 +24,11 @@ from pathlib import Path
 
 from . import __version__
 from .analysis.comparison import compare
-from .collector import ProjectBundle, collect_dynamic, collect_static, \
-    merge_ingest, sort_events
+from .collector import (ProjectBundle, collect_dynamic,
+                        collect_static, merge_ingest)
 from .config import BenchConfig, load_config, write_default_config
 from .dashboard.generator import write_dashboard
-from .models import Event, EventType, Provenance, SubjectSpec, utc_iso
+from .models import Event, EventType, Provenance, utc_iso
 from .report.exporters import write_exports
 from .report.final_report import generate_final_report
 from .scoring.engine import score_project
@@ -131,12 +131,12 @@ def _run_pipeline(cfg: BenchConfig, args) -> dict:
     comparison = compare(bundles, cards)
 
     # optional session log ingestion
+    ingested: list[dict[str, str]] = []
     for path in (args.ingest or []):
         log_path = Path(path)
         if not log_path.exists():
             print(f"warn: log not found: {log_path}", file=sys.stderr)
             continue
-        sniff_project = log_path.parent.name
         target = next((n for n in bundles if n in str(log_path)), None)
         if target is None:
             target = args.ingest_project or (
@@ -146,8 +146,12 @@ def _run_pipeline(cfg: BenchConfig, args) -> dict:
         merge_ingest(bundles[target], res)
         cards[target] = score_project(bundles[target], cfg.scoring_weights)
         comparison = compare(bundles, cards)
+        ingested.append({"path": str(log_path), "project": target,
+                         "records": res.lines_parsed})
         print(f"ingested {log_path} into '{target}' "
               f"({res.lines_parsed} records)")
+    if ingested:
+        meta["ingested_logs"] = ingested
 
     report_md = generate_final_report(bundles, cards, comparison, meta)
     paths = write_exports(data_root / "results", bundles, cards,

@@ -1,0 +1,294 @@
+project,section,metric,value,provenance,source,note
+demo-atlas,dimension,score.completion,100.0,OBSERVED,scoring-engine,coverage=100%
+demo-atlas,dimension,score.reliability,100.0,OBSERVED,scoring-engine,coverage=55%
+demo-atlas,dimension,score.testing,77.32,OBSERVED,scoring-engine,coverage=75%
+demo-atlas,dimension,score.architecture,95.5,OBSERVED,scoring-engine,coverage=100%
+demo-atlas,dimension,score.performance,100.0,OBSERVED,scoring-engine,coverage=100%
+demo-atlas,dimension,score.documentation,60.29,OBSERVED,scoring-engine,coverage=100%
+demo-atlas,dimension,score.autonomy,100.0,OBSERVED,scoring-engine,coverage=100%
+demo-atlas,dimension,score.maintainability,97.19,OBSERVED,scoring-engine,coverage=100%
+demo-atlas,overall,engineering_score,92.88,OBSERVED,scoring-engine,data coverage=89%
+demo-atlas,metric,avg_complexity,2.43,OBSERVED,code,
+demo-atlas,metric,branch,master,OBSERVED,git,
+demo-atlas,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-atlas,metric,build.duration_s,0.076,OBSERVED,procmon,
+demo-atlas,metric,build.exit_code,0,OBSERVED,procmon,
+demo-atlas,metric,build.peak_rss_mb,0.23,OBSERVED,procmon,
+demo-atlas,metric,build.timed_out,False,OBSERVED,procmon,
+demo-atlas,metric,commit_first_time,2026-08-20T16:59:47Z,OBSERVED,git,
+demo-atlas,metric,commit_last_time,2026-08-21T18:53:47Z,OBSERVED,git,
+demo-atlas,metric,commits_total,8,OBSERVED,git,
+demo-atlas,metric,coverage.percent,,UNAVAILABLE,harness,no machine-readable coverage report found
+demo-atlas,metric,dirty_files,0,OBSERVED,git,
+demo-atlas,metric,docstring_coverage,0.5714,OBSERVED,code,
+demo-atlas,metric,duplication_ratio,0.0,ESTIMATED,code,6-line shingle heuristic
+demo-atlas,metric,files_total,9,OBSERVED,code,
+demo-atlas,metric,head_sha,41f20baab13d35b7cc530a10320d72b641a4fa99,OBSERVED,git,
+demo-atlas,metric,max_complexity,6,OBSERVED,code,
+demo-atlas,metric,retries,1,OBSERVED,log_ingest,
+demo-atlas,metric,sloc_test,39,OBSERVED,code,
+demo-atlas,metric,sloc_total,106,OBSERVED,code,
+demo-atlas,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-atlas,metric,smoke.duration_s,0.069,OBSERVED,procmon,
+demo-atlas,metric,smoke.exit_code,0,OBSERVED,procmon,
+demo-atlas,metric,smoke.peak_rss_mb,6.58,OBSERVED,procmon,
+demo-atlas,metric,smoke.timed_out,False,OBSERVED,procmon,
+demo-atlas,metric,test_to_code_ratio,0.5821,OBSERVED,code,
+demo-atlas,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-atlas,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
+demo-atlas,metric,tests.duration_s,0.482,OBSERVED,procmon,
+demo-atlas,metric,tests.errors,0,OBSERVED,harness,
+demo-atlas,metric,tests.exit_code,0,OBSERVED,procmon,
+demo-atlas,metric,tests.failed,0,OBSERVED,harness,
+demo-atlas,metric,tests.passed,7,OBSERVED,harness,
+demo-atlas,metric,tests.peak_rss_mb,34.12,OBSERVED,procmon,
+demo-atlas,metric,tests.skipped,0,OBSERVED,harness,
+demo-atlas,metric,tests.timed_out,False,OBSERVED,procmon,
+demo-atlas,metric,todo_count,0,OBSERVED,code,
+demo-atlas,metric,tokens.input,7650,OBSERVED,log_ingest,
+demo-atlas,metric,tokens.output,2580,OBSERVED,log_ingest,
+demo-atlas,metric,tokens.provenance,OBSERVED,OBSERVED,log_ingest,
+demo-atlas,metric,tokens.total,10230,OBSERVED,log_ingest,from agent usage records
+demo-atlas,metric,tools.calls,2,OBSERVED,log_ingest,
+demo-atlas,metric,tools.success_rate,1.0,ESTIMATED,log_ingest,only calls with explicit success flags counted
+demo-atlas,event,build_succeeded,1787426377.519,OBSERVED,harness,build ok (0.1s)
+demo-atlas,event,test_run,1787426378.001,OBSERVED,harness,"7 passed, 0 failed, 0 errors"
+demo-atlas,event,test_passed,1787426378.001,OBSERVED,harness,7 passed
+demo-atlas,event,coverage_reported,1787426378.001,OBSERVED,harness,coverage 94.79166666666667%
+demo-atlas,event,run_started,1787426379.491,OBSERVED,harness,smoke-run start
+demo-atlas,event,run_finished,1787426379.559,OBSERVED,harness,entrypoint smoke-run ok
+demo-atlas,event,agent_started,1755500000.0,OBSERVED,log_ingest,
+demo-atlas,event,tool_call,,OBSERVED,log_ingest,tool: bash
+demo-atlas,event,tool_call,,OBSERVED,log_ingest,python -m venv .venv
+demo-atlas,event,tool_call,,OBSERVED,log_ingest,tool: write_file
+demo-atlas,event,tool_call,,OBSERVED,log_ingest,atlas/queue.py
+demo-atlas,event,tokens_reported,1755500300.0,OBSERVED,log_ingest,usage record
+demo-atlas,event,task_completed,1755500300.0,ESTIMATED,log_ingest,Implemented core queue with push/pop semantics.
+demo-atlas,event,tokens_reported,1755501200.0,OBSERVED,log_ingest,usage record
+demo-atlas,event,test_failed,1755501900.0,OBSERVED,log_ingest,FAILED tests/test_queue.py::test_pop_attempts - assert 2 == 1
+demo-atlas,event,tokens_reported,1755501910.0,OBSERVED,log_ingest,usage record
+demo-atlas,event,bug_discovered,1755501910.0,ESTIMATED,log_ingest,"Found bug: pop() increments attempts twice, breaking retry budget."
+demo-atlas,event,retry_attempted,1755502000.0,OBSERVED,log_ingest,re-running suite after edit
+demo-atlas,event,tokens_reported,1755502400.0,OBSERVED,log_ingest,usage record
+demo-atlas,event,bug_fixed,1755502400.0,ESTIMATED,log_ingest,Patched attempt accounting; extracted priority pick to queue_prio.
+demo-atlas,event,bug_fixed,1755502500.0,OBSERVED,log_ingest,attempts off-by-one fixed
+demo-atlas,event,test_passed,1755502600.0,OBSERVED,log_ingest,7 passed
+demo-atlas,event,commit_created,1755502700.0,OBSERVED,log_ingest,fix: restore attempt accounting in pop()
+demo-atlas,event,tokens_reported,1755503000.0,OBSERVED,log_ingest,usage record
+demo-atlas,event,task_completed,1755503000.0,ESTIMATED,log_ingest,"Task complete: queue, retry policy and worker delivered with green suite."
+demo-atlas,event,task_completed,1755503010.0,OBSERVED,log_ingest,
+demo-atlas,event,milestone_reached,1755503100.0,OBSERVED,log_ingest,v0.1.0 tagged
+demo-atlas,failure_analysis,build_failures,0,OBSERVED,comparison,
+demo-atlas,failure_analysis,test_failures,1,OBSERVED,comparison,
+demo-atlas,failure_analysis,errors_observed,0,OBSERVED,comparison,
+demo-atlas,failure_analysis,failures_total,1,OBSERVED,comparison,
+demo-atlas,failure_analysis,recovered,1,OBSERVED,comparison,
+demo-atlas,failure_analysis,persisting,0,OBSERVED,comparison,
+demo-atlas,failure_analysis,recovery_rate,1.0,OBSERVED,comparison,
+demo-atlas,failure_analysis,mean_time_to_recovery_s,500.0,OBSERVED,comparison,
+demo-cascade,dimension,score.completion,73.33,OBSERVED,scoring-engine,coverage=100%
+demo-cascade,dimension,score.reliability,24.24,OBSERVED,scoring-engine,coverage=55%
+demo-cascade,dimension,score.testing,40.63,OBSERVED,scoring-engine,coverage=75%
+demo-cascade,dimension,score.architecture,73.25,OBSERVED,scoring-engine,coverage=100%
+demo-cascade,dimension,score.performance,100.0,OBSERVED,scoring-engine,coverage=100%
+demo-cascade,dimension,score.documentation,0.0,OBSERVED,scoring-engine,coverage=100%
+demo-cascade,dimension,score.autonomy,0.0,OBSERVED,scoring-engine,coverage=35%
+demo-cascade,dimension,score.maintainability,51.39,OBSERVED,scoring-engine,coverage=100%
+demo-cascade,overall,engineering_score,51.69,OBSERVED,scoring-engine,data coverage=83%
+demo-cascade,metric,avg_complexity,4.6,OBSERVED,code,
+demo-cascade,metric,branch,master,OBSERVED,git,
+demo-cascade,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-cascade,metric,build.duration_s,0.13,OBSERVED,procmon,
+demo-cascade,metric,build.exit_code,0,OBSERVED,procmon,
+demo-cascade,metric,build.peak_rss_mb,0.28,OBSERVED,procmon,
+demo-cascade,metric,build.timed_out,False,OBSERVED,procmon,
+demo-cascade,metric,commit_first_time,2026-08-20T16:59:47Z,OBSERVED,git,
+demo-cascade,metric,commit_last_time,2026-08-21T04:05:47Z,OBSERVED,git,
+demo-cascade,metric,commits_total,4,OBSERVED,git,
+demo-cascade,metric,coverage.percent,,UNAVAILABLE,harness,no machine-readable coverage report found
+demo-cascade,metric,dirty_files,0,OBSERVED,git,
+demo-cascade,metric,docstring_coverage,0.0,OBSERVED,code,
+demo-cascade,metric,duplication_ratio,1.0,ESTIMATED,code,6-line shingle heuristic
+demo-cascade,metric,files_total,5,OBSERVED,code,
+demo-cascade,metric,head_sha,4d50c315e9238da94e95b6241e4a298a03a82f6d,OBSERVED,git,
+demo-cascade,metric,max_complexity,7,OBSERVED,code,
+demo-cascade,metric,sloc_test,13,OBSERVED,code,
+demo-cascade,metric,sloc_total,63,OBSERVED,code,
+demo-cascade,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-cascade,metric,smoke.duration_s,0.087,OBSERVED,procmon,
+demo-cascade,metric,smoke.exit_code,0,OBSERVED,procmon,
+demo-cascade,metric,smoke.peak_rss_mb,0.16,OBSERVED,procmon,
+demo-cascade,metric,smoke.timed_out,False,OBSERVED,procmon,
+demo-cascade,metric,test_to_code_ratio,0.26,OBSERVED,code,
+demo-cascade,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-cascade,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
+demo-cascade,metric,tests.duration_s,0.697,OBSERVED,procmon,
+demo-cascade,metric,tests.errors,0,OBSERVED,harness,
+demo-cascade,metric,tests.exit_code,1,OBSERVED,procmon,
+demo-cascade,metric,tests.failed,2,OBSERVED,harness,
+demo-cascade,metric,tests.passed,1,OBSERVED,harness,
+demo-cascade,metric,tests.peak_rss_mb,34.94,OBSERVED,procmon,
+demo-cascade,metric,tests.skipped,0,OBSERVED,harness,
+demo-cascade,metric,tests.timed_out,False,OBSERVED,procmon,
+demo-cascade,metric,todo_count,2,OBSERVED,code,
+demo-cascade,event,build_succeeded,1787426382.797,OBSERVED,harness,build ok (0.1s)
+demo-cascade,event,test_run,1787426383.494,OBSERVED,harness,"1 passed, 2 failed, 0 errors"
+demo-cascade,event,test_failed,1787426383.494,OBSERVED,harness,2 failed / 0 errors
+demo-cascade,event,bug_discovered,1787426383.494,ESTIMATED,harness,E       NotImplementedError: soon
+demo-cascade,event,bug_discovered,1787426383.494,ESTIMATED,harness,E       assert 27 == (9 * 2)
+demo-cascade,event,bug_discovered,1787426383.494,ESTIMATED,harness,"E        +  where 9 = len('{""id"": 2}')"
+demo-cascade,event,bug_discovered,1787426383.494,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-af4c243fd3/te
+demo-cascade,event,bug_discovered,1787426383.494,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-cascade-af4c243fd3/te
+demo-cascade,event,coverage_reported,1787426383.494,OBSERVED,harness,coverage 65.3061224489796%
+demo-cascade,event,run_started,1787426385.768,OBSERVED,harness,smoke-run start
+demo-cascade,event,run_finished,1787426385.855,OBSERVED,harness,entrypoint smoke-run ok
+demo-cascade,failure_analysis,build_failures,0,OBSERVED,comparison,
+demo-cascade,failure_analysis,test_failures,1,OBSERVED,comparison,
+demo-cascade,failure_analysis,errors_observed,0,OBSERVED,comparison,
+demo-cascade,failure_analysis,failures_total,1,OBSERVED,comparison,
+demo-cascade,failure_analysis,recovered,0,OBSERVED,comparison,
+demo-cascade,failure_analysis,persisting,1,OBSERVED,comparison,
+demo-cascade,failure_analysis,recovery_rate,0.0,OBSERVED,comparison,
+demo-cascade,failure_analysis,mean_time_to_recovery_s,,OBSERVED,comparison,
+demo-volt,dimension,score.completion,70.0,OBSERVED,scoring-engine,coverage=100%
+demo-volt,dimension,score.reliability,74.24,OBSERVED,scoring-engine,coverage=55%
+demo-volt,dimension,score.testing,68.26,OBSERVED,scoring-engine,coverage=75%
+demo-volt,dimension,score.architecture,87.25,OBSERVED,scoring-engine,coverage=100%
+demo-volt,dimension,score.performance,100.0,OBSERVED,scoring-engine,coverage=100%
+demo-volt,dimension,score.documentation,7.84,OBSERVED,scoring-engine,coverage=100%
+demo-volt,dimension,score.autonomy,22.5,OBSERVED,scoring-engine,coverage=100%
+demo-volt,dimension,score.maintainability,92.83,OBSERVED,scoring-engine,coverage=100%
+demo-volt,overall,engineering_score,65.8,OBSERVED,scoring-engine,data coverage=89%
+demo-volt,metric,avg_complexity,3.2,OBSERVED,code,
+demo-volt,metric,branch,master,OBSERVED,git,
+demo-volt,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-volt,metric,build.duration_s,0.092,OBSERVED,procmon,
+demo-volt,metric,build.exit_code,0,OBSERVED,procmon,
+demo-volt,metric,build.peak_rss_mb,0.12,OBSERVED,procmon,
+demo-volt,metric,build.timed_out,False,OBSERVED,procmon,
+demo-volt,metric,commit_first_time,2026-08-20T16:59:47Z,OBSERVED,git,
+demo-volt,metric,commit_last_time,2026-08-21T11:29:47Z,OBSERVED,git,
+demo-volt,metric,commits_total,6,OBSERVED,git,
+demo-volt,metric,coverage.percent,,UNAVAILABLE,harness,no machine-readable coverage report found
+demo-volt,metric,dirty_files,0,OBSERVED,git,
+demo-volt,metric,docstring_coverage,0.2,OBSERVED,code,
+demo-volt,metric,duplication_ratio,0.0,ESTIMATED,code,6-line shingle heuristic
+demo-volt,metric,files_total,9,OBSERVED,code,
+demo-volt,metric,head_sha,771dc688d5238921698d133f5a3d74fc08516278,OBSERVED,git,
+demo-volt,metric,max_complexity,5,OBSERVED,code,
+demo-volt,metric,retries,1,OBSERVED,log_ingest,
+demo-volt,metric,sloc_test,17,OBSERVED,code,
+demo-volt,metric,sloc_total,62,OBSERVED,code,
+demo-volt,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-volt,metric,smoke.duration_s,0.067,OBSERVED,procmon,
+demo-volt,metric,smoke.exit_code,0,OBSERVED,procmon,
+demo-volt,metric,smoke.peak_rss_mb,0.62,OBSERVED,procmon,
+demo-volt,metric,smoke.timed_out,False,OBSERVED,procmon,
+demo-volt,metric,test_to_code_ratio,0.3778,OBSERVED,code,
+demo-volt,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
+demo-volt,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
+demo-volt,metric,tests.duration_s,0.69,OBSERVED,procmon,
+demo-volt,metric,tests.errors,0,OBSERVED,harness,
+demo-volt,metric,tests.exit_code,1,OBSERVED,procmon,
+demo-volt,metric,tests.failed,1,OBSERVED,harness,
+demo-volt,metric,tests.passed,5,OBSERVED,harness,
+demo-volt,metric,tests.peak_rss_mb,33.53,OBSERVED,procmon,
+demo-volt,metric,tests.skipped,0,OBSERVED,harness,
+demo-volt,metric,tests.timed_out,False,OBSERVED,procmon,
+demo-volt,metric,todo_count,1,OBSERVED,code,
+demo-volt,metric,tokens.input,900,OBSERVED,log_ingest,
+demo-volt,metric,tokens.output,350,OBSERVED,log_ingest,
+demo-volt,metric,tokens.provenance,OBSERVED,OBSERVED,log_ingest,
+demo-volt,metric,tokens.total,1250,OBSERVED,log_ingest,from agent usage records
+demo-volt,metric,tools.calls,2,OBSERVED,log_ingest,
+demo-volt,metric,tools.success_rate,0.5,ESTIMATED,log_ingest,only calls with explicit success flags counted
+demo-volt,event,build_succeeded,1787426379.78,OBSERVED,harness,build ok (0.1s)
+demo-volt,event,test_run,1787426380.469,OBSERVED,harness,"5 passed, 1 failed, 0 errors"
+demo-volt,event,test_failed,1787426380.469,OBSERVED,harness,1 failed / 0 errors
+demo-volt,event,bug_discovered,1787426380.469,ESTIMATED,harness,E       assert 0.0 is None
+demo-volt,event,bug_discovered,1787426380.469,ESTIMATED,harness,E        +  where 0.0 = median([])
+demo-volt,event,bug_discovered,1787426380.469,ESTIMATED,harness,FAILED ../../../../../../../../var/folders/z1/qnmb5zdn32s1lvgp5bk6q4m40000gn/T/fab-workspaces/demo-volt-4f974d91ce/tests
+demo-volt,event,coverage_reported,1787426380.469,OBSERVED,harness,coverage 95.83333333333333%
+demo-volt,event,run_started,1787426382.469,OBSERVED,harness,smoke-run start
+demo-volt,event,run_finished,1787426382.536,OBSERVED,harness,entrypoint smoke-run ok
+demo-volt,event,agent_started,1755510000.0,OBSERVED,log_ingest,
+demo-volt,event,tool_call,,OBSERVED,log_ingest,tool: bash
+demo-volt,event,tool_call,,OBSERVED,log_ingest,pytest -q (collection error)
+demo-volt,event,retry_attempted,1755510050.0,OBSERVED,log_ingest,retrying after fixing imports
+demo-volt,event,tool_call,,OBSERVED,log_ingest,tool: bash
+demo-volt,event,tool_call,,OBSERVED,log_ingest,pytest -q
+demo-volt,event,tokens_reported,1755511000.0,OBSERVED,log_ingest,usage record
+demo-volt,event,bug_discovered,1755511000.0,ESTIMATED,log_ingest,"Stats implemented; median edge case still failing, deferring."
+demo-volt,event,test_failed,1755511100.0,OBSERVED,log_ingest,FAILED tests/test_median_edge.py - expected None
+demo-volt,event,intervention_requested,1755511600.0,OBSERVED,log_ingest,clarify spec for empty-input median
+demo-volt,event,commit_created,1755512000.0,OBSERVED,log_ingest,wip: column filter
+demo-volt,event,task_completed,1755512500.0,OBSERVED,log_ingest,cli usable for basic mean reporting
+demo-volt,failure_analysis,build_failures,0,OBSERVED,comparison,
+demo-volt,failure_analysis,test_failures,2,OBSERVED,comparison,
+demo-volt,failure_analysis,errors_observed,0,OBSERVED,comparison,
+demo-volt,failure_analysis,failures_total,2,OBSERVED,comparison,
+demo-volt,failure_analysis,recovered,1,OBSERVED,comparison,
+demo-volt,failure_analysis,persisting,1,OBSERVED,comparison,
+demo-volt,failure_analysis,recovery_rate,0.5,OBSERVED,comparison,
+demo-volt,failure_analysis,mean_time_to_recovery_s,31915279.78,OBSERVED,comparison,
+fab-self,dimension,score.completion,80.78,OBSERVED,scoring-engine,coverage=100%
+fab-self,dimension,score.reliability,100.0,OBSERVED,scoring-engine,coverage=40%
+fab-self,dimension,score.testing,99.46,OBSERVED,scoring-engine,coverage=75%
+fab-self,dimension,score.architecture,82.3,OBSERVED,scoring-engine,coverage=100%
+fab-self,dimension,score.performance,88.0,OBSERVED,scoring-engine,coverage=100%
+fab-self,dimension,score.documentation,37.55,OBSERVED,scoring-engine,coverage=100%
+fab-self,dimension,score.autonomy,,UNAVAILABLE,scoring-engine,no data backed this dimension
+fab-self,dimension,score.maintainability,72.63,OBSERVED,scoring-engine,coverage=100%
+fab-self,overall,engineering_score,81.07,OBSERVED,scoring-engine,data coverage=76%
+fab-self,metric,avg_complexity,6.88,OBSERVED,code,
+fab-self,metric,branch,main,OBSERVED,git,
+fab-self,metric,build.avg_cpu_pct,0.0,OBSERVED,procmon,
+fab-self,metric,build.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
+fab-self,metric,build.duration_s,0.315,OBSERVED,procmon,
+fab-self,metric,build.exit_code,0,OBSERVED,procmon,
+fab-self,metric,build.peak_rss_mb,21.86,OBSERVED,procmon,
+fab-self,metric,build.timed_out,False,OBSERVED,procmon,
+fab-self,metric,commit_first_time,2026-08-22T17:38:32Z,OBSERVED,git,
+fab-self,metric,commit_last_time,2026-08-22T18:41:07Z,OBSERVED,git,
+fab-self,metric,commits_total,5,OBSERVED,git,
+fab-self,metric,coverage.percent,,UNAVAILABLE,harness,no machine-readable coverage report found
+fab-self,metric,dirty_files,18,OBSERVED,git,
+fab-self,metric,docstring_coverage,0.1983,OBSERVED,code,
+fab-self,metric,duplication_ratio,0.0081,ESTIMATED,code,6-line shingle heuristic
+fab-self,metric,files_total,36,OBSERVED,code,
+fab-self,metric,head_sha,f5996af38df7e89e808740ffe82c29d9799ff687,OBSERVED,git,
+fab-self,metric,max_complexity,43,OBSERVED,code,
+fab-self,metric,sloc_test,961,OBSERVED,code,
+fab-self,metric,sloc_total,5335,OBSERVED,code,
+fab-self,metric,smoke.avg_cpu_pct,0.0,OBSERVED,procmon,
+fab-self,metric,smoke.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
+fab-self,metric,smoke.duration_s,0.197,OBSERVED,procmon,
+fab-self,metric,smoke.exit_code,0,OBSERVED,procmon,
+fab-self,metric,smoke.peak_rss_mb,23.81,OBSERVED,procmon,
+fab-self,metric,smoke.timed_out,False,OBSERVED,procmon,
+fab-self,metric,test_to_code_ratio,0.2197,OBSERVED,code,
+fab-self,metric,tests.avg_cpu_pct,0.0,OBSERVED,procmon,
+fab-self,metric,tests.cpu_core_seconds,0.0,ESTIMATED,procmon,integral between samples
+fab-self,metric,tests.duration_s,15.282,OBSERVED,procmon,
+fab-self,metric,tests.errors,0,OBSERVED,harness,
+fab-self,metric,tests.exit_code,0,OBSERVED,procmon,
+fab-self,metric,tests.failed,0,OBSERVED,harness,
+fab-self,metric,tests.passed,75,OBSERVED,harness,
+fab-self,metric,tests.peak_rss_mb,75.12,OBSERVED,procmon,
+fab-self,metric,tests.skipped,0,OBSERVED,harness,
+fab-self,metric,tests.timed_out,False,OBSERVED,procmon,
+fab-self,metric,todo_count,7,OBSERVED,code,
+fab-self,event,build_succeeded,1787426386.433,OBSERVED,harness,build ok (0.3s)
+fab-self,event,test_run,1787426401.716,OBSERVED,harness,"75 passed, 0 failed, 0 errors"
+fab-self,event,test_passed,1787426401.716,OBSERVED,harness,75 passed
+fab-self,event,coverage_reported,1787426401.716,OBSERVED,harness,coverage 82.15124471582902%
+fab-self,event,run_started,1787426417.727,OBSERVED,harness,smoke-run start
+fab-self,event,run_finished,1787426417.925,OBSERVED,harness,entrypoint smoke-run ok
+fab-self,failure_analysis,build_failures,0,OBSERVED,comparison,
+fab-self,failure_analysis,test_failures,0,OBSERVED,comparison,
+fab-self,failure_analysis,errors_observed,0,OBSERVED,comparison,
+fab-self,failure_analysis,failures_total,0,OBSERVED,comparison,
+fab-self,failure_analysis,recovered,0,OBSERVED,comparison,
+fab-self,failure_analysis,persisting,0,OBSERVED,comparison,
+fab-self,failure_analysis,recovery_rate,,OBSERVED,comparison,
+fab-self,failure_analysis,mean_time_to_recovery_s,,OBSERVED,comparison,

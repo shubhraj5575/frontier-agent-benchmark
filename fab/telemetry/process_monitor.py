@@ -229,7 +229,7 @@ def run_monitored(cmd: list[str], cwd: str | Path | None = None,
 
 def measurements_from_run(mr: MonitoredRun, label: str) -> dict[str, Any]:
     """Provenance-tagged measurement dict from a monitored run."""
-    from ..models import Measurement, Provenance
+    from ..models import Measurement
 
     m: dict[str, Any] = {}
     m[f"{label}.exit_code"] = Measurement.observed(mr.exit_code, SOURCE)

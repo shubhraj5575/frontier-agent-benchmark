@@ -9,7 +9,6 @@ legend.  All data is embedded as JSON; rendering is vanilla JS + SVG.
 from __future__ import annotations
 
 import json
-import time
 from pathlib import Path
 from typing import Any
 
