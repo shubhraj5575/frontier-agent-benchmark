@@ -28,7 +28,7 @@
 ## fab-self
 
 - Overall engineering score: **81.07** (B+), data coverage 76%
-- Git: repo, 5 commits (OBSERVED)
+- Git: repo, 6 commits (OBSERVED)
 - Code: 5335 SLOC across 36 files
 - Tests executed: 75 passed / 0 failed
 - Failures observed: 0 (recovered 0, MTTR n/as)
@@ -40,7 +40,7 @@
 - Code: 62 SLOC across 9 files
 - Tests executed: 5 passed / 1 failed
 - Tokens: 1250 (OBSERVED)
-- Failures observed: 2 (recovered 1, MTTR 31915279.78s)
+- Failures observed: 2 (recovered 1, MTTR 31915605.57s)
 
 ## demo-cascade
 

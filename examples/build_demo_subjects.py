@@ -27,7 +27,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DEST = ROOT / "examples" / "subjects"
+DEST = ROOT / "output" / "demo-subjects"
 
 T0 = time.time() - 48 * 3600  # start two days ago
 

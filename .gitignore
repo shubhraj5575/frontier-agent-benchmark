@@ -15,3 +15,7 @@ fab.log
 
 # OS
 .DS_Store
+
+# demo subjects are generated (with real git histories) by
+# examples/build_demo_subjects.py - not tracked
+output/demo-subjects/

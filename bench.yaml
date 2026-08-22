@@ -11,7 +11,7 @@ version: 1
 
 subjects:
   - name: demo-atlas
-    path: examples/subjects/demo-atlas
+    path: output/demo-subjects/demo-atlas
     language: python
     entrypoint: >-
       python3 -c "import sys; from atlas.queue import Queue;
@@ -20,13 +20,13 @@ subjects:
     notes: high-quality fixture - green suite, docs, manifest
 
   - name: demo-volt
-    path: examples/subjects/demo-volt
+    path: output/demo-subjects/demo-volt
     language: python
     entrypoint: python3 -m volt.cli --help
     notes: medium fixture - works but ships one failing test
 
   - name: demo-cascade
-    path: examples/subjects/demo-cascade
+    path: output/demo-subjects/demo-cascade
     language: python
     entrypoint: python3 -c "import processor; print('cascade loads')"
     notes: poor fixture - duplication, TODO debt, red suite
