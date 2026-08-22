@@ -232,16 +232,16 @@ def analyze_python_module(path: Path, rel: str, tel: CodeTelemetry) -> None:
     try:
         tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     except (SyntaxError, ValueError, OSError):
-        tel.todo_count += 0
         return
 
-    raw_imports: list[tuple[int, str | None]] = []
+    raw_imports: list[tuple[int, str | None, list[str]]] = []
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
-            raw_imports.append((node.level, node.module))
+            raw_imports.append((node.level, node.module,
+                                [a.name for a in node.names]))
         elif isinstance(node, ast.Import):
             for alias in node.names:
-                raw_imports.append((0, alias.name))
+                raw_imports.append((0, alias.name, []))
 
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             args = getattr(getattr(node, "args", None), "args", []) or []
@@ -255,16 +255,24 @@ def analyze_python_module(path: Path, rel: str, tel: CodeTelemetry) -> None:
     # record raw import requests; resolved into a graph after all files scanned
     tel.import_graph.setdefault(rel, set())
     pkg_parts = rel[:-len(".py")].split("/") if rel.endswith(".py") else rel.split("/")
-    for level, module in raw_imports:
-        if level == 0 and module:
-            tel.import_graph[rel].add(module.replace(".", "/") + ".py")
-        elif level == 0:
-            continue
-        else:  # relative import: resolve against current package
+    for level, module, names in raw_imports:
+        cands: list[str] = []
+        modpath = ""
+        if level > 0:
             base = pkg_parts[: len(pkg_parts) - level]
             if module:
                 base = base + module.split(".")
-            tel.import_graph[rel].add("/".join(base) + ".py")
+            modpath = "/".join(base)
+        elif module:
+            modpath = module.replace(".", "/")
+        if modpath:
+            cands.append(modpath + ".py")
+            cands.append(modpath + "/__init__.py")
+        # `from pkg import submodule` / `from . import sibling`
+        for n in names:
+            if n and n != "*" and modpath:
+                cands.append(f"{modpath}/{n}.py")
+        tel.import_graph[rel].update(cands)
 
 
 # -- duplication -------------------------------------------------------------
@@ -299,24 +307,23 @@ def _duplication_fraction(files: list[FileInfo]) -> float:
 
 # -- import graph post-processing ---------------------------------------------
 
-def _resolve_graph(tel: CodeTelemetry, file_set: set[str],
-                   dir_set: set[str]) -> dict[str, set[str]]:
-    """Resolve requested module paths to actual repo files."""
+def _resolve_graph(tel: CodeTelemetry, file_set: set[str]) -> dict[str, set[str]]:
+    """Resolve requested module paths to actual repo files.
+
+    Exact hits win; otherwise a unique path-suffix match; otherwise nothing
+    (external / stdlib imports simply resolve away).
+    """
     resolved: dict[str, set[str]] = {}
     for src, reqs in tel.import_graph.items():
         out: set[str] = set()
-        for req in reqs:
-            candidates = {
-                req,
-                req[:-3] + "/__init__.py",
-            }
-            hit = {c for c in candidates if c in file_set}
-            if not hit:
-                # try matching any file whose path ends with the request
-                hits_suffix = {f for f in file_set if f.endswith(req)}
-                if len(hits_suffix) == 1:
-                    hit = hits_suffix
-            out |= hit
+        for req in sorted(reqs):
+            if req in file_set:
+                out.add(req)
+                continue
+            hits_suffix = {f for f in file_set
+                           if f.endswith("/" + req) or f.endswith(req)}
+            if len(hits_suffix) == 1:
+                out |= hits_suffix
         resolved[src] = out - {src}
     return resolved
 
@@ -436,9 +443,7 @@ def collect_code_telemetry(path: str | Path) -> CodeTelemetry:
     tel.duplicate_sloc_fraction = _duplication_fraction(tel.files)
 
     file_set = {fi.rel_display for fi in tel.files}
-    dir_set = {str(p.relative_to(root)) for p in root.rglob("*")
-               if p.is_dir() and "__pycache__" not in p.parts}
-    graph = _resolve_graph(tel, file_set, dir_set)
+    graph = _resolve_graph(tel, file_set)
     tel.circular_imports = _find_cycles(graph)
     fanouts = [len(t) for t in graph.values()]
     tel.avg_fanout = round(sum(fanouts) / len(fanouts), 3) if fanouts else 0.0

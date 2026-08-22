@@ -270,17 +270,17 @@ class PhaseResult:
                                          f"{c.get('errors', 0)} errors",
                                  data=dict(c),
                                  provenance=Provenance.OBSERVED, **base))
-                if self.run and self.run.stderr_tail:
-                    failing = [ln.strip() for ln in
-                               self.run.stdout_tail.splitlines()
-                               if ln.startswith(("FAILED", "E   "))][:3]
-                    for i, fl in enumerate(failing):
-                        evs.append(Event(type=EventType.BUG_DISCOVERED, ts=ts,
-                                         severity="warn", message=fl[:200],
-                                         data={"index": i},
-                                         provenance=Provenance.ESTIMATED,
-                                         note="failing-test line interpreted as bug signal",
-                                         **base))
+                failing = [ln.strip() for ln in
+                           (self.run.stdout_tail if self.run else "").splitlines()
+                           + (self.run.stderr_tail if self.run else "").splitlines()
+                           if ln.startswith(("FAILED", "E   "))][:5]
+                for i, fl in enumerate(failing):
+                    evs.append(Event(type=EventType.BUG_DISCOVERED, ts=ts,
+                                     severity="warn", message=fl[:200],
+                                     data={"index": i},
+                                     provenance=Provenance.ESTIMATED,
+                                     note="failing-test line interpreted as bug signal",
+                                     **base))
             elif c.get("passed"):
                 evs.append(Event(type=EventType.TEST_PASSED, ts=ts,
                                  severity="success",

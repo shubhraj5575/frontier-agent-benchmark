@@ -155,13 +155,13 @@ class TreeMonitor(threading.Thread):
         self.interval_s = max(0.05, interval_s)
         self.t0 = start_time if start_time is not None else time.time()
         self.samples: list[ResourceSample] = []
-        self._stop = threading.Event()
+        self._halt = threading.Event()
 
     def stop(self) -> None:
-        self._stop.set()
+        self._halt.set()
 
     def run(self) -> None:
-        while not self._stop.is_set():
+        while not self._halt.is_set():
             started = time.time()
             cpu = rss = None
             if HAS_PSUTIL:
@@ -186,7 +186,7 @@ class TreeMonitor(threading.Thread):
             if cpu is not None and rss is not None:
                 self.samples.append(ResourceSample(
                     t=round(time.time() - self.t0, 4), cpu_pct=cpu, rss_mb=rss))
-            self._stop.wait(max(0.0, self.interval_s - (time.time() - started)))
+            self._halt.wait(max(0.0, self.interval_s - (time.time() - started)))
 
 
 def run_monitored(cmd: list[str], cwd: str | Path | None = None,

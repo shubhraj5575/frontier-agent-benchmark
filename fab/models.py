@@ -139,6 +139,7 @@ class Event:
     raw_type: str | None = None      # original label before normalisation
     provenance: Provenance = Provenance.OBSERVED
     source: str = ""                 # adapter/collector name
+    note: str | None = None          # heuristic/method annotation when derived
     id: str = field(default_factory=lambda: uuid.uuid4().hex[:16])
 
     def to_dict(self) -> dict[str, Any]:
@@ -160,6 +161,7 @@ class Event:
             raw_type=d.get("raw_type"),
             provenance=Provenance(d.get("provenance", "OBSERVED")),
             source=d.get("source", ""),
+            note=d.get("note"),
             id=d.get("id") or uuid.uuid4().hex[:16],
         )
 

@@ -172,17 +172,16 @@ def collect_git_telemetry(path: str | Path) -> GitTelemetry:
     cur: CommitRecord | None = None
     for line in log.stdout.splitlines():
         if line.startswith("\x01"):
-            fields = line.split("\x02")
-            meta = fields[0][1:].split("\x04")
-            subject = meta[1] if len(meta) > 1 else ""
-            author = fields[-1].split("\x04")[0] if "\x04" in fields[-1] else ""
-            parts = fields[-1].split("\x03")
-            sha = parts[0]
+            # format: \x01<sha>\x02<epoch>\x03<author>\x04<subject>
+            body = line[1:]
             try:
-                ts = float(parts[1]) if len(parts) > 1 and parts[1] else None
+                sha_part, rest = body.split("\x02", 1)
+                ts_part, remainder = rest.split("\x03", 1)
+                author, subject = remainder.split("\x04", 1)
+                ts = float(ts_part) if ts_part.strip() else None
             except ValueError:
-                ts = None
-            cur = CommitRecord(sha=sha, ts=ts, author=author.strip("\x04"),
+                continue
+            cur = CommitRecord(sha=sha_part, ts=ts, author=author,
                                subject=subject, files_changed=0,
                                insertions=0, deletions=0)
             tel.commits.append(cur)

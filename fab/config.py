@@ -22,7 +22,7 @@ except Exception:  # pragma: no cover
 DEFAULT_WEIGHTS: dict[str, float] = {
     "completion": 0.20,
     "reliability": 0.15,
-    "testing": 0.125,
+    "testing": 0.15,
     "architecture": 0.125,
     "performance": 0.075,
     "documentation": 0.075,
@@ -113,10 +113,17 @@ def load_config(path: str | Path | None = None) -> BenchConfig:
 def _from_dict(data: dict[str, Any]) -> BenchConfig:
     weights = DEFAULT_WEIGHTS.copy()
     custom = data.get("scoring_weights") or {}
-    unknown = set(custom) - set(weights)
-    if unknown:
-        raise ConfigError(f"unknown scoring dimensions: {sorted(unknown)}")
-    weights.update({k: float(v) for k, v in custom.items()})
+    if custom:
+        unknown = set(custom) - set(weights)
+        if unknown:
+            raise ConfigError(f"unknown scoring dimensions: {sorted(unknown)}")
+        missing = set(weights) - set(custom)
+        if missing:
+            raise ConfigError(
+                f"scoring_weights must be complete when overridden - "
+                f"missing: {sorted(missing)}")
+        # explicit replacement: every dimension specified
+        weights = {k: float(v) for k, v in custom.items()}
     total = sum(weights.values())
     if abs(total - 1.0) > 1e-6:
         raise ConfigError(

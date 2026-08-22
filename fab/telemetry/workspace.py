@@ -12,7 +12,7 @@ import tempfile
 import time
 from pathlib import Path
 
-from .models import SessionMeta, stable_id
+from ..models import SessionMeta, stable_id
 
 
 def make_workspace(project: str, path: str | Path,
